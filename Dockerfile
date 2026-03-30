@@ -21,6 +21,7 @@ COPY --from=build /app/package*.json ./
 COPY --from=build /app/server ./server
 COPY --from=build /app/client/dist ./client/dist
 COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/data ./data
 
 EXPOSE 3001
-CMD ["node", "server/index.js"]
+CMD ["node", "server/scripts/start.mjs"]
