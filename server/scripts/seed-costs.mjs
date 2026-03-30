@@ -13,7 +13,12 @@ async function seed() {
   await prisma.costAction.deleteMany({});
   await prisma.costAllocation.deleteMany({});
 
-  const products = costData.filter(p => !p.product.includes('Total') && !p.product.includes('check'));
+  const REMOVE_TOWERS = ['Global VBTS', 'VB Commercial', 'VBI Carrier', 'VBI Enterprise', 'Legacy', 'Innovation', 'Lean Corporate', 'P&S - Platforms'];
+  const products = costData.filter(p =>
+    !p.product.includes('Total') &&
+    !p.product.includes('check') &&
+    !REMOVE_TOWERS.includes(p.tower)
+  );
 
   for (const p of products) {
     await prisma.costAllocation.create({
