@@ -27,7 +27,11 @@ run('node server/scripts/seed-costs.mjs');
 console.log('\nSeeding NPD data...');
 run('node server/scripts/seed-npd.mjs');
 
-// 5. Start server (spawn so it takes over the process)
+// 5. Seed business cases
+console.log('\nSeeding business case data...');
+run('node server/scripts/seed-bizcase.mjs');
+
+// 6. Start server (spawn so it takes over the process)
 console.log('\nStarting Express server...');
 const server = spawn('node', ['server/index.js'], {
   cwd: root,
