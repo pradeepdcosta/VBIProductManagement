@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(node -c server/routes/products.js)",
+      "Bash(node -c server/routes/trading.js)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s http://localhost:3001/health)",
+      "Bash(curl -s http://localhost:5173/)",
+      "Bash(curl -s http://localhost:3002/health)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(node -c client/src/store/useProductStore.js)",
+      "Bash(npx prisma:*)",
+      "Bash(node -c server/routes/exports.js)",
+      "Bash(node -c server/routes/uploads.js)",
+      "Bash(node -e \":*)",
+      "Bash(docker ps:*)",
+      "Read(//c/Users/dcost/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/2c0731b7-c4ef-44bf-b2ec-84180205f80e/6ebb925b-e560-4bb6-8822-893730587574/skills/xlsx/**)",
+      "Bash(python -c \":*)",
+      "Bash(pip install:*)",
+      "Bash(taskkill /f /im node.exe)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(cmd /c \"taskkill /F /IM node.exe\")",
+      "Bash(del /f \"node_modules\\\\.prisma\\\\client\\\\query_engine-windows.dll.node\")",
+      "Bash(node server/scripts/seed-npd.js)",
+      "Bash(node server/scripts/seed-costs.js)",
+      "Bash(node server/scripts/seed-costs.mjs)",
+      "Bash(curl -s http://localhost:3002/api/products/cost-allocations)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f''''Total: {d[\"\"summary\"\"][\"\"total\"\"]} products, Grand: {d[\"\"summary\"\"][\"\"totalGrand\"\"]:.0f}''''\\); print\\(d[''''allocations''''][0][''''serviceOffering''''], d[''''allocations''''][0][''''grandTotal'''']\\)\")",
+      "Bash(curl -s \"http://localhost:3002/api/products/cost-actions?serviceOffering=Google%20Workspace\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f''''{len\\(d\\)} actions''''\\); [print\\(f''''  {a[\"\"action\"\"][:50]} - {a[\"\"savings\"\"]} - {a[\"\"status\"\"]}''''\\) for a in d]\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
+      "Bash(curl -s \"http://localhost:3002/api/products/cost-allocations?category=Cloud%20and%20Security\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f''''Products: {d[\"\"summary\"\"][\"\"total\"\"]}, Grand: {d[\"\"summary\"\"][\"\"totalGrand\"\"]:.0f}''''\\); [print\\(f''''  {a[\"\"serviceOffering\"\"]}''''\\) for a in d[''''allocations''''][:5]]\")"
+    ]
+  }
+}
