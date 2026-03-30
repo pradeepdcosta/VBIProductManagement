@@ -1,0 +1,223 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id           Int      @id @default(autoincrement())
+  category     String
+  family       String
+  productLine  String   @map("product_line")
+  name         String
+  status       String   @default("Active")
+  revenueModel String   @default("Subscription") @map("revenue_model")
+  owner        String   @default("VBI Product Team")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  costs    ProductCost[]
+  npd      NpdStage?
+  trading  TradingData[]
+  coverage CountryCoverage[]
+  sla      SlaData?
+  bizCase  BusinessCase?
+
+  @@map("products")
+}
+
+model ProductCost {
+  id        Int     @id @default(autoincrement())
+  productId Int     @map("product_id")
+  component String
+  amountEur Float   @map("amount_eur")
+  fy        String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_costs")
+}
+
+model CostAllocation {
+  id                Int     @id @default(autoincrement())
+  serviceTower      String  @map("service_tower")
+  serviceOffering   String  @map("service_offering")
+  fy                String  @default("FY26")
+  psOpex            Float   @default(0) @map("ps_opex")
+  psDep             Float   @default(0) @map("ps_dep")
+  psTotal           Float   @default(0) @map("ps_total")
+  ppeOpex           Float   @default(0) @map("ppe_opex")
+  ppeDep            Float   @default(0) @map("ppe_dep")
+  ppeTotal          Float   @default(0) @map("ppe_total")
+  totalProductOpex  Float   @default(0) @map("total_product_opex")
+  totalProductDep   Float   @default(0) @map("total_product_dep")
+  totalProduct      Float   @default(0) @map("total_product")
+  commercial        Float   @default(0)
+  vbts              Float   @default(0)
+  enterprise        Float   @default(0)
+  carrier           Float   @default(0)
+  networks          Float   @default(0)
+  vsol              Float   @default(0)
+  directorate       Float   @default(0)
+  grandTotal        Float   @default(0) @map("grand_total")
+  fteCount          Float   @default(0) @map("fte_count")
+  fteBreakdown      Json?   @map("fte_breakdown")
+
+  @@unique([serviceOffering, fy])
+  @@map("cost_allocations")
+}
+
+model CostAction {
+  id                Int      @id @default(autoincrement())
+  serviceOffering   String   @map("service_offering")
+  action            String
+  savings           Float    @default(0)
+  targetDate        DateTime? @map("target_date")
+  status            String   @default("Planned")
+  owner             String?
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  @@map("cost_actions")
+}
+
+model NpdStage {
+  id            Int       @id @default(autoincrement())
+  productId     Int       @unique @map("product_id")
+  concept       Int       @default(0)
+  bizCase       Int       @default(0) @map("biz_case")
+  design        Int       @default(0)
+  gtm           Int       @default(0)
+  salesEnable   Int       @default(0) @map("sales_enable")
+  distribution  Int       @default(0)
+  slaDefinition Int       @default(0) @map("sla_definition")
+  launch        Int       @default(0)
+  owner         String?
+  targetLaunch  DateTime? @map("target_launch")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("npd_stages")
+}
+
+model TradingData {
+  id                  Int    @id @default(autoincrement())
+  productId           Int    @map("product_id")
+  region              String
+  fy                  String
+  actualEur           Float  @map("actual_eur")
+  targetEur           Float  @map("target_eur")
+  pyActualEur         Float? @map("py_actual_eur")
+  aovWonYtd           Float? @map("aov_won_ytd")
+  aovTarget           Float? @map("aov_target")
+  aovPipelineOpen     Float? @map("aov_pipeline_open")
+  aovPipelineOpenedYtd Float? @map("aov_pipeline_opened_ytd")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("trading_data")
+}
+
+model CountryCoverage {
+  id          Int       @id @default(autoincrement())
+  productId   Int       @map("product_id")
+  countryCode String    @map("country_code")
+  status      String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, countryCode])
+  @@map("country_coverage")
+}
+
+model SlaData {
+  id           Int     @id @default(autoincrement())
+  productId    Int     @unique @map("product_id")
+  availability String
+  mttr         String
+  responseTime String  @map("response_time")
+  supportHours String  @map("support_hours")
+  escalation   String?
+  reviewFreq   String? @map("review_freq")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("sla_data")
+}
+
+model BusinessCase {
+  id            Int     @id @default(autoincrement())
+  productId     Int     @unique @map("product_id")
+  npv           Float?
+  roi           Float?
+  irr           Float?
+  paybackMonths Int?    @map("payback_months")
+  status        String  @default("Draft")
+  summary       String?
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  lines   BusinessCaseLine[]
+
+  @@map("business_cases")
+}
+
+model BusinessCaseLine {
+  id             Int     @id @default(autoincrement())
+  businessCaseId Int     @map("business_case_id")
+  section        String
+  lineItem       String  @map("line_item")
+  sortOrder      Int     @default(0) @map("sort_order")
+  isTotal        Boolean @default(false) @map("is_total")
+  fy27           Float?
+  fy28           Float?
+  fy29           Float?
+  fy30           Float?
+  fy31           Float?
+
+  businessCase BusinessCase @relation(fields: [businessCaseId], references: [id], onDelete: Cascade)
+
+  @@unique([businessCaseId, section, lineItem])
+  @@map("business_case_lines")
+}
+
+model NpdInitiative {
+  id                    Int      @id @default(autoincrement())
+  externalId            Int?     @map("external_id")
+  market                String   @default("VBI")
+  portfolio             String
+  productFamily         String   @map("product_family")
+  productLine           String   @map("product_line")
+  initiativeName        String   @map("initiative_name")
+  roadmapCategory       String   @map("roadmap_category")
+  roadmapHorizon        String?  @map("roadmap_horizon")
+  roadmapType           String?  @map("roadmap_type")
+  fy                    String
+  quarter               String
+  status                String   @default("Not Started")
+  investmentCanvas      String?  @map("investment_canvas")
+  primaryInvestmentDriver String? @map("primary_investment_driver")
+  description           String?  @db.Text
+  capex                 Float?
+  opex                  Float?
+  stages                Json?    @default("{}")
+  createdAt             DateTime @default(now()) @map("created_at")
+
+  @@map("npd_initiatives")
+}
+
+model FeatureRequest {
+  id            Int      @id @default(autoincrement())
+  type          String
+  productName   String   @map("product_name")
+  title         String
+  description   String
+  justification String?
+  dealAccount   String?  @map("deal_account")
+  priority      String   @default("Medium")
+  status        String   @default("Open")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("feature_requests")
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "tower": "P&S - Placeholder",
+    "product": "Placeholder product line",
+    "ps_opex": 585166, "ps_dep": 37441, "ps_total": 622607,
+    "ppe_opex": 158516, "ppe_dep": 303429, "ppe_total": 461945,
+    "total_product_opex": 743682, "total_product_dep": 340870, "total_product": 1084552,
+    "commercial": 145501, "vbts": 0, "enterprise": 0, "carrier": 0, "networks": 0, "vsol": 110206, "directorate": 2140,
+    "grand_total": 1342399
+  }
+]
