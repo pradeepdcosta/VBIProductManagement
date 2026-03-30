@@ -1,0 +1,4347 @@
+[
+  {
+    "id": 107,
+    "externalId": 1644,
+    "market": "VBI",
+    "portfolio": "Cybersecurity",
+    "productFamily": "Secure Connection",
+    "productLine": "Managed Security",
+    "initiativeName": "Alternative SSE product",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "Off-Track",
+    "investmentCanvas": "FY27-Zscaler and Connectivity Secure Internet Access",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Launch of Alternative SSE product to expand the Cybersecurity portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced Secure Connection capabilities with competitive differentiation.",
+    "capex": 0.31,
+    "opex": 0.57,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-03",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "at-risk"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-18",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-15",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-07",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.728Z"
+  },
+  {
+    "id": 108,
+    "externalId": 1771,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business â€“ Cisco Catalyst SDN",
+    "initiativeName": "Cisco SD-WAN relaunch inc inhouse ops",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-Cisco SDN Enhancements",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Launch of Cisco SD-WAN relaunch inc inhouse ops to expand the Fixed Connectivity portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced SDN capabilities with competitive differentiation.",
+    "capex": 1.41,
+    "opex": 0.14,
+    "stages": {
+      "gtm": {
+        "date": "2026-02-17",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2026-01-22",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-24",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-21",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-08-04",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-09-19",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.735Z"
+  },
+  {
+    "id": 109,
+    "externalId": 1676,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Internet",
+    "initiativeName": "Enhanced Internet Reporting & Super POPs - Blueprint",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-Enhanced Global Internet & SD-WAN with Super POPs",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Launch of Enhanced Internet Reporting & Super POPs - Blueprint to expand the Fixed Connectivity portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced Underlay Connectivity capabilities with competitive differentiation.",
+    "capex": 2.07,
+    "opex": 0.95,
+    "stages": {
+      "gtm": {
+        "date": "2026-02-12",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2026-01-11",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-23",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-15",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-08-02",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-09-18",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.739Z"
+  },
+  {
+    "id": 110,
+    "externalId": 1741,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business SD-WAN/SASE (Other Vendor)",
+    "initiativeName": "Juniper Migration - All customers migrated",
+    "roadmapCategory": "Product Rationalization",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-DB26Rollover-Carryover Juniper Rationalisation (KTLO)",
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Rationalization and consolidation of SDN offerings within Fixed Connectivity. This initiative streamlines the product portfolio by migrating customers to modern platforms, reducing operational complexity and improving cost efficiency.",
+    "capex": 1.44,
+    "opex": 0.99,
+    "stages": {
+      "gtm": {
+        "date": "2026-02-11",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2026-01-15",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-22",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-20",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-08-08",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-09-03",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.743Z"
+  },
+  {
+    "id": 111,
+    "externalId": 1423,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business SDN - Meraki",
+    "initiativeName": "Meraki SDN Managed services",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-Cisco Catalyst & Meraki SDN Market Onboarding ",
+    "primaryInvestmentDriver": "Market Expansion",
+    "description": "Launch of Meraki SDN Managed services to expand the Fixed Connectivity portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced SDN capabilities with competitive differentiation.",
+    "capex": 0.97,
+    "opex": 1.12,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-15",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-23",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-11",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-19",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.747Z"
+  },
+  {
+    "id": 112,
+    "externalId": 1187,
+    "market": "VBI Carrier",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Internet",
+    "initiativeName": "Paid Peering Strategic Launch",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "Off-Track",
+    "investmentCanvas": "FY26 DB - Underlay Connectivity Paid Peering Strategic Product Development - Carry Over",
+    "primaryInvestmentDriver": "New Product",
+    "description": "Launch of Paid Peering Strategic Launch to expand the Fixed Connectivity portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced Underlay Connectivity capabilities with competitive differentiation.",
+    "capex": 0.84,
+    "opex": 1.51,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-08",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "at-risk"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-21",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-20",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-04",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.751Z"
+  },
+  {
+    "id": 113,
+    "externalId": 1526,
+    "market": "VBI Carrier",
+    "portfolio": "Mobility",
+    "productFamily": "Messaging",
+    "productLine": "Vodafone Messaging Hub (VMH)",
+    "initiativeName": "Branded SMS",
+    "roadmapCategory": "Feature Release",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-Vodafone Messaging Hub",
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Feature enhancement for the Messaging product line under Mobility. This release introduces key capabilities requested by enterprise customers, improving usability, performance, and integration with existing VBI services.",
+    "capex": 2.26,
+    "opex": 1.2,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-07",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-22",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-10",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-02",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.755Z"
+  },
+  {
+    "id": 114,
+    "externalId": 1691,
+    "market": "VBI Carrier",
+    "portfolio": "Mobility",
+    "productFamily": "Messaging",
+    "productLine": "Vodafone Messaging Hub (VMH)",
+    "initiativeName": "Connect Vodafone Route Management Tool ",
+    "roadmapCategory": "Technical Enabler",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-Vodafone Messaging Hub",
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Technical infrastructure enablement for Messaging under Mobility. This initiative builds foundational capabilities that support future product launches, including platform modernization, API enhancements, and operational tooling.",
+    "capex": 1.5,
+    "opex": 0.23,
+    "stages": {
+      "gtm": {
+        "date": "2026-02-16",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2026-01-21",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-22",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-21",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-08-15",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-09-15",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.759Z"
+  },
+  {
+    "id": 115,
+    "externalId": 1477,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "DLM EU footprint Expansion Phase 1",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-DLM - New Features / Customer",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Launch of DLM EU footprint Expansion Phase 1 to expand the Mobility portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced Devices capabilities with competitive differentiation.",
+    "capex": 1.7,
+    "opex": 1.57,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-19",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-11",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-15",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-03",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.763Z"
+  },
+  {
+    "id": 116,
+    "externalId": 1765,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "DLM Range Expanison (OEM-Crosscall)",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q2",
+    "status": "On Track",
+    "investmentCanvas": "FY27-DLM - New Features / Customer",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Launch of DLM Range Expanison (OEM-Crosscall) to expand the Mobility portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced Devices capabilities with competitive differentiation.",
+    "capex": 2.04,
+    "opex": 1.27,
+    "stages": {
+      "gtm": {
+        "date": "2026-09-16",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2026-03-24",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2026-02-11",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-10-02",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.767Z"
+  },
+  {
+    "id": 117,
+    "externalId": 1546,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "DLM Range Expansion (OEM Zebra)",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-DLM - New Features / Customer",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Launch of DLM Range Expansion (OEM Zebra) to expand the Mobility portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced Devices capabilities with competitive differentiation.",
+    "capex": 1.84,
+    "opex": 0.12,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-03",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-20",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-14",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-14",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.771Z"
+  },
+  {
+    "id": 118,
+    "externalId": 1764,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "DLM Range Expansion (OEM- Fairphone)",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q2",
+    "status": "On Track",
+    "investmentCanvas": "FY27-DLM - New Features / Customer",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Launch of DLM Range Expansion (OEM- Fairphone) to expand the Mobility portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced Devices capabilities with competitive differentiation.",
+    "capex": 1.14,
+    "opex": 1.26,
+    "stages": {
+      "gtm": {
+        "date": "2026-09-08",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2026-03-24",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2026-02-14",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-09-30",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.775Z"
+  },
+  {
+    "id": 119,
+    "externalId": 1720,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "DLM Refurbished Device",
+    "roadmapCategory": "Product Launch",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-DLM - New Features / Customer",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Launch of DLM Refurbished Device to expand the Mobility portfolio. This initiative focuses on bringing a market-ready solution to VBI customers across all regions, delivering enhanced Devices capabilities with competitive differentiation.",
+    "capex": 0.52,
+    "opex": 0.83,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-04",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-17",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-23",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-05",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.778Z"
+  },
+  {
+    "id": 182,
+    "externalId": 409,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Voice",
+    "productLine": "Microsoft Voice",
+    "initiativeName": "FY26 DB Investment - TPM Partner Market Pilot",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Innovation & PoC",
+    "description": "Strategic initiative for UC Voice within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Innovation & PoC.",
+    "capex": 0.42,
+    "opex": 0.32,
+    "stages": {
+      "gtm": {
+        "date": "2026-03-20",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2026-02-03",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-08-19",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:02.017Z"
+  },
+  {
+    "id": 120,
+    "externalId": 1758,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "DLM+eSIM",
+    "roadmapCategory": "Feature Release",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "Off-Track",
+    "investmentCanvas": "FY27-DLM - New Features / Customer",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Feature enhancement for the Devices product line under Mobility. This release introduces key capabilities requested by enterprise customers, improving usability, performance, and integration with existing VBI services.",
+    "capex": 1.27,
+    "opex": 1.26,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-03",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "at-risk"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-15",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-15",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-16",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.782Z"
+  },
+  {
+    "id": 121,
+    "externalId": 1528,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Tariffs",
+    "productLine": "Reporting Solutions",
+    "initiativeName": "Mobility Customers upgraded and migrated to VBR Cloud Platform",
+    "roadmapCategory": "Service Launch",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q4",
+    "status": "On Track",
+    "investmentCanvas": "FY27-Business Reporting -New Features and customer migration to new platform ",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "New service offering under Tariffs in the Mobility category. This launch delivers managed service capabilities to VBI enterprise customers, with SLA-backed performance guarantees and global reach.",
+    "capex": 1.71,
+    "opex": 1.01,
+    "stages": {
+      "gtm": {
+        "date": "2026-11-23",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2026-10-17",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2026-09-20",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2026-08-15",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2027-05-02",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2027-06-02",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.785Z"
+  },
+  {
+    "id": 122,
+    "externalId": 1664,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Tariffs",
+    "productLine": "Vodafone Business Global Tariffs",
+    "initiativeName": "RedFlex supporting Enterprise Bundles Dashboard",
+    "roadmapCategory": "Feature Release",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-Group Mobility Tariffs ",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Feature enhancement for the Tariffs product line under Mobility. This release introduces key capabilities requested by enterprise customers, improving usability, performance, and integration with existing VBI services.",
+    "capex": 0.99,
+    "opex": 0.14,
+    "stages": {
+      "gtm": {
+        "date": "2026-02-12",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2026-01-18",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-16",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-13",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-07-31",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-09-10",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.789Z"
+  },
+  {
+    "id": 123,
+    "externalId": 1669,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Unified Communication as a Service",
+    "productLine": "Vodafone Business UC",
+    "initiativeName": " Full Stack Enh (Operator Console)",
+    "roadmapCategory": "Feature Release",
+    "roadmapHorizon": "Aspirational",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q4",
+    "status": "Not Started",
+    "investmentCanvas": "FY26 DB - VBUC Enhancements, Digital & Automation",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Feature enhancement for the Unified Communication as a Service product line under Unified Communications. This release introduces key capabilities requested by enterprise customers, improving usability, performance, and integration with existing VBI services.",
+    "capex": 0.69,
+    "opex": 1.53,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "not-started"
+      },
+      "design": {
+        "date": null,
+        "status": "not-started"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "not-started"
+      },
+      "concept": {
+        "date": null,
+        "status": "not-started"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.792Z"
+  },
+  {
+    "id": 124,
+    "externalId": 947,
+    "market": "VBI Carrier",
+    "portfolio": "Unified Communications",
+    "productFamily": "Voice",
+    "productLine": "International Voice",
+    "initiativeName": "Cloud Numbers E2E Number Allocation (Strategic)",
+    "roadmapCategory": "Feature Release",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY26 DB - Advanced  Communications Platform",
+    "primaryInvestmentDriver": "Technical Enabler",
+    "description": "Feature enhancement for the Voice product line under Unified Communications. This release introduces key capabilities requested by enterprise customers, improving usability, performance, and integration with existing VBI services.",
+    "capex": 1.34,
+    "opex": 0.88,
+    "stages": {
+      "gtm": {
+        "date": "2026-02-14",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2026-01-10",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-16",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-18",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-08-01",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-09-08",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.796Z"
+  },
+  {
+    "id": 125,
+    "externalId": 1763,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Contact Centre as a Service",
+    "productLine": "Recording",
+    "initiativeName": "Compliance Recording for TPM (Red-Tariff Customers, UK Footprint) - Automation ",
+    "roadmapCategory": "Technical Enabler",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q2",
+    "status": "On Track",
+    "investmentCanvas": "FY27-RaaS for Teams - product enhancement",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Technical infrastructure enablement for Contact Centre as a Service under Unified Communications. This initiative builds foundational capabilities that support future product launches, including platform modernization, API enhancements, and operational tooling.",
+    "capex": 0.36,
+    "opex": 0.59,
+    "stages": {
+      "gtm": {
+        "date": "2026-05-12",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2026-04-18",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2026-03-24",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2026-02-16",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-11-12",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-12-13",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.800Z"
+  },
+  {
+    "id": 126,
+    "externalId": 1762,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Contact Centre as a Service",
+    "productLine": "Recording",
+    "initiativeName": "Compliance Recording for TPM (Red-Tariff Customers, UK Footprint) - Service Launch",
+    "roadmapCategory": "Technical Enabler",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "On Track",
+    "investmentCanvas": "FY27-RaaS for Microsoft Teams - Footprint Expansion",
+    "primaryInvestmentDriver": "Market Expansion",
+    "description": "Technical infrastructure enablement for Contact Centre as a Service under Unified Communications. This initiative builds foundational capabilities that support future product launches, including platform modernization, API enhancements, and operational tooling.",
+    "capex": 1.84,
+    "opex": 0.23,
+    "stages": {
+      "gtm": {
+        "date": "2026-06-14",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-24",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-18",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-09",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.804Z"
+  },
+  {
+    "id": 127,
+    "externalId": 1727,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Unified Communication as a Service",
+    "productLine": "VONE-C",
+    "initiativeName": "LayerX (GSIP) Migration",
+    "roadmapCategory": "Product Rationalization",
+    "roadmapHorizon": "Aspirational",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q3",
+    "status": "Not Started",
+    "investmentCanvas": "FY27-DB26Rollover HCS (Hosted Communication Services) platform rationalisation ",
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Rationalization and consolidation of Unified Communication as a Service offerings within Unified Communications. This initiative streamlines the product portfolio by migrating customers to modern platforms, reducing operational complexity and improving cost efficiency.",
+    "capex": 1.54,
+    "opex": 0.77,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "not-started"
+      },
+      "design": {
+        "date": null,
+        "status": "not-started"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "not-started"
+      },
+      "concept": {
+        "date": null,
+        "status": "not-started"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.807Z"
+  },
+  {
+    "id": 128,
+    "externalId": 1406,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Contact Centre as a Service",
+    "productLine": "Recording",
+    "initiativeName": "NMR Customer Migrations Completed",
+    "roadmapCategory": "Product Rationalization",
+    "roadmapHorizon": "Plan of Record",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q2",
+    "status": "On Track",
+    "investmentCanvas": "FY26 DB - NMR UK & VBI customer migrations",
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Rationalization and consolidation of Contact Centre as a Service offerings within Unified Communications. This initiative streamlines the product portfolio by migrating customers to modern platforms, reducing operational complexity and improving cost efficiency.",
+    "capex": 0.48,
+    "opex": 0.26,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "design": {
+        "date": "2026-04-19",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2026-03-11",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2026-02-24",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-10-18",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": "2026-11-06",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.812Z"
+  },
+  {
+    "id": 129,
+    "externalId": 1722,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Contact Centre as a Service",
+    "productLine": "Recording",
+    "initiativeName": "Recording Reconciliation Report (SMS)",
+    "roadmapCategory": "Feature Release",
+    "roadmapHorizon": "Aspirational",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q1",
+    "status": "At Risk",
+    "investmentCanvas": "FY27-RaaS for Teams - product enhancement",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Feature enhancement for the Contact Centre as a Service product line under Unified Communications. This release introduces key capabilities requested by enterprise customers, improving usability, performance, and integration with existing VBI services.",
+    "capex": 0.92,
+    "opex": 0.11,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "at-risk"
+      },
+      "design": {
+        "date": "2026-01-11",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-12-21",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-11-23",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-07-01",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": "2026-07-31",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.816Z"
+  },
+  {
+    "id": 130,
+    "externalId": 1487,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Voice",
+    "productLine": "Microsoft Voice",
+    "initiativeName": "WhatsApp Integration for TPM (VBI Contracted Customers, UK Footprint)",
+    "roadmapCategory": "Feature Release",
+    "roadmapHorizon": "Plan of Intent",
+    "roadmapType": "B&C",
+    "fy": "FY27",
+    "quarter": "Q3",
+    "status": "On Track",
+    "investmentCanvas": "FY26 DB - Advanced Communications ",
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Feature enhancement for the UC Voice product line under Unified Communications. This release introduces key capabilities requested by enterprise customers, improving usability, performance, and integration with existing VBI services.",
+    "capex": 1.58,
+    "opex": 0.73,
+    "stages": {
+      "gtm": {
+        "date": "2026-12-09",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2026-06-12",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2026-05-20",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2027-01-09",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.819Z"
+  },
+  {
+    "id": 131,
+    "externalId": 304,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Contact Centre as a Service",
+    "productLine": "Vodafone Contact Centre",
+    "initiativeName": "FY25 DB Investment - Next Generation Cloud Contact Centre (rollover but scope edited for FY26)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for Contact Centre as a Service within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.3,
+    "opex": 0.87,
+    "stages": {
+      "gtm": {
+        "date": "2025-12-17",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-11-02",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-05-11",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.823Z"
+  },
+  {
+    "id": 132,
+    "externalId": 277,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Fixed Network Security",
+    "initiativeName": "FY25 DB Investment - Underlay Connectivity- Connectivity as a Service  (carry over)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Rationalisation.",
+    "capex": 0.13,
+    "opex": 1.21,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-12",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-08-09",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-02-10",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.827Z"
+  },
+  {
+    "id": 133,
+    "externalId": 277,
+    "market": "VBI Carrier",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Fixed Network Security",
+    "initiativeName": "FY25 DB Investment - Underlay Connectivity- Connectivity as a Service  (carry over)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Rationalisation.",
+    "capex": 0.4,
+    "opex": 0.28,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-08",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-08-17",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-02-17",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.831Z"
+  },
+  {
+    "id": 134,
+    "externalId": 279,
+    "market": "VBI Carrier",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Internet",
+    "initiativeName": "FY25 DB Investment - Underlay Connectivity- Underlay Monitoring (Carry over)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.19,
+    "opex": 0.29,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-03",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-08-15",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-02-22",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.835Z"
+  },
+  {
+    "id": 135,
+    "externalId": 279,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Internet",
+    "initiativeName": "FY25 DB Investment - Underlay Connectivity- Underlay Monitoring (Carry over)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.22,
+    "opex": 1.58,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-06",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-08-16",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-02-23",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.839Z"
+  },
+  {
+    "id": 136,
+    "externalId": 405,
+    "market": "VBI Carrier",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Voice",
+    "productLine": "SIP",
+    "initiativeName": "FY26 DB - Advanced  Communications Platform",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Technical Enabler",
+    "description": "Strategic initiative for UC Voice within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Technical Enabler.",
+    "capex": 0.35,
+    "opex": 0.72,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "design": {
+        "date": "2025-10-12",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-09-22",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-22",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-03-31",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": "2026-05-07",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.843Z"
+  },
+  {
+    "id": 137,
+    "externalId": 411,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Value Add Services",
+    "productLine": "Professional Services",
+    "initiativeName": "FY26 DB - Advanced Communications ",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Not Started",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for UC Value Add Services within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.57,
+    "opex": 1.47,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "not-started"
+      },
+      "design": {
+        "date": null,
+        "status": "not-started"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "not-started"
+      },
+      "concept": {
+        "date": null,
+        "status": "not-started"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.847Z"
+  },
+  {
+    "id": 138,
+    "externalId": 460,
+    "market": "VBI Carrier",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Software Defined Network",
+    "initiativeName": "FY26 DB - Best on VF Multi-Cloud Connectivity (Super POPs)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Technical Enabler",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Technical Enabler.",
+    "capex": 0.52,
+    "opex": 0.53,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-04",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-08-07",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-02-14",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.850Z"
+  },
+  {
+    "id": 139,
+    "externalId": 460,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Software Defined Network",
+    "initiativeName": "FY26 DB - Best on VF Multi-Cloud Connectivity (Super POPs)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Technical Enabler",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Technical Enabler.",
+    "capex": 0.12,
+    "opex": 0.47,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-12",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-08-04",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-02-23",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.854Z"
+  },
+  {
+    "id": 140,
+    "externalId": 447,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Ethernet",
+    "initiativeName": "FY26 DB - Carrier Ethernet",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.21,
+    "opex": 0.76,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-23",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-23",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-09-18",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-03-19",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-23",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-06-15",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-07-19",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-08-21",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.858Z"
+  },
+  {
+    "id": 141,
+    "externalId": 447,
+    "market": "VBI Carrier",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Ethernet",
+    "initiativeName": "FY26 DB - Carrier Ethernet",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.19,
+    "opex": 1.12,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-15",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-15",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-06-19",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-16",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-02-09",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-03-19",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.862Z"
+  },
+  {
+    "id": 142,
+    "externalId": 467,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business Cisco SD-WAN/SASE",
+    "initiativeName": "FY26 DB - Cisco SD-WAN/SASE (inc. Branch LAN) Refresh",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.33,
+    "opex": 1.46,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-23",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-14",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-12-20",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-06-09",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-16",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-09-23",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-10-11",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-11-10",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.866Z"
+  },
+  {
+    "id": 143,
+    "externalId": 319,
+    "market": "VBI Carrier",
+    "portfolio": "Unified Communications",
+    "productFamily": "Voice",
+    "productLine": "International Voice",
+    "initiativeName": "FY26 DB - Cloud Numbers footprint expansion",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q1",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Market Expansion",
+    "description": "Strategic initiative for Voice within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Market Expansion.",
+    "capex": 0.38,
+    "opex": 0.74,
+    "stages": {
+      "gtm": {
+        "date": "2025-02-13",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-01-14",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-06-19",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2024-12-11",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2024-11-16",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-03-16",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-04-15",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-05-17",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.869Z"
+  },
+  {
+    "id": 144,
+    "externalId": 444,
+    "market": "VBI",
+    "portfolio": "Cybersecurity",
+    "productFamily": "Endpoint & Network Security",
+    "productLine": "MNC Security",
+    "initiativeName": "FY26 DB - Consolidation and Rationalization of existing network security products",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Market Expansion",
+    "description": "Strategic initiative for Endpoint & Network Security within Cybersecurity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Market Expansion.",
+    "capex": 0.54,
+    "opex": 0.38,
+    "stages": {
+      "gtm": {
+        "date": "2026-03-03",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-09-12",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-14",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-04-12",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.873Z"
+  },
+  {
+    "id": 145,
+    "externalId": 442,
+    "market": "VBI",
+    "portfolio": "Cybersecurity",
+    "productFamily": "Endpoint & Network Security",
+    "productLine": "Network Security",
+    "initiativeName": "FY26 DB - Create and expand Vodafone Business SSE (Secure Service Edge) capability",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Market Expansion",
+    "description": "Strategic initiative for Endpoint & Network Security within Cybersecurity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Market Expansion.",
+    "capex": 0.36,
+    "opex": 1.37,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-12",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-14",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-09-21",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-03-23",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-22",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-06-12",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-07-22",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-08-22",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.876Z"
+  },
+  {
+    "id": 146,
+    "externalId": 443,
+    "market": "VBI",
+    "portfolio": "Cybersecurity",
+    "productFamily": "Endpoint & Network Security",
+    "productLine": "MNC Security",
+    "initiativeName": "FY26 DB - Cybersecurity for Large Corporate in OpCo and MNC customers",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Market Expansion",
+    "description": "Strategic initiative for Endpoint & Network Security within Cybersecurity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Market Expansion.",
+    "capex": 0.11,
+    "opex": 1.46,
+    "stages": {
+      "gtm": {
+        "date": "2025-12-17",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-06-21",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-13",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-01-19",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.880Z"
+  },
+  {
+    "id": 147,
+    "externalId": 367,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "FY26 DB - DLM - CX Enhancements",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Devices within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.6,
+    "opex": 0.12,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-11",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-21",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-12-22",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-06-13",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-21",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-09-17",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-10-16",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-11-13",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.883Z"
+  },
+  {
+    "id": 148,
+    "externalId": 362,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "FY26 DB - DLM New Features",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Devices within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.15,
+    "opex": 1.3,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-20",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-19",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-09-20",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-03-15",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-18",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-06-12",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-07-18",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-08-21",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.887Z"
+  },
+  {
+    "id": 149,
+    "externalId": 450,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Software Defined Network",
+    "initiativeName": "FY26 DB - eSIM Fixed Wireless Access | NaaS Use Case",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.52,
+    "opex": 1.16,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-07",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-08-13",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-02-24",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.891Z"
+  },
+  {
+    "id": 150,
+    "externalId": 461,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business Fortinet SD-WAN/SASE",
+    "initiativeName": "FY26 DB - Fortinet 2.0 Inc SD-Branch ",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.17,
+    "opex": 1.26,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-05",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-03-10",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-24",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-10-11",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.894Z"
+  },
+  {
+    "id": 151,
+    "externalId": 375,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Tariffs",
+    "productLine": "Global Tariffs",
+    "initiativeName": "FY26 DB - Global Tariffs Vodafone Red for Global Enterprise & Enterprise Bundles",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Tariffs within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.5,
+    "opex": 1.57,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "design": {
+        "date": "2025-04-14",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-03-20",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-13",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-10-11",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": "2025-11-18",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.898Z"
+  },
+  {
+    "id": 152,
+    "externalId": 403,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Voice",
+    "productLine": "SIP",
+    "initiativeName": "FY26 DB - GSIP Lifecycle",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for UC Voice within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.35,
+    "opex": 0.56,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-11",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-15",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-03-17",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-23",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2025-11-20",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2025-12-19",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.902Z"
+  },
+  {
+    "id": 153,
+    "externalId": 314,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Unified Communication as a Service",
+    "productLine": "VONE-C",
+    "initiativeName": "FY26 DB - Hosted Communication Services (HCS) platform rationalisation and VONE-C sunset (Rollover)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Strategic initiative for Unified Communication as a Service within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Rationalisation.",
+    "capex": 0.12,
+    "opex": 0.69,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-11",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-23",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2026-04-13",
+        "status": "planned"
+      },
+      "bizCase": {
+        "date": "2025-06-09",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-12",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-09-22",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "slaDefinition": {
+        "date": "2026-03-07",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.905Z"
+  },
+  {
+    "id": 154,
+    "externalId": 451,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business SD-WAN/SASE (Other Vendor)",
+    "initiativeName": "FY26 DB - Juniper Rationalisation",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Rationalisation.",
+    "capex": 0.52,
+    "opex": 1.09,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-18",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-09",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-06-22",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-19",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-02-07",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-03-17",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.909Z"
+  },
+  {
+    "id": 155,
+    "externalId": 404,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Value Add Services",
+    "productLine": "Professional Services",
+    "initiativeName": "FY26 DB - Managed Services for UC portfolio",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for UC Value Add Services within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.5,
+    "opex": 1.3,
+    "stages": {
+      "gtm": {
+        "date": "2025-11-21",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-10-11",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2026-07-05",
+        "status": "planned"
+      },
+      "bizCase": {
+        "date": "2025-09-12",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-21",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-12-16",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "slaDefinition": {
+        "date": "2026-06-10",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.913Z"
+  },
+  {
+    "id": 156,
+    "externalId": 379,
+    "market": "VBI",
+    "portfolio": "Cloud & Edge Computing",
+    "productFamily": "Managed Infrastructure",
+    "productLine": "Sovereign Cloud",
+    "initiativeName": "FY26 DB - Mgd Infra - Digital Sovereignty ",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for Managed Infrastructure within Cloud & Edge Computing. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.27,
+    "opex": 0.17,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-02",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-03-24",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-21",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-10-17",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.916Z"
+  },
+  {
+    "id": 157,
+    "externalId": 372,
+    "market": "VBI",
+    "portfolio": "Cloud & Edge Computing",
+    "productFamily": "Managed Infrastructure",
+    "productLine": "Co-Location",
+    "initiativeName": "FY26 DB - Mgd Infra - Enhancing Global Colocation with Digital Realty",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Managed Infrastructure within Cloud & Edge Computing. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.54,
+    "opex": 0.23,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-10",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-12",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-12-19",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-06-23",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-19",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-09-11",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-10-11",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-11-22",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.920Z"
+  },
+  {
+    "id": 158,
+    "externalId": 382,
+    "market": "VBI",
+    "portfolio": "Cloud & Edge Computing",
+    "productFamily": "Managed Infrastructure",
+    "productLine": "Managed Hybrid Cloud",
+    "initiativeName": "FY26 DB - Mgd Infra - Managed Hybrid Cloud & Edge - Cloud & Edge Solution Blueprints",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for Managed Infrastructure within Cloud & Edge Computing. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.48,
+    "opex": 0.32,
+    "stages": {
+      "gtm": {
+        "date": "2026-03-16",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-09-12",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-20",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-04-07",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.923Z"
+  },
+  {
+    "id": 159,
+    "externalId": 377,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Mobile Private Networks",
+    "productLine": "MPN Connectivity",
+    "initiativeName": "FY26 DB - MPN - Connectivity Enhancements",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Mobile Private Networks within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.1,
+    "opex": 0.61,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-12",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-20",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2026-01-06",
+        "status": "planned"
+      },
+      "bizCase": {
+        "date": "2025-03-20",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-19",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-06-19",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "slaDefinition": {
+        "date": "2025-12-12",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.927Z"
+  },
+  {
+    "id": 160,
+    "externalId": 206,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Mobile Private Networks",
+    "productLine": "MPN Connectivity",
+    "initiativeName": "FY26 DB - MPN - Global Managed MPN",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Market Expansion",
+    "description": "Strategic initiative for Mobile Private Networks within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Market Expansion.",
+    "capex": 0.44,
+    "opex": 0.17,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-18",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-11",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-09-23",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-03-11",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-18",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-06-10",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-07-09",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-08-15",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.931Z"
+  },
+  {
+    "id": 161,
+    "externalId": 448,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Software Defined Network",
+    "initiativeName": "FY26 DB - Network as a Service (NaaS)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.39,
+    "opex": 1.32,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-12",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-12",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-03-13",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-10",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2025-11-18",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2025-12-06",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.935Z"
+  },
+  {
+    "id": 162,
+    "externalId": 412,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Contact Centre as a Service",
+    "productLine": "Recording",
+    "initiativeName": "FY26 DB - NMR UK & VBI customer migrations",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Strategic initiative for Contact Centre as a Service within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Rationalisation.",
+    "capex": 0.48,
+    "opex": 0.31,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "design": {
+        "date": "2025-07-20",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-06-10",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-12",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-01-13",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": "2026-02-09",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.939Z"
+  },
+  {
+    "id": 163,
+    "externalId": 305,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Hardware & Terminals",
+    "productLine": "Devices, CPE & Hardware",
+    "initiativeName": "FY26 DB - Operationalise a leading devices portfolio  (Rollover)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Hardware & Terminals within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.41,
+    "opex": 1.58,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-10",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-20",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-03-11",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-10",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2025-11-19",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2025-12-09",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.942Z"
+  },
+  {
+    "id": 164,
+    "externalId": 386,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Voice",
+    "productLine": "Microsoft Voice",
+    "initiativeName": "FY26 DB - Operator Connect Lifecycle",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for UC Voice within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.27,
+    "opex": 0.26,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-23",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-09",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-09-09",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-03-20",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-16",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-06-21",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-07-22",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-08-16",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.946Z"
+  },
+  {
+    "id": 165,
+    "externalId": 455,
+    "market": "VBI Carrier",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Internet",
+    "initiativeName": "FY26 DB - Paid Peering Enhancement ",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.51,
+    "opex": 1.14,
+    "stages": {
+      "gtm": {
+        "date": "2025-12-08",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-11-15",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-05-20",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.950Z"
+  },
+  {
+    "id": 166,
+    "externalId": 302,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Contact Centre as a Service",
+    "productLine": "Recording",
+    "initiativeName": "FY26 DB - Recording as a Service (RaaS) Microsoft Voice",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for Contact Centre as a Service within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.34,
+    "opex": 1.07,
+    "stages": {
+      "gtm": {
+        "date": "2025-11-19",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-10-23",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2026-07-18",
+        "status": "planned"
+      },
+      "bizCase": {
+        "date": "2025-09-23",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-14",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-12-20",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "slaDefinition": {
+        "date": "2026-06-14",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.954Z"
+  },
+  {
+    "id": 167,
+    "externalId": 294,
+    "market": "VBI Carrier",
+    "portfolio": "Mobility",
+    "productFamily": "Tariffs",
+    "productLine": "Global Tariffs",
+    "initiativeName": "FY26 DB - Red New Vodafone Telecoms Reporting",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Technical Enabler",
+    "description": "Strategic initiative for Tariffs within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Technical Enabler.",
+    "capex": 0.24,
+    "opex": 0.76,
+    "stages": {
+      "gtm": {
+        "date": "2025-12-03",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-06-21",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-19",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-01-05",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.958Z"
+  },
+  {
+    "id": 168,
+    "externalId": 445,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Internet",
+    "initiativeName": "FY26 DB - Refreshed Business Internet Access Product Line",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.16,
+    "opex": 1.4,
+    "stages": {
+      "gtm": {
+        "date": "2025-12-12",
+        "status": "planned"
+      },
+      "design": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-06-17",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-22",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2026-01-01",
+        "status": "planned"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.962Z"
+  },
+  {
+    "id": 169,
+    "externalId": 457,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business SDN Managed Services",
+    "initiativeName": "FY26 DB - SDN Managed Service: Scale Managed Services",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Market Expansion",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Market Expansion.",
+    "capex": 0.33,
+    "opex": 0.36,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-22",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-15",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-09-22",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-03-11",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-12",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-06-13",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-07-19",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-08-20",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.966Z"
+  },
+  {
+    "id": 170,
+    "externalId": 268,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business Multi-Cloud Networking",
+    "initiativeName": "FY26 DB - SDN Super POPs (Points of Presence) Carry over",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Mobilise",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Technical Enabler",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Technical Enabler.",
+    "capex": 0.43,
+    "opex": 1.6,
+    "stages": {
+      "gtm": {
+        "date": "2025-09-06",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-08-06",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-02-21",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.970Z"
+  },
+  {
+    "id": 171,
+    "externalId": 465,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Software Defined Network",
+    "initiativeName": "FY26 DB - SDN Type A to Type B Product Simplification",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Rationalisation.",
+    "capex": 0.27,
+    "opex": 0.49,
+    "stages": {
+      "gtm": {
+        "date": "2025-11-24",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-10-22",
+        "status": "complete"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": "2025-09-18",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-14",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "distribution": {
+        "date": "2026-05-19",
+        "status": "planned"
+      },
+      "slaDefinition": {
+        "date": "2026-06-15",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.974Z"
+  },
+  {
+    "id": 172,
+    "externalId": 310,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Unified Communication as a Service",
+    "productLine": "VONE-M",
+    "initiativeName": "FY26 DB - Teams Direct Routing (TDR) Migration and platform consolidation (Rollover)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Strategic initiative for Unified Communication as a Service within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Rationalisation.",
+    "capex": 0.45,
+    "opex": 0.54,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-14",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-16",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-12-16",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-06-21",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-10",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-09-23",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-10-20",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-11-22",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.979Z"
+  },
+  {
+    "id": 173,
+    "externalId": 407,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Voice",
+    "productLine": "Microsoft Voice",
+    "initiativeName": "FY26 DB - TPM Footprint Expansion",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for UC Voice within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.44,
+    "opex": 0.65,
+    "stages": {
+      "gtm": {
+        "date": "2025-11-11",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-10-21",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2026-07-11",
+        "status": "planned"
+      },
+      "bizCase": {
+        "date": "2025-09-19",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-09",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-12-19",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "slaDefinition": {
+        "date": "2026-06-09",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.983Z"
+  },
+  {
+    "id": 174,
+    "externalId": 286,
+    "market": "VBI Carrier",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "Underlay Connectivity",
+    "productLine": "Internet",
+    "initiativeName": "FY26 DB - Underlay Connectivity Paid Peering Strategic Product Development - Carry Over",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Not Started",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for Underlay Connectivity within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.16,
+    "opex": 1.53,
+    "stages": {
+      "gtm": {
+        "date": null,
+        "status": "not-started"
+      },
+      "design": {
+        "date": null,
+        "status": "not-started"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "not-started"
+      },
+      "concept": {
+        "date": null,
+        "status": "not-started"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.987Z"
+  },
+  {
+    "id": 175,
+    "externalId": 432,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Hardware & Terminals",
+    "productLine": "Devices, CPE & Hardware",
+    "initiativeName": "FY26 DB - User Devices",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Hardware & Terminals within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.57,
+    "opex": 1.24,
+    "stages": {
+      "gtm": {
+        "date": "2025-11-10",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-10-23",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2026-03-10",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-09-19",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-17",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-12-24",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2026-01-24",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2026-02-18",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.991Z"
+  },
+  {
+    "id": 176,
+    "externalId": 427,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "Unified Communication as a Service",
+    "productLine": "Vodafone Business UC",
+    "initiativeName": "FY26 DB - VBUC Enhancements, Digital & Automation",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Unified Communication as a Service within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.4,
+    "opex": 0.42,
+    "stages": {
+      "gtm": {
+        "date": "2025-11-13",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-10-18",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2026-07-04",
+        "status": "planned"
+      },
+      "bizCase": {
+        "date": "2025-09-18",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-08-15",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-12-24",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "slaDefinition": {
+        "date": "2026-06-09",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.994Z"
+  },
+  {
+    "id": 177,
+    "externalId": 470,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business VeloCloud SD-WAN/SASE",
+    "initiativeName": "FY26 DB - Velocloud SDWAN & SASE",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.32,
+    "opex": 0.49,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-10",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-20",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-12-23",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-06-16",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-16",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-09-10",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-10-18",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-11-15",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:01.998Z"
+  },
+  {
+    "id": 178,
+    "externalId": 374,
+    "market": "VBI",
+    "portfolio": "Mobility",
+    "productFamily": "Tariffs",
+    "productLine": "Global Tariffs",
+    "initiativeName": "FY26 DB - Vodafone Business eSIM Manager",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "In Progress",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for Tariffs within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.44,
+    "opex": 1.04,
+    "stages": {
+      "gtm": {
+        "date": "2025-08-13",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-07-13",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2026-04-09",
+        "status": "planned"
+      },
+      "bizCase": {
+        "date": "2025-06-22",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-05-11",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-09-10",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "slaDefinition": {
+        "date": "2026-03-02",
+        "status": "planned"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:02.002Z"
+  },
+  {
+    "id": 179,
+    "externalId": 364,
+    "market": "VBI Carrier",
+    "portfolio": "Mobility",
+    "productFamily": "Messaging & Identity",
+    "productLine": "Vodafone Messaging Hub (VMH)",
+    "initiativeName": "FY26 DB - Vodafone Messaging Hub",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q2",
+    "status": "Done",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Rationalisation",
+    "description": "Strategic initiative for Messaging & Identity within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Rationalisation.",
+    "capex": 0.58,
+    "opex": 0.64,
+    "stages": {
+      "gtm": {
+        "date": "2025-05-13",
+        "status": "complete"
+      },
+      "design": {
+        "date": "2025-04-13",
+        "status": "complete"
+      },
+      "launch": {
+        "date": "2025-09-10",
+        "status": "complete"
+      },
+      "bizCase": {
+        "date": "2025-03-11",
+        "status": "complete"
+      },
+      "concept": {
+        "date": "2025-02-22",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": "2025-06-11",
+        "status": "complete"
+      },
+      "distribution": {
+        "date": "2025-07-16",
+        "status": "complete"
+      },
+      "slaDefinition": {
+        "date": "2025-08-14",
+        "status": "complete"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:02.006Z"
+  },
+  {
+    "id": 180,
+    "externalId": 401,
+    "market": "VBI",
+    "portfolio": "Unified Communications",
+    "productFamily": "UC Voice",
+    "productLine": "SIP",
+    "initiativeName": "FY26 DB Investment - GSIP Local Supplier Integration",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q3",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Product Enhancements",
+    "description": "Strategic initiative for UC Voice within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Product Enhancements.",
+    "capex": 0.48,
+    "opex": 0.54,
+    "stages": {
+      "gtm": {
+        "date": "2025-12-16",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2025-11-16",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-05-23",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:02.009Z"
+  },
+  {
+    "id": 181,
+    "externalId": 406,
+    "market": "VBI Carrier",
+    "portfolio": "Unified Communications",
+    "productFamily": "Voice",
+    "productLine": "International Voice",
+    "initiativeName": "FY26 DB Investment - Tomia Replacement",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "Technical Enabler",
+    "description": "Strategic initiative for Voice within Unified Communications. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: Technical Enabler.",
+    "capex": 0.12,
+    "opex": 0.75,
+    "stages": {
+      "gtm": {
+        "date": "2026-03-16",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2026-02-01",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-08-10",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:02.013Z"
+  },
+  {
+    "id": 183,
+    "externalId": 486,
+    "market": "VBI Carrier",
+    "portfolio": "Mobility",
+    "productFamily": "Devices",
+    "productLine": "Vodafone Business Device Lifecycle Management (DLM)",
+    "initiativeName": "FY26 Investment - DLM - LiLo (Lease in Lease out)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "KTLO",
+    "description": "Strategic initiative for Devices within Mobility. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: KTLO.",
+    "capex": 0.21,
+    "opex": 1.55,
+    "stages": {
+      "gtm": {
+        "date": "2026-03-17",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2026-02-15",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-08-23",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:02.020Z"
+  },
+  {
+    "id": 184,
+    "externalId": 452,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Vodafone Business Multi-Cloud Networking",
+    "initiativeName": "FY26 Investment- Multicloud Networking (MCN)",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.28,
+    "opex": 0.73,
+    "stages": {
+      "gtm": {
+        "date": "2026-03-20",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2026-02-02",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-08-20",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:02.024Z"
+  },
+  {
+    "id": 185,
+    "externalId": 453,
+    "market": "VBI",
+    "portfolio": "Fixed Connectivity",
+    "productFamily": "SDN",
+    "productLine": "Software Defined Network",
+    "initiativeName": "FY26 Investment- Network as a Service (NaaS) AI Ops",
+    "roadmapCategory": "Aspirational",
+    "roadmapHorizon": null,
+    "roadmapType": "B&C",
+    "fy": "FY26",
+    "quarter": "Q4",
+    "status": "DB Approved",
+    "investmentCanvas": null,
+    "primaryInvestmentDriver": "New Product",
+    "description": "Strategic initiative for SDN within Fixed Connectivity. This aspirational project explores new market opportunities and innovation areas, with potential for significant revenue growth. Investment driver: New Product.",
+    "capex": 0.29,
+    "opex": 1.14,
+    "stages": {
+      "gtm": {
+        "date": "2026-03-18",
+        "status": "planned"
+      },
+      "design": {
+        "date": "2026-02-13",
+        "status": "planned"
+      },
+      "launch": {
+        "date": null,
+        "status": "not-started"
+      },
+      "bizCase": {
+        "date": null,
+        "status": "in-progress"
+      },
+      "concept": {
+        "date": "2025-08-16",
+        "status": "complete"
+      },
+      "salesEnable": {
+        "date": null,
+        "status": "not-started"
+      },
+      "distribution": {
+        "date": null,
+        "status": "not-started"
+      },
+      "slaDefinition": {
+        "date": null,
+        "status": "not-started"
+      }
+    },
+    "createdAt": "2026-03-29T21:54:02.027Z"
+  }
+]
