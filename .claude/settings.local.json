@@ -32,7 +32,12 @@
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f''''{len\\(d\\)} actions''''\\); [print\\(f''''  {a[\"\"action\"\"][:50]} - {a[\"\"savings\"\"]} - {a[\"\"status\"\"]}''''\\) for a in d]\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
       "Bash(curl -s \"http://localhost:3002/api/products/cost-allocations?category=Cloud%20and%20Security\")",
-      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f''''Products: {d[\"\"summary\"\"][\"\"total\"\"]}, Grand: {d[\"\"summary\"\"][\"\"totalGrand\"\"]:.0f}''''\\); [print\\(f''''  {a[\"\"serviceOffering\"\"]}''''\\) for a in d[''''allocations''''][:5]]\")"
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f''''Products: {d[\"\"summary\"\"][\"\"total\"\"]}, Grand: {d[\"\"summary\"\"][\"\"totalGrand\"\"]:.0f}''''\\); [print\\(f''''  {a[\"\"serviceOffering\"\"]}''''\\) for a in d[''''allocations''''][:5]]\")",
+      "Bash(find 'C:\\\\Users\\\\dcost\\\\OneDrive\\\\Documents\\\\Coding Projects\\\\VBI Product Management' -name seed* -type f)",
+      "Bash(ls \"C:\\\\Users\\\\dcost\\\\OneDrive\\\\Documents\\\\Coding Projects\\\\VBI Product Management\\\\server\\\\scripts\\\\seed-npd\"*)",
+      "Bash(ls \"D:\\\\Data Export\"*)",
+      "Bash(ls D:/*.xlsx)",
+      "Bash(node --watch index.js)"
     ]
   }
 }

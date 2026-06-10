@@ -10,11 +10,10 @@ const data = JSON.parse(readFileSync(join(__dirname, 'bizcase-data.json'), 'utf-
 const prisma = new PrismaClient();
 
 async function seed() {
-  const existing = await prisma.businessCase.count();
-  if (existing > 0) {
-    console.log(`Business cases already seeded (${existing}). Skipping.`);
-    return;
-  }
+  // Delete all existing business case data and re-seed with complete data
+  // (seed.js creates summary-only cases; this script adds the full P&L lines)
+  await prisma.businessCaseLine.deleteMany({});
+  await prisma.businessCase.deleteMany({});
 
   let caseCount = 0;
   let lineCount = 0;
