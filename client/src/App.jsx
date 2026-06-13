@@ -9,11 +9,16 @@ import CountryCoverage from './pages/CountryCoverage.jsx';
 import SlaService from './pages/SlaService.jsx';
 import FeatureRequests from './pages/FeatureRequests.jsx';
 import ImportExport from './pages/ImportExport.jsx';
+import MagicLinkPage from './pages/MagicLinkPage.jsx';
+import PublicSubmitPage from './pages/PublicSubmitPage.jsx';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public routes — no layout/auth */}
+        <Route path="request/:token" element={<MagicLinkPage />} />
+        <Route path="raise-request" element={<PublicSubmitPage />} />
         <Route element={<Layout />}>
           <Route index element={<ProductCatalog />} />
           <Route path="npd" element={<NpdPipeline />} />

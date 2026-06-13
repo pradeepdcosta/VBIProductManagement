@@ -208,16 +208,23 @@ model NpdInitiative {
 }
 
 model FeatureRequest {
-  id            Int      @id @default(autoincrement())
-  type          String
-  productName   String   @map("product_name")
-  title         String
-  description   String
-  justification String?
-  dealAccount   String?  @map("deal_account")
-  priority      String   @default("Medium")
-  status        String   @default("Open")
-  createdAt     DateTime @default(now()) @map("created_at")
+  id              Int      @id @default(autoincrement())
+  type            String
+  category        String?
+  productFamily   String?  @map("product_family")
+  productLine     String?  @map("product_line")
+  productName     String   @map("product_name")
+  title           String
+  description     String
+  justification   String?
+  dealAccount     String?  @map("deal_account")
+  priority        String   @default("Medium")
+  status          String   @default("Open")
+  submitterName   String?  @map("submitter_name")
+  submitterEmail  String?  @map("submitter_email")
+  vbiFeedback     String?  @map("vbi_feedback")
+  token           String   @unique @default(uuid())
+  createdAt       DateTime @default(now()) @map("created_at")
 
   @@map("feature_requests")
 }

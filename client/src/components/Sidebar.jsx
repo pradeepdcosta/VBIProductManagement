@@ -14,9 +14,10 @@ import useProductStore from '../store/useProductStore.js';
 
 const sections = [
   {
-    label: 'Product',
+    label: 'Product Management',
     items: [
       { to: '/', icon: LayoutGrid, label: 'Product Catalog' },
+      { to: '/features', icon: MessageSquare, label: 'Product Requests', badge: true },
       { to: '/npd', icon: GitBranch, label: 'NPD Pipeline' },
     ],
   },
@@ -33,12 +34,6 @@ const sections = [
     items: [
       { to: '/coverage', icon: Globe, label: 'Country Coverage' },
       { to: '/sla', icon: Shield, label: 'SLA & Service' },
-    ],
-  },
-  {
-    label: 'Engagement',
-    items: [
-      { to: '/features', icon: MessageSquare, label: 'Feature Requests', badge: true },
     ],
   },
   {
