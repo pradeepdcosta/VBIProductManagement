@@ -207,6 +207,44 @@ model NpdInitiative {
   @@map("npd_initiatives")
 }
 
+model NpdEpic {
+  id                  Int       @id @default(autoincrement())
+  initiativeId        String    @map("initiative_id")
+  productCanvas       String?   @map("product_canvas")
+  epicName            String    @map("epic_name")
+  epicType            String?   @map("epic_type")
+  description         String?   @db.Text
+  capex               Float?
+  opex                Float?
+  marketsAgreed       String?   @map("markets_agreed")
+  goLiveDateOverall   DateTime? @map("go_live_date_overall")
+  goLiveDatePerMarket String?   @map("go_live_date_per_market") @db.Text
+  riskLevel           String    @default("Medium") @map("risk_level")
+  signOffComplete     Boolean   @default(false) @map("sign_off_complete")
+  signOffBy           String?   @map("sign_off_by")
+  signOffDate         DateTime? @map("sign_off_date")
+  signOffNotes        String?   @map("sign_off_notes") @db.Text
+  createdAt           DateTime  @default(now()) @map("created_at")
+
+  activities NpdEpicActivity[]
+
+  @@map("npd_epics")
+}
+
+model NpdEpicActivity {
+  id        Int     @id @default(autoincrement())
+  epicId    Int     @map("epic_id")
+  category  String
+  label     String  @db.Text
+  status    String  @default("pending")
+  isCustom  Boolean @default(false) @map("is_custom")
+  sortOrder Int     @default(0) @map("sort_order")
+
+  epic NpdEpic @relation(fields: [epicId], references: [id], onDelete: Cascade)
+
+  @@map("npd_epic_activities")
+}
+
 model FeatureRequest {
   id              Int      @id @default(autoincrement())
   type            String
