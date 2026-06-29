@@ -63,15 +63,23 @@ const statusClass = (s) => {
 
 function RequestModal({ request, onClose, onSave }) {
   const [form, setForm] = useState({ vbiFeedback: '', ...request });
-  const [copied, setCopied] = useState(false);
+  const [copiedRequester, setCopiedRequester] = useState(false);
+  const [copiedReview, setCopiedReview] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  const magicLink = `${window.location.origin}/request/${request.token}`;
+  const requesterLink = `${window.location.origin}/request/${request.token}`;
+  const reviewLink = `${window.location.origin}/review/${request.token}`;
 
-  const copyLink = () => {
-    navigator.clipboard.writeText(magicLink);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const copyRequesterLink = () => {
+    navigator.clipboard.writeText(requesterLink);
+    setCopiedRequester(true);
+    setTimeout(() => setCopiedRequester(false), 2000);
+  };
+
+  const copyReviewLink = () => {
+    navigator.clipboard.writeText(reviewLink);
+    setCopiedReview(true);
+    setTimeout(() => setCopiedReview(false), 2000);
   };
 
   const handleSave = async () => {
@@ -101,30 +109,58 @@ function RequestModal({ request, onClose, onSave }) {
         </div>
 
         <div className="p-5 space-y-4">
-          {/* Magic Link */}
-          <div className="bg-vf-surface border border-vf-border rounded-lg p-3">
-            <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">Magic Link — share with requester</p>
-            <div className="flex items-center gap-2">
-              <input
-                readOnly
-                value={magicLink}
-                className="flex-1 text-xs border border-vf-border rounded-md px-2.5 py-1.5 bg-white font-mono text-vf-muted"
-              />
-              <button
-                onClick={copyLink}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-vf-border rounded-md bg-white hover:bg-vf-surface transition-colors"
-              >
-                {copied ? <Check size={13} className="text-vf-success" /> : <Copy size={13} />}
-                {copied ? 'Copied!' : 'Copy'}
-              </button>
-              <a
-                href={magicLink}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-vf-border rounded-md bg-white hover:bg-vf-surface transition-colors"
-              >
-                <ExternalLink size={13} />
-              </a>
+          {/* Share links */}
+          <div className="bg-vf-surface border border-vf-border rounded-lg p-3 space-y-2.5">
+            {/* Requester link */}
+            <div>
+              <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
+                Requester Link — send to person who raised this
+              </p>
+              <div className="flex items-center gap-2">
+                <input
+                  readOnly
+                  value={requesterLink}
+                  className="flex-1 text-xs border border-vf-border rounded-md px-2.5 py-1.5 bg-white font-mono text-vf-muted"
+                />
+                <button
+                  onClick={copyRequesterLink}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-vf-border rounded-md bg-white hover:bg-vf-surface transition-colors"
+                >
+                  {copiedRequester ? <Check size={13} className="text-green-500" /> : <Copy size={13} />}
+                  {copiedRequester ? 'Copied!' : 'Copy'}
+                </button>
+                <a href={requesterLink} target="_blank" rel="noreferrer"
+                  className="flex items-center px-2.5 py-1.5 text-xs border border-vf-border rounded-md bg-white hover:bg-vf-surface transition-colors">
+                  <ExternalLink size={13} />
+                </a>
+              </div>
+            </div>
+
+            <div className="border-t border-vf-border" />
+
+            {/* Product team review link */}
+            <div>
+              <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
+                Product Team Review Link — send to product team for their feedback
+              </p>
+              <div className="flex items-center gap-2">
+                <input
+                  readOnly
+                  value={reviewLink}
+                  className="flex-1 text-xs border border-vf-border rounded-md px-2.5 py-1.5 bg-white font-mono text-vf-muted"
+                />
+                <button
+                  onClick={copyReviewLink}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-vf-border rounded-md bg-white hover:bg-vf-surface transition-colors"
+                >
+                  {copiedReview ? <Check size={13} className="text-green-500" /> : <Copy size={13} />}
+                  {copiedReview ? 'Copied!' : 'Copy'}
+                </button>
+                <a href={reviewLink} target="_blank" rel="noreferrer"
+                  className="flex items-center px-2.5 py-1.5 text-xs border border-vf-border rounded-md bg-white hover:bg-vf-surface transition-colors">
+                  <ExternalLink size={13} />
+                </a>
+              </div>
             </div>
           </div>
 

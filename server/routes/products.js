@@ -101,6 +101,29 @@ router.get('/lines', async (req, res, next) => {
   }
 });
 
+// GET /api/products/summary — per-category stats
+router.get('/summary', async (req, res, next) => {
+  try {
+    const all = await prisma.product.findMany({
+      select: { category: true, family: true, productLine: true },
+      orderBy: { category: 'asc' },
+    });
+    const map = {};
+    for (const p of all) {
+      if (!map[p.category]) map[p.category] = { category: p.category, products: 0, families: new Set(), lines: new Set() };
+      map[p.category].products++;
+      map[p.category].families.add(p.family);
+      map[p.category].lines.add(p.productLine);
+    }
+    res.json(Object.values(map).map((c) => ({
+      category: c.category,
+      products: c.products,
+      families: c.families.size,
+      lines: c.lines.size,
+    })));
+  } catch (err) { next(err); }
+});
+
 // GET /api/products/categories — distinct categories
 router.get('/categories', async (req, res, next) => {
   try {

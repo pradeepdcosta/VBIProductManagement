@@ -199,7 +199,7 @@ export default function NpdPipeline() {
         if (filters.family) params.set('family', filters.family);
         if (filters.productLine) params.set('productLine', filters.productLine);
         if (filters.q) params.set('q', filters.q);
-        if (fyFilter) params.set('fy', fyFilter);
+        // fyFilter applied client-side after FY26 removal + FY28 generation
         if (statusFilter) params.set('status', statusFilter);
         if (categoryFilter) params.set('roadmapCategory', categoryFilter);
         const qs = params.toString();
@@ -211,7 +211,30 @@ export default function NpdPipeline() {
     })();
   }, [filters.category, filters.family, filters.productLine, filters.q, fyFilter, statusFilter, categoryFilter]);
 
-  const { initiatives, summary } = data;
+  // Strip FY26, clone FY27 as FY28 dummy
+  const initiatives = useMemo(() => {
+    const fy27 = data.initiatives.filter((i) => i.fy === 'FY27');
+    const fy28 = fy27.map((i) => ({ ...i, id: `fy28-${i.id}`, fy: 'FY28' }));
+    const base = [...fy27, ...fy28];
+    if (fyFilter) return base.filter((i) => i.fy === fyFilter);
+    return base;
+  }, [data.initiatives, fyFilter]);
+
+  // Recompute summary from filtered initiatives
+  const summary = useMemo(() => {
+    const statusCounts = {};
+    const categoryCounts = {};
+    const portfolioCounts = {};
+    const quarterCounts = {};
+    for (const i of initiatives) {
+      statusCounts[i.status] = (statusCounts[i.status] || 0) + 1;
+      categoryCounts[i.roadmapCategory] = (categoryCounts[i.roadmapCategory] || 0) + 1;
+      portfolioCounts[i.portfolio] = (portfolioCounts[i.portfolio] || 0) + 1;
+      const key = `${i.fy} ${i.quarter}`;
+      quarterCounts[key] = (quarterCounts[key] || 0) + 1;
+    }
+    return { total: initiatives.length, statusCounts, categoryCounts, portfolioCounts, quarterCounts };
+  }, [initiatives]);
 
   // Build year/quarter matrix for the tile
   const matrix = useMemo(() => {
@@ -274,8 +297,8 @@ export default function NpdPipeline() {
       <div className="flex items-center gap-2 mb-4">
         <select className="border border-vf-border rounded-md px-2.5 py-1.5 text-sm bg-white cursor-pointer focus:outline-none focus:border-vf-red" value={fyFilter} onChange={(e) => setFyFilter(e.target.value)}>
           <option value="">All Years</option>
-          <option value="FY26">FY26</option>
           <option value="FY27">FY27</option>
+          <option value="FY28">FY28</option>
         </select>
         <select className="border border-vf-border rounded-md px-2.5 py-1.5 text-sm bg-white cursor-pointer focus:outline-none focus:border-vf-red" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
           <option value="">All Statuses</option>

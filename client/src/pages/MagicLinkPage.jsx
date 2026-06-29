@@ -26,7 +26,6 @@ export default function MagicLinkPage() {
           justification: data.justification || '',
           dealAccount: data.dealAccount || '',
           priority: data.priority || 'Medium',
-          vbiFeedback: data.vbiFeedback || '',
         });
       })
       .catch(() => setNotFound(true))
@@ -173,16 +172,20 @@ export default function MagicLinkPage() {
               />
             </div>
 
-            {/* VBI Feedback */}
+            {/* VBI Product Team Feedback — read only */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI Product &amp; Services Feedback</label>
-              <textarea
-                className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[80px]"
-                value={form.vbiFeedback}
-                onChange={(e) => setForm({ ...form, vbiFeedback: e.target.value })}
-                rows={3}
-                placeholder="Feedback on existing VBI products and services…"
-              />
+              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">
+                VBI Product &amp; Services Feedback
+              </label>
+              {request.vbiFeedback ? (
+                <div className="w-full border border-vf-border rounded-md px-2.5 py-2 text-xs bg-vf-surface text-vf-text whitespace-pre-wrap">
+                  {request.vbiFeedback}
+                </div>
+              ) : (
+                <div className="w-full border border-vf-border rounded-md px-2.5 py-2 text-xs bg-vf-surface text-vf-muted italic">
+                  The VBI product team has not yet provided feedback on this request.
+                </div>
+              )}
             </div>
 
             <button

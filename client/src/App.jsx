@@ -11,6 +11,7 @@ import FeatureRequests from './pages/FeatureRequests.jsx';
 import ImportExport from './pages/ImportExport.jsx';
 import MagicLinkPage from './pages/MagicLinkPage.jsx';
 import PublicSubmitPage from './pages/PublicSubmitPage.jsx';
+import ProductReviewPage from './pages/ProductReviewPage.jsx';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <Routes>
         {/* Public routes — no layout/auth */}
         <Route path="request/:token" element={<MagicLinkPage />} />
+        <Route path="review/:token" element={<ProductReviewPage />} />
         <Route path="raise-request" element={<PublicSubmitPage />} />
         <Route element={<Layout />}>
           <Route index element={<ProductCatalog />} />
