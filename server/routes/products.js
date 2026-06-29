@@ -150,6 +150,67 @@ router.get('/npd', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
+// POST /api/products/npd-initiatives — create new initiative
+router.post('/npd-initiatives', async (req, res, next) => {
+  try {
+    const {
+      initiativeName, portfolio, productFamily, productLine,
+      roadmapCategory, fy, quarter, status,
+      capex, opex, investmentCanvas, primaryInvestmentDriver,
+      description, market, roadmapHorizon, roadmapType,
+    } = req.body;
+    if (!initiativeName || !portfolio || !productFamily || !productLine || !roadmapCategory || !fy || !quarter) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    const initiative = await prisma.npdInitiative.create({
+      data: {
+        market: market || 'VBI',
+        portfolio,
+        productFamily,
+        productLine,
+        initiativeName,
+        roadmapCategory,
+        roadmapHorizon: roadmapHorizon || null,
+        roadmapType: roadmapType || null,
+        fy,
+        quarter,
+        status: status || 'Not Started',
+        investmentCanvas: investmentCanvas || null,
+        primaryInvestmentDriver: primaryInvestmentDriver || null,
+        description: description || null,
+        capex: capex != null && capex !== '' ? parseFloat(capex) : null,
+        opex: opex != null && opex !== '' ? parseFloat(opex) : null,
+      },
+    });
+    res.status(201).json(initiative);
+  } catch (err) { next(err); }
+});
+
+// DELETE /api/products/npd-initiatives/:id
+router.delete('/npd-initiatives/:id', async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'Invalid id' });
+    await prisma.npdInitiative.delete({ where: { id } });
+    res.json({ ok: true });
+  } catch (err) { next(err); }
+});
+
+// PUT /api/products/npd-initiatives/:id — update initiative fields (stages, status, etc.)
+router.put('/npd-initiatives/:id', async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'Invalid id' });
+    const allowed = ['stages', 'status', 'description', 'capex', 'opex'];
+    const data = {};
+    for (const k of allowed) {
+      if (req.body[k] !== undefined) data[k] = req.body[k];
+    }
+    const updated = await prisma.npdInitiative.update({ where: { id }, data });
+    res.json(updated);
+  } catch (err) { next(err); }
+});
+
 // GET /api/products/npd-initiatives — NPD roadmap initiatives (supports filters)
 router.get('/npd-initiatives', async (req, res, next) => {
   try {
