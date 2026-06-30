@@ -8,9 +8,9 @@ export default function Topbar() {
       <div className="text-[15px] font-semibold tracking-tight">
         Vodafone <span className="text-vf-red">Business</span>
       </div>
-      <div className="text-xs text-[#aaa] font-normal ml-1">| Product Intelligence Portal</div>
+      <div className="text-xs text-[#aaa] font-normal ml-1">| VBI Product Intelligence Portal</div>
       <div className="ml-auto flex items-center gap-3">
-        <span className="text-[11px] text-[#888]">VBI · FY26</span>
+        <span className="text-[11px] text-[#888]">VBI · FY27</span>
         <button
           onClick={() => navigate('/features')}
           className="bg-vf-red border border-vf-red text-white rounded-md px-3 py-1 text-xs cursor-pointer font-sans hover:bg-vf-red-hover"
