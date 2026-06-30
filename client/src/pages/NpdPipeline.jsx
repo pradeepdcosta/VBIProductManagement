@@ -1123,17 +1123,21 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
     try {
       const res = await fetch(`/api/npd-epics?initiativeId=${item.id}`);
       const data = await res.json();
-      setEpics(data);
-    } catch {}
+      setEpics(Array.isArray(data) ? data : []);
+    } catch {
+      setEpics([]);
+    }
     setLoadingEpics(false);
   }, [item.id]);
 
   useEffect(() => { fetchEpics(); }, [fetchEpics]);
 
   const openEpic = async (epicSummary) => {
-    const res = await fetch(`/api/npd-epics/${epicSummary.id}`);
-    const full = await res.json();
-    setSelectedEpic(full);
+    try {
+      const res = await fetch(`/api/npd-epics/${epicSummary.id}`);
+      const full = await res.json();
+      if (full && full.id) setSelectedEpic(full);
+    } catch {}
   };
 
   if (selectedEpic) {
