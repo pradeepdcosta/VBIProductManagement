@@ -1396,6 +1396,7 @@ export default function NpdPipeline() {
   const [viewMode, setViewMode] = useState('timeline');
   const [selectedItem, setSelectedItem] = useState(null);
   const [formItem, setFormItem] = useState(null);
+  const [quarterFilter, setQuarterFilter] = useState(null);
 
   const updateInitiativeStatus = useCallback((itemId, newStatus) => {
     const realId = String(itemId).startsWith('fy28-')
@@ -1480,15 +1481,19 @@ export default function NpdPipeline() {
     return { years, grid, colTotals };
   }, [summary]);
 
+  const filteredInitiatives = useMemo(() =>
+    quarterFilter ? initiatives.filter((i) => i.quarter === quarterFilter) : initiatives,
+  [initiatives, quarterFilter]);
+
   const timelineData = useMemo(() => {
     const grouped = {};
-    for (const i of initiatives) {
+    for (const i of filteredInitiatives) {
       if (!grouped[i.fy]) grouped[i.fy] = {};
       if (!grouped[i.fy][i.quarter]) grouped[i.fy][i.quarter] = [];
       grouped[i.fy][i.quarter].push(i);
     }
     return grouped;
-  }, [initiatives]);
+  }, [filteredInitiatives]);
 
   const fys = Object.keys(timelineData).sort();
 
@@ -1555,6 +1560,12 @@ export default function NpdPipeline() {
           <option value="">All Categories</option>
           {Object.keys(CATEGORY_COLORS).map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
+        {quarterFilter && (
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-vf-red text-white">
+            {quarterFilter}
+            <button onClick={() => setQuarterFilter(null)} className="hover:opacity-70 leading-none ml-0.5">×</button>
+          </span>
+        )}
         {(fyFilter || statusFilter || categoryFilter) && (
           <button onClick={() => { setFyFilter(''); setStatusFilter(''); setCategoryFilter(''); }} className="text-xs text-vf-red hover:underline ml-1">Clear filters</button>
         )}
@@ -1578,17 +1589,27 @@ export default function NpdPipeline() {
               </tr>
             </thead>
             <tbody>
-              {QUARTERS.map((q) => (
-                <tr key={q} className="border-t border-[#f0eeea]">
-                  <td className="py-1.5 text-xs font-semibold text-vf-dark">{q}</td>
-                  {matrix.years.map((y) => (
-                    <td key={y} className="py-1.5 text-center font-mono font-bold text-vf-dark">{matrix.grid[q][y] || <span className="text-gray-300">—</span>}</td>
-                  ))}
-                  {matrix.years.length > 1 && (
-                    <td className="py-1.5 text-center font-mono font-bold text-vf-dark border-l border-[#e8e6e1]">{matrix.grid[q]._total}</td>
-                  )}
-                </tr>
-              ))}
+              {QUARTERS.map((q) => {
+                const isActive = quarterFilter === q;
+                return (
+                  <tr
+                    key={q}
+                    onClick={() => setQuarterFilter(isActive ? null : q)}
+                    className={`border-t border-[#f0eeea] cursor-pointer transition-colors ${isActive ? 'bg-vf-red/5' : 'hover:bg-gray-50'}`}
+                  >
+                    <td className={`py-1.5 text-xs font-semibold select-none ${isActive ? 'text-vf-red' : 'text-vf-dark'}`}>
+                      {q}
+                      {isActive && <span className="ml-1 text-[9px] font-bold tracking-wide text-vf-red">●</span>}
+                    </td>
+                    {matrix.years.map((y) => (
+                      <td key={y} className={`py-1.5 text-center font-mono font-bold ${isActive ? 'text-vf-red' : 'text-vf-dark'}`}>{matrix.grid[q][y] || <span className="text-gray-300">—</span>}</td>
+                    ))}
+                    {matrix.years.length > 1 && (
+                      <td className={`py-1.5 text-center font-mono font-bold border-l border-[#e8e6e1] ${isActive ? 'text-vf-red' : 'text-vf-dark'}`}>{matrix.grid[q]._total}</td>
+                    )}
+                  </tr>
+                );
+              })}
               <tr className="border-t-2 border-vf-dark">
                 <td className="py-1.5 text-xs font-bold text-vf-dark">Total</td>
                 {matrix.years.map((y) => (
@@ -1695,7 +1716,7 @@ export default function NpdPipeline() {
             <div className="px-3 py-2.5 text-xs font-semibold text-vf-muted uppercase tracking-wide">Qtr</div>
             <div />
           </div>
-          {initiatives.map((item) => {
+          {filteredInitiatives.map((item) => {
             const isReadOnly = String(item.id).startsWith('fy28-');
             return (
               <div
