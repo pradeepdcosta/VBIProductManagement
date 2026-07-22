@@ -125,11 +125,12 @@ function ProgressBar({ pct }) {
 // ─── Stage Gate ───────────────────────────────────────────────────────────────
 
 const STAGE_STATUS_OPTIONS = [
-  { value: 'complete',    label: 'Complete',    dot: 'bg-green-500', ring: 'ring-green-400', text: 'text-green-700', bg: 'bg-green-50',  icon: '✓' },
-  { value: 'in-progress', label: 'In Progress', dot: 'bg-blue-500',  ring: 'ring-blue-400',  text: 'text-blue-700',  bg: 'bg-blue-50',   icon: '●' },
-  { value: 'at-risk',     label: 'At Risk',     dot: 'bg-red-500',   ring: 'ring-red-400',   text: 'text-red-700',   bg: 'bg-red-50',    icon: '!' },
-  { value: 'planned',     label: 'Planned',     dot: 'bg-amber-400', ring: 'ring-amber-300', text: 'text-amber-700', bg: 'bg-amber-50',  icon: '○' },
-  { value: 'not-started', label: 'Not Started', dot: 'bg-gray-300',  ring: 'ring-gray-300',  text: 'text-gray-500',  bg: 'bg-gray-50',   icon: '' },
+  { value: 'complete',       label: 'Complete',       dot: 'bg-green-500',  ring: 'ring-green-400',  text: 'text-green-700',  bg: 'bg-green-50',  icon: '✓' },
+  { value: 'in-progress',    label: 'In Progress',    dot: 'bg-blue-500',   ring: 'ring-blue-400',   text: 'text-blue-700',   bg: 'bg-blue-50',   icon: '●' },
+  { value: 'at-risk',        label: 'At Risk',        dot: 'bg-red-500',    ring: 'ring-red-400',    text: 'text-red-700',    bg: 'bg-red-50',    icon: '!' },
+  { value: 'planned',        label: 'Planned',        dot: 'bg-amber-400',  ring: 'ring-amber-300',  text: 'text-amber-700',  bg: 'bg-amber-50',  icon: '○' },
+  { value: 'not-started',    label: 'Not Started',    dot: 'bg-gray-300',   ring: 'ring-gray-300',   text: 'text-gray-500',   bg: 'bg-gray-50',   icon: '' },
+  { value: 'not-applicable', label: 'Not Applicable', dot: 'bg-green-400',  ring: 'ring-green-300',  text: 'text-green-700',  bg: 'bg-green-50',  icon: '–' },
 ];
 
 function stageMeta(status) {
@@ -137,7 +138,7 @@ function stageMeta(status) {
 }
 
 function isOverdue(stage) {
-  if (!stage?.date || stage?.status === 'complete') return false;
+  if (!stage?.date || stage?.status === 'complete' || stage?.status === 'not-applicable') return false;
   return new Date(stage.date) < new Date();
 }
 
@@ -164,7 +165,7 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
     } finally { setSaving(false); }
   };
 
-  const completeCount = STAGE_KEYS.filter((k) => localStages[k]?.status === 'complete').length;
+  const completeCount = STAGE_KEYS.filter((k) => ['complete', 'not-applicable'].includes(localStages[k]?.status)).length;
   const inProgressCount = STAGE_KEYS.filter((k) => ['in-progress', 'at-risk', 'planned'].includes(localStages[k]?.status)).length;
 
   return (
@@ -193,7 +194,7 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
           return (
             <div key={key} className="flex-1 flex flex-col items-center relative">
               {i > 0 && (
-                <div className={`absolute top-[16px] right-1/2 w-full h-0.5 ${localStages[STAGE_KEYS[i-1]]?.status === 'complete' && s.status === 'complete' ? 'bg-green-400' : 'bg-gray-200'}`} style={{ zIndex: 0 }} />
+                <div className={`absolute top-[16px] right-1/2 w-full h-0.5 ${['complete','not-applicable'].includes(localStages[STAGE_KEYS[i-1]]?.status) && ['complete','not-applicable'].includes(s.status) ? 'bg-green-400' : 'bg-gray-200'}`} style={{ zIndex: 0 }} />
               )}
               <button
                 onClick={() => !isReadOnly && toggleStage(key)}

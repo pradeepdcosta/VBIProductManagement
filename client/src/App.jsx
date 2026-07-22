@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
+import LandingPage from './pages/LandingPage.jsx';
 import ProductCatalog from './pages/ProductCatalog.jsx';
 import NpdPipeline from './pages/NpdPipeline.jsx';
 import CostManagement from './pages/CostManagement.jsx';
@@ -14,7 +16,16 @@ import PublicSubmitPage from './pages/PublicSubmitPage.jsx';
 import ProductReviewPage from './pages/ProductReviewPage.jsx';
 
 export default function App() {
+  const [showLanding, setShowLanding] = useState(() => !sessionStorage.getItem('vbi-entered'));
+
+  const handleEnter = () => {
+    sessionStorage.setItem('vbi-entered', '1');
+    setShowLanding(false);
+  };
+
   return (
+    <>
+      {showLanding && <LandingPage onEnter={handleEnter} />}
     <BrowserRouter>
       <Routes>
         {/* Public routes — no layout/auth */}
@@ -34,5 +45,6 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </>
   );
 }
