@@ -102,7 +102,7 @@ data is entered:
 - **Product drawer:** coverage and distributors.
 
 Real figures entered in the portal always replace the placeholders.
-Setting `SEED_DEMO_DATA=false` and restarting hides the cost and trading placeholders.
+Setting `SEED_DEMO_DATA=false` and restarting hides the cost and trading placeholders. On a new install it also skips the placeholder business cases.
 
 ---
 
