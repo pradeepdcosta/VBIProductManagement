@@ -19,19 +19,16 @@ run('npx prisma migrate deploy --schema=server/prisma/schema.prisma');
 console.log('\nSeeding products...');
 run('node server/prisma/seed.js');
 
-// 3. Seed costs
-console.log('\nSeeding cost data...');
-run('node server/scripts/seed-costs.mjs');
-
-// 4. Seed NPD initiatives
+// 3. Seed NPD initiatives (cost figures need no seeding: product lines without
+//    cost data are shown with placeholder figures)
 console.log('\nSeeding NPD data...');
 run('node server/scripts/seed-npd.mjs');
 
-// 5. Seed business cases
+// 4. Seed business cases
 console.log('\nSeeding business case data...');
 run('node server/scripts/seed-bizcase.mjs');
 
-// 6. Start server (spawn so it takes over the process)
+// 5. Start server (spawn so it takes over the process)
 console.log('\nStarting Express server...');
 const server = spawn('node', ['server/index.js'], {
   cwd: root,

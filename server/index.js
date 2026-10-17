@@ -16,6 +16,7 @@ import npdEpicsRouter from './routes/npdEpics.js';
 import adminRouter from './routes/admin.js';
 import authRouter from './routes/auth.js';
 import usersRouter from './routes/users.js';
+import costsRouter from './routes/costs.js';
 import { requireAuth, ensureInitialUser, pruneSessions } from './lib/auth.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -59,6 +60,7 @@ app.use('/api/upload', uploadsRouter);
 app.use('/api/export', exportsRouter);
 app.use('/api/npd-epics', npdEpicsRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/costs', costsRouter);
 
 // Production: serve client build
 if (process.env.NODE_ENV === 'production') {

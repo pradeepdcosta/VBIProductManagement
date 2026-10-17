@@ -53,11 +53,14 @@ model ProductCost {
   @@map("product_costs")
 }
 
+// Cost to serve per product line. serviceTower = product family,
+// serviceOffering = product line (column names kept from the original cost file).
+// Product lines without a row here are shown with placeholder figures.
 model CostAllocation {
   id                Int     @id @default(autoincrement())
   serviceTower      String  @map("service_tower")
   serviceOffering   String  @map("service_offering")
-  fy                String  @default("FY26")
+  fy                String  @default("FY28")
   psOpex            Float   @default(0) @map("ps_opex")
   psDep             Float   @default(0) @map("ps_dep")
   psTotal           Float   @default(0) @map("ps_total")
@@ -82,16 +85,23 @@ model CostAllocation {
   @@map("cost_allocations")
 }
 
+// Cost reduction action planned against a product line (serviceOffering = product line,
+// productFamily disambiguates lines that exist in more than one family)
 model CostAction {
   id                Int      @id @default(autoincrement())
   serviceOffering   String   @map("service_offering")
+  productFamily     String?  @map("product_family")
+  fy                String   @default("FY28")
   action            String
+  impactType        String   @default("OpEx reduction") @map("impact_type")
   savings           Float    @default(0)
   targetDate        DateTime? @map("target_date")
   status            String   @default("Planned")
   owner             String?
+  notes             String?  @db.Text
   createdAt         DateTime @default(now()) @map("created_at")
 
+  @@index([serviceOffering])
   @@map("cost_actions")
 }
 
