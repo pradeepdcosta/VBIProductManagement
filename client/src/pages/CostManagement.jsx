@@ -244,70 +244,212 @@ function CostActions({ item, onChanged }) {
   );
 }
 
-/* ─── Cost Detail View ─── */
-function CostDetail({ item, onBack, onActionsChanged }) {
-  const fteBreakdown = item.fteBreakdown || [];
+/* ─── Cost Detail View (editable cost sheet) ─── */
 
-  // Build rows matching the Excel layout exactly
-  const ROWS = [
-    // P&S Section
-    { label: 'Direct FTE (P&S)', opex: item.psOpex, dep: null, total: item.psOpex, belowEbit: null, grandTotal: item.psOpex, bold: false, section: 'ps' },
-    { label: 'VOIS FTE (P&S)', opex: 0, dep: null, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ps' },
-    { label: 'External', opex: 0, dep: null, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ps' },
-    { label: 'Depreciation', opex: null, dep: item.psDep, total: item.psDep, belowEbit: null, grandTotal: item.psDep, bold: false, section: 'ps' },
-    { label: 'Manual Adjs (Accounting)', opex: 0, dep: null, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ps' },
-    { label: 'Total P&S Direct', opex: item.psOpex, dep: item.psDep, total: item.psTotal, belowEbit: 0, grandTotal: item.psTotal, bold: true, topBorder: true, section: 'ps' },
-    { label: 'Cross Portfolio Allocations', opex: 0, dep: 0, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ps' },
-    { label: 'P&S Indirect Allocations', opex: 0, dep: 0, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ps' },
-    { label: 'Total P&S Cost', opex: item.psOpex, dep: item.psDep, total: item.psTotal, belowEbit: 0, grandTotal: item.psTotal, bold: true, topBorder: true, section: 'ps', highlight: true },
-    // Spacer
-    { spacer: true },
-    // PPE Section
-    { label: 'Direct FTE (PPE)', opex: item.ppeOpex, dep: null, total: item.ppeOpex, belowEbit: null, grandTotal: item.ppeOpex, bold: false, section: 'ppe' },
-    { label: 'VOIS FTE (PPE)', opex: 0, dep: null, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ppe' },
-    { label: 'External', opex: 0, dep: null, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ppe' },
-    { label: 'Depreciation', opex: null, dep: item.ppeDep, total: item.ppeDep, belowEbit: null, grandTotal: item.ppeDep, bold: false, section: 'ppe' },
-    { label: 'Manual Adjs (Accounting)', opex: 0, dep: null, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ppe' },
-    { label: 'Total PPE Direct', opex: item.ppeOpex, dep: item.ppeDep, total: item.ppeTotal, belowEbit: 0, grandTotal: item.ppeTotal, bold: true, topBorder: true, section: 'ppe' },
-    { label: 'Cross Portfolio Allocations', opex: 0, dep: 0, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ppe' },
-    { label: 'PPE Indirect Allocations', opex: 0, dep: 0, total: 0, belowEbit: null, grandTotal: 0, bold: false, section: 'ppe' },
-    { label: 'Total PPE Cost', opex: item.ppeOpex, dep: item.ppeDep, total: item.ppeTotal, belowEbit: 0, grandTotal: item.ppeTotal, bold: true, topBorder: true, section: 'ppe', highlight: true },
-    // Spacer
-    { spacer: true },
-    // Other Allocations
-    { label: 'Other Allocations', sectionHeader: true },
-    { label: 'Commercial', opex: item.commercial, dep: 0, total: item.commercial, belowEbit: null, grandTotal: item.commercial, bold: false, section: 'alloc' },
-    { label: 'Directorate (SAMs Allocation)', opex: item.directorate, dep: 0, total: item.directorate, belowEbit: null, grandTotal: item.directorate, bold: false, section: 'alloc' },
-    { label: 'VSOL', opex: item.vsol, dep: 0, total: item.vsol, belowEbit: 0, grandTotal: item.vsol, bold: false, section: 'alloc' },
-    { label: 'Networks', opex: item.networks, dep: 0, total: item.networks, belowEbit: 0, grandTotal: item.networks, bold: false, section: 'alloc' },
-    { label: 'Total Allocations', opex: item.allocations, dep: 0, total: item.allocations, belowEbit: 0, grandTotal: item.allocations, bold: true, topBorder: true, section: 'alloc' },
-    // Spacer
-    { spacer: true },
-    // Grand Total
-    { label: 'Grand Total', opex: item.opex, dep: item.dep, total: item.grandTotal, belowEbit: 0, grandTotal: item.grandTotal, bold: true, topBorder: true, isGrand: true },
-  ];
+// Same arithmetic as the server (routes/costs.js) so totals update while typing
+function sectionTotals(s) {
+  const directOpex = s.directFte + s.voisFte + s.external + s.manualAdj;
+  const directDep = s.depreciation;
+  const opex = directOpex + s.crossOpex + s.indirectOpex;
+  const dep = directDep + s.crossDep + s.indirectDep;
+  return { directOpex, directDep, directTotal: directOpex + directDep, opex, dep, total: opex + dep };
+}
+
+function sheetTotals(b) {
+  const ps = sectionTotals(b.ps);
+  const ppe = sectionTotals(b.ppe);
+  const allocations = b.alloc.commercial + b.alloc.directorate + b.alloc.vsol + b.alloc.networks;
+  return { ps, ppe, allocations, opex: ps.opex + ppe.opex + allocations, dep: ps.dep + ppe.dep, grandTotal: ps.total + ppe.total + allocations };
+}
+
+// Draft values are strings while editing; totals treat blanks as 0
+const toNumbers = (draft) => JSON.parse(JSON.stringify(draft), (k, v) => (typeof v === 'string' ? (Number(v) || 0) : v));
+const toDraft = (b) => JSON.parse(JSON.stringify(b), (k, v) => (typeof v === 'number' ? (v === 0 ? '' : String(v)) : v));
+
+// Rows of one direct-cost section (P&S or PPE). `opex`/`dep` name the editable field.
+function sectionRows(sec, label) {
+  return [
+    { label: `Direct FTE (${label})`, opex: 'directFte', fte: true },
+    { label: `VOIS FTE (${label})`, opex: 'voisFte' },
+    { label: 'External', opex: 'external' },
+    { label: 'Depreciation', dep: 'depreciation' },
+    { label: 'Manual Adjs (Accounting)', opex: 'manualAdj', allowNegative: true },
+    { label: `Total ${label} Direct`, total: (t) => [t[sec].directOpex, t[sec].directDep, t[sec].directTotal], bold: true, topBorder: true },
+    { label: 'Cross Portfolio Allocations', opex: 'crossOpex', dep: 'crossDep' },
+    { label: `${label} Indirect Allocations`, opex: 'indirectOpex', dep: 'indirectDep' },
+    { label: `Total ${label} Cost`, total: (t) => [t[sec].opex, t[sec].dep, t[sec].total], bold: true, topBorder: true, highlight: true },
+  ].map((r) => ({ ...r, sec }));
+}
+
+const SHEET = [
+  ...sectionRows('ps', 'P&S'),
+  { spacer: true },
+  ...sectionRows('ppe', 'PPE'),
+  { spacer: true },
+  { label: 'Other Allocations', sectionHeader: true },
+  { label: 'Commercial', alloc: 'commercial' },
+  { label: 'Directorate (SAMs Allocation)', alloc: 'directorate' },
+  { label: 'VSOL', alloc: 'vsol' },
+  { label: 'Networks', alloc: 'networks' },
+  { label: 'Total Allocations', total: (t) => [t.allocations, 0, t.allocations], bold: true, topBorder: true },
+  { spacer: true },
+  { label: 'Grand Total', total: (t) => [t.opex, t.dep, t.grandTotal], bold: true, topBorder: true, isGrand: true },
+];
+
+function CellInput({ value, onChange, allowNegative, label }) {
+  return (
+    <input
+      type="number"
+      inputMode="decimal"
+      step="any"
+      min={allowNegative ? undefined : 0}
+      aria-label={label}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="0"
+      className="w-full max-w-[110px] ml-auto block text-right font-mono text-xs border border-vf-border rounded px-1.5 py-0.5 bg-white focus:outline-none focus:border-vf-red [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none"
+    />
+  );
+}
+
+function CostDetail({ item, onBack, onSaved, onActionsChanged }) {
+  const showToast = useProductStore((s) => s.showToast);
+  const fteBreakdown = item.fteBreakdown || [];
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(() => toDraft(item.breakdown));
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(null);
+  const [confirmRevert, setConfirmRevert] = useState(false);
+
+  // Reset the draft whenever fresh figures arrive from the server
+  useEffect(() => { if (!editing) setDraft(toDraft(item.breakdown)); }, [item.breakdown, editing]);
+
+  const values = editing ? toNumbers(draft) : item.breakdown;
+  const t = sheetTotals(values);
+  const dirty = editing && JSON.stringify(toNumbers(draft)) !== JSON.stringify(item.breakdown);
+
+  const setField = (group, field, v) => setDraft((d) => ({ ...d, [group]: { ...d[group], [field]: v } }));
+
+  const lineParams = `fy=${item.fy}&productFamily=${encodeURIComponent(item.productFamily)}&productLine=${encodeURIComponent(item.productLine)}`;
+
+  const save = async () => {
+    setSaving(true);
+    setError(null);
+    try {
+      await sendJson('/api/costs/line', 'PUT', { fy: item.fy, productFamily: item.productFamily, productLine: item.productLine, breakdown: toNumbers(draft) });
+      setEditing(false);
+      showToast(`Costs saved for ${item.productLine}`);
+      onSaved();
+    } catch (err) { setError(err.message); }
+    setSaving(false);
+  };
+
+  const revert = async () => {
+    if (!confirmRevert) { setConfirmRevert(true); return; }
+    setSaving(true);
+    setError(null);
+    try {
+      await sendJson(`/api/costs/line?${lineParams}`, 'DELETE');
+      setEditing(false);
+      setConfirmRevert(false);
+      showToast(`${item.productLine} reverted to placeholder figures`);
+      onSaved();
+    } catch (err) { setError(err.message); }
+    setSaving(false);
+  };
+
+  const cancel = () => {
+    if (dirty && !window.confirm('Discard your unsaved cost changes?')) return;
+    setDraft(toDraft(item.breakdown));
+    setEditing(false);
+    setError(null);
+  };
+
+  const back = () => {
+    if (dirty && !window.confirm('You have unsaved cost changes. Leave without saving?')) return;
+    onBack();
+  };
+
+  const opexCell = (r) => {
+    if (r.total) return fmtCell(r.total(t)[0]);
+    const group = r.alloc ? 'alloc' : r.sec;
+    const field = r.alloc || r.opex;
+    if (!field) return '';
+    return editing
+      ? <CellInput label={`${r.label} opex`} value={draft[group][field]} allowNegative={r.allowNegative} onChange={(v) => setField(group, field, v)} />
+      : fmtCell(values[group][field]);
+  };
+  const depCell = (r) => {
+    if (r.total) return fmtCell(r.total(t)[1]);
+    if (r.alloc) return '-';
+    if (!r.dep) return '';
+    return editing
+      ? <CellInput label={`${r.label} depreciation`} value={draft[r.sec][r.dep]} onChange={(v) => setField(r.sec, r.dep, v)} />
+      : fmtCell(values[r.sec][r.dep]);
+  };
+  const rowTotal = (r) => {
+    if (r.total) return r.total(t)[2];
+    const group = r.alloc ? 'alloc' : r.sec;
+    return (r.alloc ? values.alloc[r.alloc] : 0) + (r.opex ? values[group][r.opex] : 0) + (r.dep ? values[r.sec][r.dep] : 0);
+  };
+  const fteCell = (r) => {
+    if (!r.fte) return '';
+    return editing
+      ? <CellInput label={`${r.label} count`} value={draft.fte[r.sec]} onChange={(v) => setField('fte', r.sec, v)} />
+      : (values.fte[r.sec] || '—');
+  };
 
   return (
     <div>
-      <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-vf-red hover:underline mb-4 font-medium">
+      <button onClick={back} className="flex items-center gap-1.5 text-sm text-vf-red hover:underline mb-4 font-medium">
         ← Back to Cost Overview
       </button>
 
-      {item.placeholder && <PlaceholderNote count={1} total={1} />}
+      {item.placeholder && !editing && <PlaceholderNote count={1} total={1} />}
 
       {/* Header */}
-      <div className="bg-vf-dark text-white rounded-t-[10px] px-6 py-4 flex items-center justify-between">
+      <div className="bg-vf-dark text-white rounded-t-[10px] px-6 py-4 flex items-center justify-between gap-4">
         <div>
           <div className="text-xs text-gray-400 mb-0.5">Product Line</div>
           <h3 className="text-xl font-bold">{item.productLine}</h3>
           <div className="text-sm text-gray-300 mt-0.5">{item.productFamily} · {item.portfolio} · {item.fy}</div>
         </div>
-        <div className="text-right">
-          <div className="text-xs text-gray-400">Grand Total</div>
-          <div className="text-3xl font-bold font-mono">{fmtK(item.grandTotal)}</div>
-          <div className="text-xs text-gray-400 mt-1">FTE: {item.fteCount || '—'}</div>
+        <div className="flex items-center gap-5">
+          {!editing && (
+            <button onClick={() => { setEditing(true); setError(null); }} className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white text-sm font-medium rounded-lg px-3 py-1.5">
+              <Pencil size={13} /> Edit costs
+            </button>
+          )}
+          <div className="text-right">
+            <div className="text-xs text-gray-400">Grand Total</div>
+            <div className="text-3xl font-bold font-mono">{fmtK(t.grandTotal)}</div>
+            <div className="text-xs text-gray-400 mt-1">FTE: {(values.fte.ps + values.fte.ppe) || '—'}</div>
+          </div>
         </div>
       </div>
+
+      {editing && (
+        <div className="bg-amber-50 border-x border-amber-200 px-6 py-2.5 flex items-center gap-3 text-xs">
+          <span className="font-semibold text-amber-900">Editing costs (€)</span>
+          <span className="text-amber-800">Totals update as you type. Only Manual Adjs can be negative.</span>
+          {error && <span className="text-red-700 font-medium">{error}</span>}
+          <div className="flex-1" />
+          {!item.placeholder && (
+            <button
+              onClick={revert}
+              onBlur={() => setConfirmRevert(false)}
+              disabled={saving}
+              className={`px-2.5 py-1 rounded font-medium ${confirmRevert ? 'bg-red-600 text-white' : 'text-red-700 hover:bg-red-50 border border-red-200'}`}
+            >
+              {confirmRevert ? 'Confirm — discard these figures' : 'Revert to placeholder'}
+            </button>
+          )}
+          <button onClick={cancel} disabled={saving} className="px-2.5 py-1 text-vf-muted hover:text-vf-dark">Cancel</button>
+          <button onClick={save} disabled={saving || !dirty} className="bg-vf-red text-white rounded-md px-4 py-1.5 font-semibold hover:bg-vf-red-hover disabled:opacity-40">
+            {saving ? 'Saving…' : 'Save costs'}
+          </button>
+        </div>
+      )}
 
       <div className="flex gap-0">
         {/* Left: Cost Table */}
@@ -317,23 +459,21 @@ function CostDetail({ item, onBack, onActionsChanged }) {
             <thead>
               <tr className="bg-yellow-300">
                 <th className="text-left py-2 px-3 font-semibold border-b-2 border-vf-dark w-[220px]"></th>
-                <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[90px]">Opex</th>
-                <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[90px]">Dep</th>
+                <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[110px]">Opex</th>
+                <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[110px]">Dep</th>
                 <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[90px]">Total</th>
-                <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[90px]">Below EBIT</th>
+                <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[80px]">Below EBIT</th>
                 <th className="text-right py-2 px-2 font-bold border-b-2 border-vf-dark w-[100px]">Total</th>
-                <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[70px]">No of FTE</th>
+                <th className="text-right py-2 px-2 font-semibold border-b-2 border-vf-dark w-[90px]">No of FTE</th>
               </tr>
             </thead>
             <tbody>
-              {ROWS.map((r, i) => {
+              {SHEET.map((r, i) => {
                 if (r.spacer) return <tr key={i}><td colSpan={7} className="py-2" /></tr>;
                 if (r.sectionHeader) return (
                   <tr key={i}><td colSpan={7} className="py-2 px-3 font-bold text-sm text-vf-dark">{r.label}</td></tr>
                 );
-
-                const showFte = (r.label === 'Direct FTE (P&S)' || r.label === 'Direct FTE (PPE)');
-
+                const total = rowTotal(r);
                 return (
                   <tr key={i} className={`
                     ${r.topBorder ? 'border-t-2 border-vf-dark' : 'border-t border-[#e8e6e1]'}
@@ -342,14 +482,12 @@ function CostDetail({ item, onBack, onActionsChanged }) {
                     ${r.highlight ? 'bg-blue-50' : ''}
                   `}>
                     <td className={`py-1.5 px-3 ${r.bold ? 'font-bold' : ''}`}>{r.label}</td>
-                    <td className="py-1.5 px-2 text-right font-mono">{r.opex !== null ? fmtCell(r.opex) : ''}</td>
-                    <td className="py-1.5 px-2 text-right font-mono">{r.dep !== null ? fmtCell(r.dep) : ''}</td>
-                    <td className="py-1.5 px-2 text-right font-mono">{fmtCell(r.total)}</td>
-                    <td className="py-1.5 px-2 text-right font-mono">{r.belowEbit !== null ? fmtCell(r.belowEbit) : ''}</td>
-                    <td className={`py-1.5 px-2 text-right font-mono ${r.bold || r.isGrand ? 'font-bold' : ''}`}>{fmtCell(r.grandTotal)}</td>
-                    <td className="py-1.5 px-2 text-right font-mono">
-                      {showFte ? (r.label.includes('P&S') ? (item.fteCount || '—') : '—') : ''}
-                    </td>
+                    <td className="py-1 px-2 text-right font-mono">{opexCell(r)}</td>
+                    <td className="py-1 px-2 text-right font-mono">{depCell(r)}</td>
+                    <td className="py-1.5 px-2 text-right font-mono">{fmtCell(total)}</td>
+                    <td className="py-1.5 px-2 text-right font-mono">{r.total ? '-' : ''}</td>
+                    <td className={`py-1.5 px-2 text-right font-mono ${r.bold || r.isGrand ? 'font-bold' : ''}`}>{fmtCell(total)}</td>
+                    <td className="py-1 px-2 text-right font-mono">{fteCell(r)}</td>
                   </tr>
                 );
               })}
@@ -384,7 +522,7 @@ function CostDetail({ item, onBack, onActionsChanged }) {
 
         {/* Right: Cost Reduction Actions */}
         <div className="w-[360px] shrink-0 bg-white border-x border-b border-vf-border rounded-br-[10px]">
-          <CostActions item={item} onChanged={onActionsChanged} />
+          <CostActions item={{ ...item, grandTotal: t.grandTotal }} onChanged={onActionsChanged} />
         </div>
       </div>
     </div>
@@ -437,6 +575,7 @@ export default function CostManagement() {
         <CostDetail
           item={selectedItem}
           onBack={() => setSelectedKey(null)}
+          onSaved={() => setReloadKey((k) => k + 1)}
           onActionsChanged={() => setReloadKey((k) => k + 1)}
         />
       </div>

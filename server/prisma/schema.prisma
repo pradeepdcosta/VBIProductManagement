@@ -80,8 +80,11 @@ model CostAllocation {
   grandTotal        Float   @default(0) @map("grand_total")
   fteCount          Float   @default(0) @map("fte_count")
   fteBreakdown      Json?   @map("fte_breakdown")
+  // Line-by-line figures entered in the cost breakdown; the columns above are their totals
+  breakdown         Json?
+  updatedAt         DateTime? @updatedAt @map("updated_at")
 
-  @@unique([serviceOffering, fy])
+  @@unique([serviceTower, serviceOffering, fy])
   @@map("cost_allocations")
 }
 
