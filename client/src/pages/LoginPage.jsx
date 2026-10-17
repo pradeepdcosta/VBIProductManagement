@@ -36,7 +36,7 @@ export default function LoginPage() {
           <span className="text-xl font-bold text-white">Vodafone</span>
           <span className="text-xl font-bold text-vf-red">Business</span>
           <span className="w-px h-[18px] bg-white/35 mx-1.5" />
-          <span className="text-[13px] text-white/75 uppercase tracking-widest">International</span>
+          <span className="text-[0.8125rem] text-white/75 uppercase tracking-widest">International</span>
         </div>
 
         <form
@@ -50,7 +50,7 @@ export default function LoginPage() {
             <div role="alert" className="mb-4 bg-red-500/15 border border-red-500/40 text-red-200 text-sm px-3 py-2 rounded-md">{error}</div>
           )}
 
-          <label htmlFor="login-email" className="block text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5">Email</label>
+          <label htmlFor="login-email" className="block text-[0.6875rem] font-semibold text-white/60 uppercase tracking-wider mb-1.5">Email</label>
           <input
             id="login-email"
             type="email"
@@ -63,7 +63,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <label htmlFor="login-password" className="block text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5 mt-4">Password</label>
+          <label htmlFor="login-password" className="block text-[0.6875rem] font-semibold text-white/60 uppercase tracking-wider mb-1.5 mt-4">Password</label>
           <input
             id="login-password"
             type="password"
@@ -77,12 +77,12 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={busy}
-            className="w-full mt-6 bg-vf-red hover:bg-[#C40000] text-white font-bold text-[15px] tracking-wide rounded py-3 transition-colors disabled:opacity-60"
+            className="w-full mt-6 bg-vf-red hover:bg-[#C40000] text-white font-bold text-[0.9375rem] tracking-wide rounded py-3 transition-colors disabled:opacity-60"
           >
             {busy ? 'Signing in…' : 'Sign in'}
           </button>
 
-          <p className="text-[11px] text-white/45 mt-5 text-center leading-relaxed">
+          <p className="text-[0.6875rem] text-white/45 mt-5 text-center leading-relaxed">
             No account? Ask a portal administrator to add you.
           </p>
         </form>

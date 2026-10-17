@@ -98,7 +98,7 @@ function RequestModal({ request, onClose, onSave }) {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-vf-border">
           <div className="flex items-center gap-2">
-            <span className={`${typeClass(request.type)} px-2 py-0.5 rounded text-[10px] font-semibold uppercase`}>
+            <span className={`${typeClass(request.type)} px-2 py-0.5 rounded text-[0.625rem] font-semibold uppercase`}>
               {request.type}
             </span>
             <span className="text-sm font-semibold text-vf-text">{request.title}</span>
@@ -113,7 +113,7 @@ function RequestModal({ request, onClose, onSave }) {
           <div className="bg-vf-surface border border-vf-border rounded-lg p-3 space-y-2.5">
             {/* Requester link */}
             <div>
-              <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
+              <p className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
                 Requester Link — send to person who raised this
               </p>
               <div className="flex items-center gap-2">
@@ -140,7 +140,7 @@ function RequestModal({ request, onClose, onSave }) {
 
             {/* Product team review link */}
             <div>
-              <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
+              <p className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
                 Product Team Review Link — send to product team for their feedback
               </p>
               <div className="flex items-center gap-2">
@@ -167,7 +167,7 @@ function RequestModal({ request, onClose, onSave }) {
           {/* Status + Priority */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Status</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Status</label>
               <select
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.status}
@@ -177,7 +177,7 @@ function RequestModal({ request, onClose, onSave }) {
               </select>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Priority</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Priority</label>
               <select
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.priority}
@@ -191,7 +191,7 @@ function RequestModal({ request, onClose, onSave }) {
           {/* Submitter */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Submitter Name</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Submitter Name</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.submitterName || ''}
@@ -200,7 +200,7 @@ function RequestModal({ request, onClose, onSave }) {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Submitter Email</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Submitter Email</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.submitterEmail || ''}
@@ -213,7 +213,7 @@ function RequestModal({ request, onClose, onSave }) {
           {/* Category / Family / Line */}
           <div className="grid grid-cols-3 gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Category</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Category</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red bg-vf-surface"
                 value={form.category || ''}
@@ -221,7 +221,7 @@ function RequestModal({ request, onClose, onSave }) {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Family</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Family</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red bg-vf-surface"
                 value={form.productFamily || ''}
@@ -229,7 +229,7 @@ function RequestModal({ request, onClose, onSave }) {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Line</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Line</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red bg-vf-surface"
                 value={form.productLine || ''}
@@ -241,7 +241,7 @@ function RequestModal({ request, onClose, onSave }) {
           {/* Product + Deal */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Name</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Name</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.productName || ''}
@@ -249,7 +249,7 @@ function RequestModal({ request, onClose, onSave }) {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Deal / Account</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Deal / Account</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.dealAccount || ''}
@@ -260,7 +260,7 @@ function RequestModal({ request, onClose, onSave }) {
 
           {/* Description */}
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Description</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Description</label>
             <textarea
               className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[80px]"
               value={form.description || ''}
@@ -271,7 +271,7 @@ function RequestModal({ request, onClose, onSave }) {
 
           {/* Justification */}
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Business Justification</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Business Justification</label>
             <textarea
               className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[80px]"
               value={form.justification || ''}
@@ -282,7 +282,7 @@ function RequestModal({ request, onClose, onSave }) {
 
           {/* VBI Feedback */}
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI Product &amp; Services Feedback</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">VBI Product &amp; Services Feedback</label>
             <textarea
               className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[80px]"
               value={form.vbiFeedback || ''}
@@ -292,7 +292,7 @@ function RequestModal({ request, onClose, onSave }) {
             />
           </div>
 
-          <div className="text-[11px] text-vf-muted">
+          <div className="text-[0.6875rem] text-vf-muted">
             Submitted {new Date(request.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
           </div>
         </div>
@@ -329,7 +329,7 @@ function PublicLinkBar() {
   return (
     <div className="bg-white border border-vf-border rounded-[10px] px-4 py-3 mb-5 flex items-center gap-3">
       <Link size={14} className="text-vf-muted shrink-0" />
-      <span className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide shrink-0">Public request link</span>
+      <span className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide shrink-0">Public request link</span>
       <input
         readOnly
         value={url}
@@ -453,7 +453,7 @@ export default function FeatureRequests() {
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Request Type</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Request Type</label>
               <select
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.type}
@@ -463,7 +463,7 @@ export default function FeatureRequests() {
               </select>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Category</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Category</label>
               <select
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.category}
@@ -480,7 +480,7 @@ export default function FeatureRequests() {
           </div>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Family</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Family</label>
               <select
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red disabled:opacity-40"
                 value={form.productFamily}
@@ -496,7 +496,7 @@ export default function FeatureRequests() {
               </select>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Line</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Line</label>
               <select
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red disabled:opacity-40"
                 value={form.productLine}
@@ -510,7 +510,7 @@ export default function FeatureRequests() {
           </div>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div className="flex flex-col gap-1 col-span-2">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Name</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Name</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 placeholder="e.g. RedBox, Vodafone Identity Hub…"
@@ -521,7 +521,7 @@ export default function FeatureRequests() {
           </div>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Title</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Title</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 placeholder="Brief summary of the request"
@@ -530,7 +530,7 @@ export default function FeatureRequests() {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Priority</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Priority</label>
               <select
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.priority}
@@ -542,7 +542,7 @@ export default function FeatureRequests() {
           </div>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Deal / Account (if applicable)</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Deal / Account (if applicable)</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 placeholder="e.g. APAC regional bank RFP"
@@ -552,7 +552,7 @@ export default function FeatureRequests() {
             </div>
           </div>
           <div className="mb-3">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Description</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Description</label>
             <textarea
               className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[70px]"
               placeholder="Describe the feature needed, countries required, SLA requirements, timeline..."
@@ -562,7 +562,7 @@ export default function FeatureRequests() {
             />
           </div>
           <div className="mb-3">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Business Justification</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Business Justification</label>
             <textarea
               className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[70px]"
               placeholder="Revenue at stake, customer name (if permitted), strategic rationale..."
@@ -572,7 +572,7 @@ export default function FeatureRequests() {
             />
           </div>
           <div className="mb-3">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">VBI Product &amp; Services Feedback</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">VBI Product &amp; Services Feedback</label>
             <textarea
               className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[70px]"
               placeholder="Feedback on existing VBI products and services…"
@@ -583,7 +583,7 @@ export default function FeatureRequests() {
           </div>
           <button
             type="submit"
-            className="bg-vf-red text-white border-none rounded-lg px-5 py-2 text-[13px] font-medium cursor-pointer font-sans hover:bg-vf-red-hover"
+            className="bg-vf-red text-white border-none rounded-lg px-5 py-2 text-[0.8125rem] font-medium cursor-pointer font-sans hover:bg-vf-red-hover"
           >
             Submit Request
           </button>
@@ -604,17 +604,17 @@ export default function FeatureRequests() {
         ].map(({ label, color }) => (
           <div key={label} className={`border rounded-[10px] p-4 text-center ${color}`}>
             <div className="text-2xl font-bold">{statusCounts[label]}</div>
-            <div className="text-[11px] font-semibold uppercase tracking-wide mt-0.5">{label}</div>
+            <div className="text-[0.6875rem] font-semibold uppercase tracking-wide mt-0.5">{label}</div>
           </div>
         ))}
       </div>
 
       {/* Request list */}
       <div className="bg-white border border-vf-border rounded-[10px] overflow-hidden">
-        <div className="px-4 py-3 border-b border-vf-border text-[13px] font-semibold flex items-center gap-2 bg-vf-surface">
+        <div className="px-4 py-3 border-b border-vf-border text-[0.8125rem] font-semibold flex items-center gap-2 bg-vf-surface">
           All Requests
-          <span className="bg-vf-dark text-white rounded-full px-2 py-px text-[11px] font-semibold">{totalCount}</span>
-          <span className="text-[11px] text-vf-muted font-normal ml-1">— click any row to view, edit or copy magic link</span>
+          <span className="bg-vf-dark text-white rounded-full px-2 py-px text-[0.6875rem] font-semibold">{totalCount}</span>
+          <span className="text-[0.6875rem] text-vf-muted font-normal ml-1">— click any row to view, edit or copy magic link</span>
           <button
             onClick={exportRequests}
             disabled={exporting || totalCount === 0}
@@ -633,18 +633,18 @@ export default function FeatureRequests() {
               className="px-4 py-3 border-b border-[#f0eeea] last:border-b-0 hover:bg-[#fdf9f9] transition-colors cursor-pointer"
             >
               <div className="flex items-center gap-2 mb-1">
-                <span className={`${typeClass(r.type)} px-2 py-0.5 rounded text-[10px] font-semibold uppercase`}>
+                <span className={`${typeClass(r.type)} px-2 py-0.5 rounded text-[0.625rem] font-semibold uppercase`}>
                   {r.type}
                 </span>
-                <span className="text-[13px] font-medium flex-1">{r.title}</span>
-                <span className={`${statusClass(r.status)} px-2 py-0.5 rounded-full text-[10px] font-semibold`}>
+                <span className="text-[0.8125rem] font-medium flex-1">{r.title}</span>
+                <span className={`${statusClass(r.status)} px-2 py-0.5 rounded-full text-[0.625rem] font-semibold`}>
                   {r.status}
                 </span>
-                <span className={`${priClass(r.priority)} px-2 py-0.5 rounded-full text-[10px] font-semibold`}>
+                <span className={`${priClass(r.priority)} px-2 py-0.5 rounded-full text-[0.625rem] font-semibold`}>
                   {r.priority}
                 </span>
               </div>
-              <div className="text-[11px] text-vf-muted">
+              <div className="text-[0.6875rem] text-vf-muted">
                 {r.productName}
                 {r.submitterName ? ` · ${r.submitterName}` : ''}
                 {r.dealAccount ? ` · ${r.dealAccount}` : ''}

@@ -76,7 +76,7 @@ function StatusControl({ status, busy, onChange }) {
   if (status === 'Draft') {
     return (
       <div className="flex items-center gap-2">
-        <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold ${STATUS_STYLE.Draft}`}>Draft</span>
+        <span className={`px-2.5 py-1 rounded-full text-[0.6875rem] font-semibold ${STATUS_STYLE.Draft}`}>Draft</span>
         <button
           disabled={busy}
           onClick={() => onChange('In Review')}
@@ -90,7 +90,7 @@ function StatusControl({ status, busy, onChange }) {
   const approved = status === 'Approved';
   return (
     <div className="flex items-center gap-3">
-      <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold ${approved ? 'bg-white/15 text-white/60' : STATUS_STYLE['In Review']}`}>In Review</span>
+      <span className={`px-2.5 py-1 rounded-full text-[0.6875rem] font-semibold ${approved ? 'bg-white/15 text-white/60' : STATUS_STYLE['In Review']}`}>In Review</span>
       <button
         type="button"
         role="switch"
@@ -104,7 +104,7 @@ function StatusControl({ status, busy, onChange }) {
         <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${approved ? 'translate-x-5' : ''}`} />
       </button>
       <span className={`text-xs font-semibold ${approved ? 'text-green-400' : 'text-white/60'}`}>Approved</span>
-      <button disabled={busy} onClick={() => onChange('Draft')} className="text-[11px] text-white/50 hover:text-white underline ml-1">Back to draft</button>
+      <button disabled={busy} onClick={() => onChange('Draft')} className="text-[0.6875rem] text-white/50 hover:text-white underline ml-1">Back to draft</button>
     </div>
   );
 }
@@ -190,7 +190,7 @@ function BusinessCaseDetail({ line, template, onBack, onChanged }) {
   const setCell = (item, fy, v) => setDraft((d) => ({ ...d, [item]: { ...(d[item] || {}), [fy]: v } }));
   const metricInput = (key, label, suffix) => (
     <div>
-      <div className="text-[10px] text-vf-muted">{label}</div>
+      <div className="text-[0.625rem] text-vf-muted">{label}</div>
       {editing ? (
         <input
           type="number" step="any" value={metrics[key]} onChange={(e) => setMetrics((m) => ({ ...m, [key]: e.target.value }))}
@@ -214,9 +214,9 @@ function BusinessCaseDetail({ line, template, onBack, onChanged }) {
         {/* Header */}
         <div className="bg-vf-dark text-white px-5 py-4 flex items-center justify-between gap-4">
           <div>
-            <div className="text-[10px] text-gray-400 uppercase tracking-wide">Product Line</div>
-            <div className="text-[15px] font-semibold">{line.productLine}</div>
-            <div className="text-[11px] text-gray-400 mt-0.5">{line.productFamily} · {line.portfolio} · VBI Business Case P&L</div>
+            <div className="text-[0.625rem] text-gray-400 uppercase tracking-wide">Product Line</div>
+            <div className="text-[0.9375rem] font-semibold">{line.productLine}</div>
+            <div className="text-[0.6875rem] text-gray-400 mt-0.5">{line.productFamily} · {line.portfolio} · VBI Business Case P&L</div>
           </div>
           <div className="flex items-center gap-4">
             <StatusControl status={bc?.status} busy={busy} onChange={changeStatus} />
@@ -266,9 +266,9 @@ function BusinessCaseDetail({ line, template, onBack, onChanged }) {
             <table className="w-full text-xs border-collapse">
               <thead>
                 <tr className="bg-vf-red text-white">
-                  <th className="text-left px-3 py-2 font-semibold text-[11px] w-[280px]">Business Case P&L</th>
-                  {fyKeys.map((fy) => <th key={fy} className="text-right px-3 py-2 font-semibold text-[11px] w-[100px]">{FY_LABELS[fy]}</th>)}
-                  <th className="text-right px-3 py-2 font-semibold text-[11px] w-[110px]">Total FY27-FY31 (€m)</th>
+                  <th className="text-left px-3 py-2 font-semibold text-[0.6875rem] w-[280px]">Business Case P&L</th>
+                  {fyKeys.map((fy) => <th key={fy} className="text-right px-3 py-2 font-semibold text-[0.6875rem] w-[100px]">{FY_LABELS[fy]}</th>)}
+                  <th className="text-right px-3 py-2 font-semibold text-[0.6875rem] w-[110px]">Total FY27-FY31 (€m)</th>
                 </tr>
               </thead>
               <tbody>
@@ -315,7 +315,7 @@ function BusinessCaseDetail({ line, template, onBack, onChanged }) {
 
             {/* Summary metrics */}
             <div className="border-t border-vf-border px-4 py-3 bg-vf-surface">
-              <div className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-2">FY27-FY31 Summary</div>
+              <div className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-2">FY27-FY31 Summary</div>
               <div className="grid grid-cols-4 gap-4 max-w-2xl">
                 {metricInput('npv', 'NPV (€m)', 'M')}
                 {metricInput('roi', 'RoI (%)', '%')}
@@ -323,7 +323,7 @@ function BusinessCaseDetail({ line, template, onBack, onChanged }) {
                 {metricInput('paybackYears', 'Payback (years)', ' yrs')}
               </div>
               <div className="mt-3">
-                <div className="text-[10px] text-vf-muted mb-1">Summary</div>
+                <div className="text-[0.625rem] text-vf-muted mb-1">Summary</div>
                 {editing ? (
                   <textarea
                     rows={3}
@@ -450,7 +450,7 @@ export default function BusinessCasePage() {
         <div>
           <h2 className="text-base font-semibold">Business Cases</h2>
           {summary.lines > 0 && (
-            <div className="text-[11px] text-vf-muted mt-0.5">
+            <div className="text-[0.6875rem] text-vf-muted mt-0.5">
               {summary.withCase} of {summary.lines} product lines have a business case
               {summary.byStatus && ` · ${summary.byStatus.Approved} approved · ${summary.byStatus['In Review']} in review · ${summary.byStatus.Draft} draft`}
             </div>
@@ -468,24 +468,24 @@ export default function BusinessCasePage() {
 
       {showUpload && (
         <div className="bg-white border border-vf-border rounded-[10px] p-4 mb-4">
-          <div className="text-[13px] font-semibold mb-3">Upload Business Case</div>
+          <div className="text-[0.8125rem] font-semibold mb-3">Upload Business Case</div>
           <div className="grid grid-cols-4 gap-3 items-end">
             <div>
-              <label className="text-[11px] text-vf-muted block mb-1">Category</label>
+              <label className="text-[0.6875rem] text-vf-muted block mb-1">Category</label>
               <select className={selectCls} value={uploadCat} onChange={(e) => { setUploadCat(e.target.value); setUploadFam(''); setUploadLineKey(''); }}>
                 <option value="">All Categories</option>
                 {uploadCategories.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
             <div>
-              <label className="text-[11px] text-vf-muted block mb-1">Family</label>
+              <label className="text-[0.6875rem] text-vf-muted block mb-1">Family</label>
               <select className={selectCls} value={uploadFam} onChange={(e) => { setUploadFam(e.target.value); setUploadLineKey(''); }}>
                 <option value="">All Families</option>
                 {uploadFamilies.map((f) => <option key={f} value={f}>{f}</option>)}
               </select>
             </div>
             <div>
-              <label className="text-[11px] text-vf-muted block mb-1">Product Line ({uploadLines.length})</label>
+              <label className="text-[0.6875rem] text-vf-muted block mb-1">Product Line ({uploadLines.length})</label>
               <select className={selectCls} value={uploadLineKey} onChange={(e) => setUploadLineKey(e.target.value)}>
                 <option value="">Select a product line…</option>
                 {uploadLines.map((l) => <option key={l.key} value={l.key}>{l.productLine}{uploadFam ? '' : ` (${l.productFamily})`}</option>)}
@@ -493,7 +493,7 @@ export default function BusinessCasePage() {
             </div>
             <div className="flex gap-2 items-end">
               <div className="flex-1">
-                <label className="text-[11px] text-vf-muted block mb-1">File (.xlsx)</label>
+                <label className="text-[0.6875rem] text-vf-muted block mb-1">File (.xlsx)</label>
                 <input ref={fileRef} type="file" accept=".xlsx" className="w-full border border-vf-border rounded-md px-2 py-1 text-xs bg-white" />
               </div>
               <button className="bg-vf-red text-white rounded-md px-4 py-1.5 text-xs cursor-pointer font-sans font-semibold hover:bg-red-700 disabled:opacity-50" onClick={handleUpload} disabled={uploading}>
@@ -501,7 +501,7 @@ export default function BusinessCasePage() {
               </button>
             </div>
           </div>
-          <div className="text-[10px] text-vf-muted mt-2">Upload the filled-in template. Only the input lines are read; totals, margins, EBITDA and cash flow are recalculated. Replaces that line's existing P&L.</div>
+          <div className="text-[0.625rem] text-vf-muted mt-2">Upload the filled-in template. Only the input lines are read; totals, margins, EBITDA and cash flow are recalculated. Replaces that line's existing P&L.</div>
         </div>
       )}
 
@@ -514,11 +514,11 @@ export default function BusinessCasePage() {
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-vf-surface border-b border-vf-border">
-                <th className="text-left px-4 py-2.5 font-semibold text-[11px] text-vf-muted uppercase tracking-wide">Product Line</th>
-                <th className="text-left px-4 py-2.5 font-semibold text-[11px] text-vf-muted uppercase tracking-wide">Category</th>
-                <th className="text-left px-4 py-2.5 font-semibold text-[11px] text-vf-muted uppercase tracking-wide">Family</th>
-                <th className="text-center px-4 py-2.5 font-semibold text-[11px] text-vf-muted uppercase tracking-wide">Business Case</th>
-                <th className="text-center px-4 py-2.5 font-semibold text-[11px] text-vf-muted uppercase tracking-wide">Status</th>
+                <th className="text-left px-4 py-2.5 font-semibold text-[0.6875rem] text-vf-muted uppercase tracking-wide">Product Line</th>
+                <th className="text-left px-4 py-2.5 font-semibold text-[0.6875rem] text-vf-muted uppercase tracking-wide">Category</th>
+                <th className="text-left px-4 py-2.5 font-semibold text-[0.6875rem] text-vf-muted uppercase tracking-wide">Family</th>
+                <th className="text-center px-4 py-2.5 font-semibold text-[0.6875rem] text-vf-muted uppercase tracking-wide">Business Case</th>
+                <th className="text-center px-4 py-2.5 font-semibold text-[0.6875rem] text-vf-muted uppercase tracking-wide">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -534,7 +534,7 @@ export default function BusinessCasePage() {
                   <td className="px-4 py-2.5 text-center"><CaseDot row={r} /></td>
                   <td className="px-4 py-2.5 text-center">
                     {r.status ? (
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${STATUS_STYLE[r.status] || 'bg-gray-500 text-white'}`}>{r.status}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[0.625rem] font-semibold ${STATUS_STYLE[r.status] || 'bg-gray-500 text-white'}`}>{r.status}</span>
                     ) : (
                       <span className="text-vf-muted">—</span>
                     )}
@@ -546,7 +546,7 @@ export default function BusinessCasePage() {
         </div>
       )}
 
-      <div className="flex items-center gap-5 mt-3 text-[11px] text-vf-muted flex-wrap">
+      <div className="flex items-center gap-5 mt-3 text-[0.6875rem] text-vf-muted flex-wrap">
         <span className="font-semibold text-vf-dark">Business case:</span>
         <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-green-500" /> P&L entered</span>
         <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-yellow-400" /> Created, P&L figures not yet entered</span>

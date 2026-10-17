@@ -57,9 +57,9 @@ function UploadZone({ zone }) {
         className="hidden"
         onChange={handleUpload}
       />
-      <div className="text-[32px] mb-2">{zone.emoji}</div>
-      <div className="text-[13px] font-semibold mb-1">{zone.label}</div>
-      <div className="text-[11px] text-vf-muted">{zone.desc}</div>
+      <div className="text-[2rem] mb-2">{zone.emoji}</div>
+      <div className="text-[0.8125rem] font-semibold mb-1">{zone.label}</div>
+      <div className="text-[0.6875rem] text-vf-muted">{zone.desc}</div>
     </div>
   );
 }
@@ -103,7 +103,7 @@ export default function ImportExport() {
       </div>
 
       <div className="bg-white border border-vf-border rounded-[10px] p-4">
-        <div className="text-[13px] font-semibold mb-2.5">Export</div>
+        <div className="text-[0.8125rem] font-semibold mb-2.5">Export</div>
         <div className="flex gap-2.5 flex-wrap">
           {EXPORTS.map((exp) => (
             <button

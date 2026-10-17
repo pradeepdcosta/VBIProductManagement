@@ -11,7 +11,7 @@ const categoryMap = {
 export default function CategoryBadge({ category }) {
   const cls = categoryMap[category] || 'cat-other';
   return (
-    <span className={`${cls} px-2 py-0.5 rounded text-[11px] font-medium whitespace-nowrap inline-block`}>
+    <span className={`${cls} px-2 py-0.5 rounded text-[0.6875rem] font-medium whitespace-nowrap inline-block`}>
       {category}
     </span>
   );

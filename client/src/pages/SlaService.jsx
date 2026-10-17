@@ -43,7 +43,7 @@ export default function SlaService() {
               className="bg-white border border-vf-border rounded-[10px] p-4 cursor-pointer hover:shadow-md transition-shadow"
               onClick={() => openDrawer(product.id)}
             >
-              <h4 className="text-[13px] font-semibold mb-3 text-vf-dark">{product.name}</h4>
+              <h4 className="text-[0.8125rem] font-semibold mb-3 text-vf-dark">{product.name}</h4>
               {[
                 ['Availability', sla.availability],
                 ['MTTR', sla.mttr],
@@ -51,8 +51,8 @@ export default function SlaService() {
                 ['Support Hours', sla.supportHours],
               ].map(([label, value]) => (
                 <div key={label} className="flex justify-between items-center py-1.5 border-b border-[#f0eeea] last:border-b-0">
-                  <span className="text-[11px] text-vf-muted">{label}</span>
-                  <span className="text-[11px] font-medium font-mono">{value}</span>
+                  <span className="text-[0.6875rem] text-vf-muted">{label}</span>
+                  <span className="text-[0.6875rem] font-medium font-mono">{value}</span>
                 </div>
               ))}
             </div>

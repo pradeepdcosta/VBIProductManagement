@@ -12,7 +12,7 @@ export default function OverviewTab({ product }) {
 
   return (
     <div className="bg-white border border-vf-border rounded-lg overflow-hidden">
-      <div className="px-4 py-2.5 border-b border-vf-border bg-vf-surface text-[11px] font-semibold text-vf-muted uppercase tracking-wide">
+      <div className="px-4 py-2.5 border-b border-vf-border bg-vf-surface text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">
         Key Attributes
       </div>
       {rows.map(([label, value]) => (

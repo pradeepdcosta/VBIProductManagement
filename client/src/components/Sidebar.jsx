@@ -59,7 +59,7 @@ export default function Sidebar() {
     <div className="w-[204px] shrink-0 bg-white border-r border-vf-border overflow-y-auto py-3">
       {sections.map((section) => (
         <div key={section.label}>
-          <div className="px-3 pt-1 pb-0.5 uppercase tracking-wider mt-2 text-[11px] font-extrabold text-vf-dark">
+          <div className="px-3 pt-1 pb-0.5 uppercase tracking-wider mt-2 text-[0.6875rem] font-extrabold text-vf-dark">
             {section.label}
           </div>
           {section.items.map((item) => (
@@ -68,7 +68,7 @@ export default function Sidebar() {
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-3.5 py-2 cursor-pointer relative text-[12.5px] font-normal transition-colors select-none ${
+                `flex items-center gap-2 px-3.5 py-2 cursor-pointer relative text-[0.78125rem] font-normal transition-colors select-none ${
                   isActive
                     ? 'bg-red-50 text-vf-red font-medium'
                     : 'text-vf-text hover:bg-[#f7f6f3]'
@@ -86,7 +86,7 @@ export default function Sidebar() {
                   />
                   {item.label}
                   {item.badge && openCount > 0 && (
-                    <span className="ml-auto bg-vf-red text-white rounded-full px-1.5 py-px text-[10px] font-semibold">
+                    <span className="ml-auto bg-vf-red text-white rounded-full px-1.5 py-px text-[0.625rem] font-semibold">
                       {openCount}
                     </span>
                   )}

@@ -79,12 +79,12 @@ export default function MagicLinkPage() {
       <div className="w-full max-w-xl bg-white border border-vf-border rounded-xl shadow-sm overflow-hidden">
         {/* Request header */}
         <div className="px-5 py-4 border-b border-vf-border bg-vf-surface">
-          <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1">
+          <p className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">
             {request.type} · {request.productName}
           </p>
           <h1 className="text-base font-semibold text-vf-text">{request.title}</h1>
           <div className="mt-2 flex items-center gap-2">
-            <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+            <span className={`px-2 py-0.5 rounded-full text-[0.625rem] font-semibold ${
               request.status === 'Open' ? 'bg-blue-100 text-blue-700' :
               request.status === 'In Review' ? 'bg-yellow-100 text-yellow-700' :
               request.status === 'Approved' ? 'bg-green-100 text-green-700' :
@@ -93,7 +93,7 @@ export default function MagicLinkPage() {
             }`}>
               {request.status}
             </span>
-            <span className="text-[11px] text-vf-muted">
+            <span className="text-[0.6875rem] text-vf-muted">
               Submitted {new Date(request.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
             </span>
           </div>
@@ -118,7 +118,7 @@ export default function MagicLinkPage() {
             {/* Submitter */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Your Name</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Your Name</label>
                 <input
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                   value={form.submitterName}
@@ -127,7 +127,7 @@ export default function MagicLinkPage() {
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Your Email</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Your Email</label>
                 <input
                   type="email"
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
@@ -140,7 +140,7 @@ export default function MagicLinkPage() {
 
             {/* Deal */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Deal / Account (if applicable)</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Deal / Account (if applicable)</label>
               <input
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                 value={form.dealAccount}
@@ -151,7 +151,7 @@ export default function MagicLinkPage() {
 
             {/* Description */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Description</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Description</label>
               <textarea
                 className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[80px]"
                 value={form.description}
@@ -162,7 +162,7 @@ export default function MagicLinkPage() {
 
             {/* Justification */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Business Justification</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Business Justification</label>
               <textarea
                 className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[80px]"
                 value={form.justification}
@@ -174,7 +174,7 @@ export default function MagicLinkPage() {
 
             {/* VBI Product Team Feedback — read only */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">
                 VBI Product &amp; Services Feedback
               </label>
               {request.vbiFeedback ? (
@@ -199,7 +199,7 @@ export default function MagicLinkPage() {
         )}
       </div>
 
-      <p className="mt-6 text-[11px] text-vf-muted">
+      <p className="mt-6 text-[0.6875rem] text-vf-muted">
         This link is private — only people with it can access this request.
       </p>
     </div>

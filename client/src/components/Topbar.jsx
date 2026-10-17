@@ -27,12 +27,12 @@ export default function Topbar() {
 
   return (
     <div className="flex items-center px-5 h-[52px] bg-vf-dark text-white border-b-2 border-vf-red shrink-0 gap-4 relative z-40">
-      <div className="text-[15px] font-semibold tracking-tight">
+      <div className="text-[0.9375rem] font-semibold tracking-tight">
         Vodafone <span className="text-vf-red">Business</span>
       </div>
-      <div className="text-xs text-[#aaa] font-normal ml-1">| VBI Product Intelligence Portal</div>
+      <div className="text-[0.9375rem] font-semibold tracking-tight text-[#aaa] ml-1">| VBI Product Intelligence Portal</div>
       <div className="ml-auto flex items-center gap-3">
-        <span className="text-[11px] text-[#888]">VBI · FY27</span>
+        <span className="text-[0.6875rem] text-[#888]">VBI · FY27</span>
         <button
           onClick={() => navigate('/features')}
           className="bg-vf-red border border-vf-red text-white rounded-md px-3 py-1 text-xs cursor-pointer font-sans hover:bg-vf-red-hover"
@@ -45,14 +45,14 @@ export default function Topbar() {
             aria-haspopup="menu"
             aria-expanded={menuOpen}
             title={user?.email}
-            className="w-[30px] h-[30px] bg-vf-red rounded-full flex items-center justify-center text-[11px] font-semibold text-white cursor-pointer hover:ring-2 hover:ring-white/30"
+            className="w-[30px] h-[30px] bg-vf-red rounded-full flex items-center justify-center text-[0.6875rem] font-semibold text-white cursor-pointer hover:ring-2 hover:ring-white/30"
           >
             {initials(user)}
           </button>
           {menuOpen && (
             <div role="menu" className="absolute right-0 top-full mt-2 w-64 bg-white text-vf-text rounded-lg shadow-xl border border-vf-border overflow-hidden">
               <div className="px-4 py-3 border-b border-vf-border">
-                <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide">Signed in as</div>
+                <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide">Signed in as</div>
                 <div className="text-sm font-medium truncate mt-0.5">{user?.email}</div>
               </div>
               <button

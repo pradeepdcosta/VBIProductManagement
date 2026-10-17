@@ -69,7 +69,7 @@ export default function CoverageTab({ product }) {
       <div className="bg-white border border-vf-border rounded-lg overflow-hidden mb-5">
         <table className="w-full text-xs">
           <thead>
-            <tr className="bg-vf-surface border-b border-vf-border text-left text-[10px] text-vf-muted uppercase tracking-wide">
+            <tr className="bg-vf-surface border-b border-vf-border text-left text-[0.625rem] text-vf-muted uppercase tracking-wide">
               <th className="px-3 py-2 font-semibold w-[150px]">Region</th>
               <th className="px-3 py-2 font-semibold text-center w-[80px]">Available</th>
               <th className="px-3 py-2 font-semibold">Countries</th>
@@ -95,7 +95,7 @@ export default function CoverageTab({ product }) {
       <div className="bg-white border border-vf-border rounded-lg overflow-hidden">
         <table className="w-full text-xs">
           <thead>
-            <tr className="bg-vf-surface border-b border-vf-border text-left text-[10px] text-vf-muted uppercase tracking-wide">
+            <tr className="bg-vf-surface border-b border-vf-border text-left text-[0.625rem] text-vf-muted uppercase tracking-wide">
               <th className="px-3 py-2 font-semibold">Distributor</th>
               <th className="px-3 py-2 font-semibold">Regions</th>
               <th className="px-3 py-2 font-semibold text-right">Status</th>
@@ -107,7 +107,7 @@ export default function CoverageTab({ product }) {
                 <td className="px-3 py-2.5 font-medium text-vf-dark">{d.name}</td>
                 <td className="px-3 py-2.5 text-vf-text">{d.regions.join(', ')}</td>
                 <td className="px-3 py-2.5 text-right">
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${d.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>{d.status}</span>
+                  <span className={`px-2 py-0.5 rounded-full text-[0.625rem] font-semibold ${d.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>{d.status}</span>
                 </td>
               </tr>
             ))}

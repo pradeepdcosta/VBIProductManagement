@@ -61,7 +61,7 @@ export default function BusinessCaseTab({ product, lineProducts, onOpenCase }) {
 
   return (
     <div>
-      <SectionTitle right={<span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${STATUS_STYLE[bc.status] || 'bg-gray-500 text-white'}`}>{bc.status}</span>}>
+      <SectionTitle right={<span className={`px-2 py-0.5 rounded-full text-[0.625rem] font-semibold ${STATUS_STYLE[bc.status] || 'bg-gray-500 text-white'}`}>{bc.status}</span>}>
         Business Case · FY27–FY31
       </SectionTitle>
       <div className="grid grid-cols-2 gap-2.5">

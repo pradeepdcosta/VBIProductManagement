@@ -5,14 +5,14 @@ function Attainment({ label, target, achieved }) {
   const bar = pct >= 100 ? 'bg-vf-success' : pct >= 70 ? 'bg-vf-warn' : 'bg-vf-red';
   return (
     <div className="bg-vf-surface border border-vf-border rounded-lg p-4">
-      <div className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-3">{label}</div>
+      <div className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-3">{label}</div>
       <div className="grid grid-cols-2 gap-3 mb-3">
         <div>
-          <div className="text-[10px] text-vf-muted">Target this year</div>
+          <div className="text-[0.625rem] text-vf-muted">Target this year</div>
           <div className="text-lg font-semibold font-mono text-vf-dark">{fmtMoney(target, 'm')}</div>
         </div>
         <div>
-          <div className="text-[10px] text-vf-muted">Achieved so far</div>
+          <div className="text-[0.625rem] text-vf-muted">Achieved so far</div>
           <div className="text-lg font-semibold font-mono text-vf-dark">{fmtMoney(achieved, 'm')}</div>
         </div>
       </div>
@@ -38,7 +38,7 @@ export default function PerformanceTab({ trading }) {
   return (
     <div>
       {rows.some((t) => t.placeholder) && <PlaceholderNote>the same dummy trading profile is shown for every product until real trading data is uploaded.</PlaceholderNote>}
-      <SectionTitle right={<span className="text-[10px] text-vf-muted">{fy} · all regions</span>}>Business Performance</SectionTitle>
+      <SectionTitle right={<span className="text-[0.625rem] text-vf-muted">{fy} · all regions</span>}>Business Performance</SectionTitle>
       <div className="space-y-3">
         <Attainment label="AOV" target={sum('aovTarget')} achieved={sum('aovWonYtd')} />
         <Attainment label="Revenue" target={sum('targetEur')} achieved={sum('actualEur')} />

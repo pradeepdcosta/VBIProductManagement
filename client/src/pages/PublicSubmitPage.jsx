@@ -129,7 +129,7 @@ export default function PublicSubmitPage() {
             </p>
 
             <div className="bg-vf-surface border border-vf-border rounded-lg p-4 text-left mb-4">
-              <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
+              <p className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
                 Your tracking link — bookmark this to update your request
               </p>
               <div className="flex items-center gap-2">
@@ -183,7 +183,7 @@ export default function PublicSubmitPage() {
             {/* Submitter */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Your Name</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Your Name</label>
                 <input
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                   placeholder="Full name"
@@ -192,7 +192,7 @@ export default function PublicSubmitPage() {
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Your Email</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Your Email</label>
                 <input
                   type="email"
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
@@ -206,7 +206,7 @@ export default function PublicSubmitPage() {
             {/* Type + Category */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Request Type</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Request Type</label>
                 <select
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                   value={form.type}
@@ -216,7 +216,7 @@ export default function PublicSubmitPage() {
                 </select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Category</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Category</label>
                 <select
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                   value={form.category}
@@ -235,7 +235,7 @@ export default function PublicSubmitPage() {
             {/* Family + Line */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Family</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Family</label>
                 <select
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red disabled:opacity-40"
                   value={form.productFamily}
@@ -251,7 +251,7 @@ export default function PublicSubmitPage() {
                 </select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Line</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Line</label>
                 <select
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red disabled:opacity-40"
                   value={form.productLine}
@@ -266,7 +266,7 @@ export default function PublicSubmitPage() {
 
             {/* Product Name */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Name <span className="text-vf-red">*</span></label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Name <span className="text-vf-red">*</span></label>
               <input
                 required
                 className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
@@ -279,7 +279,7 @@ export default function PublicSubmitPage() {
             {/* Title + Priority */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Title <span className="text-vf-red">*</span></label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Title <span className="text-vf-red">*</span></label>
                 <input
                   required
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
@@ -289,7 +289,7 @@ export default function PublicSubmitPage() {
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Priority</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Priority</label>
                 <select
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                   value={form.priority}
@@ -303,7 +303,7 @@ export default function PublicSubmitPage() {
             {/* Deal / Account */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Deal / Account (if applicable)</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Deal / Account (if applicable)</label>
                 <input
                   className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red"
                   placeholder="e.g. APAC regional bank RFP"
@@ -315,7 +315,7 @@ export default function PublicSubmitPage() {
 
             {/* Description */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Description</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Description</label>
               <textarea
                 className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[70px]"
                 placeholder="Describe the feature needed, countries required, SLA requirements, timeline..."
@@ -327,7 +327,7 @@ export default function PublicSubmitPage() {
 
             {/* Business Justification */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Business Justification</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Business Justification</label>
               <textarea
                 className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[70px]"
                 placeholder="Revenue at stake, customer name (if permitted), strategic rationale..."
@@ -339,7 +339,7 @@ export default function PublicSubmitPage() {
 
             {/* VBI Feedback */}
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI Product &amp; Services Feedback</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">VBI Product &amp; Services Feedback</label>
               <textarea
                 className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs font-sans focus:outline-none focus:border-vf-red resize-y min-h-[70px]"
                 placeholder="Feedback on existing VBI products and services…"
@@ -352,7 +352,7 @@ export default function PublicSubmitPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="bg-vf-red text-white border-none rounded-lg px-5 py-2 text-[13px] font-medium cursor-pointer font-sans hover:bg-vf-red-hover disabled:opacity-50"
+              className="bg-vf-red text-white border-none rounded-lg px-5 py-2 text-[0.8125rem] font-medium cursor-pointer font-sans hover:bg-vf-red-hover disabled:opacity-50"
             >
               {submitting ? 'Submitting…' : 'Submit Request'}
             </button>
@@ -361,7 +361,7 @@ export default function PublicSubmitPage() {
 
         {/* Shareable page link — for admin to copy and distribute */}
         <div className="mt-6 bg-white border border-vf-border rounded-xl p-4">
-          <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
+          <p className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">
             Share this form — copy the link below to send or post
           </p>
           <div className="flex items-center gap-2">

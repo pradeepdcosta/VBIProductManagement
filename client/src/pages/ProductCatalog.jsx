@@ -116,17 +116,17 @@ export default function ProductCatalog() {
           <div className="grid grid-cols-3 gap-3 mb-6">
             <div className="bg-white border border-vf-border rounded-[10px] px-5 py-4">
               <div className="text-2xl font-semibold text-vf-dark">{totalProducts || '—'}</div>
-              <div className="text-[11px] text-vf-muted mt-0.5 uppercase tracking-wide font-medium">Total Products</div>
+              <div className="text-[0.6875rem] text-vf-muted mt-0.5 uppercase tracking-wide font-medium">Total Products</div>
             </div>
             <div className="bg-white border border-vf-border rounded-[10px] px-5 py-4">
               <div className="text-2xl font-semibold text-vf-dark">{tiles.length || '—'}</div>
-              <div className="text-[11px] text-vf-muted mt-0.5 uppercase tracking-wide font-medium">Categories</div>
+              <div className="text-[0.6875rem] text-vf-muted mt-0.5 uppercase tracking-wide font-medium">Categories</div>
             </div>
             <div className="bg-white border border-vf-border rounded-[10px] px-5 py-4">
               <div className="text-2xl font-semibold text-vf-dark">
                 {summary.reduce((s, c) => s + c.families, 0) || '—'}
               </div>
-              <div className="text-[11px] text-vf-muted mt-0.5 uppercase tracking-wide font-medium">Product Families</div>
+              <div className="text-[0.6875rem] text-vf-muted mt-0.5 uppercase tracking-wide font-medium">Product Families</div>
             </div>
           </div>
 
@@ -150,7 +150,7 @@ export default function ProductCatalog() {
                     >
                       {/* Colour strip */}
                       <div
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold mb-3"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.6875rem] font-semibold mb-3"
                         style={{ background: s.bg, color: s.text, border: `1px solid ${s.border}` }}
                       >
                         <Layers size={11} />
@@ -160,7 +160,7 @@ export default function ProductCatalog() {
                       <div className="flex items-end justify-between">
                         <div>
                           <div className="text-2xl font-bold text-vf-dark">{cat.products}</div>
-                          <div className="text-[11px] text-vf-muted mt-0.5">products</div>
+                          <div className="text-[0.6875rem] text-vf-muted mt-0.5">products</div>
                         </div>
                         <ChevronRight
                           size={18}
@@ -170,13 +170,13 @@ export default function ProductCatalog() {
 
                       <div className="flex gap-3 mt-3 pt-3 border-t border-vf-border">
                         <div>
-                          <div className="text-[13px] font-semibold text-vf-dark">{cat.families}</div>
-                          <div className="text-[10px] text-vf-muted uppercase tracking-wide">Families</div>
+                          <div className="text-[0.8125rem] font-semibold text-vf-dark">{cat.families}</div>
+                          <div className="text-[0.625rem] text-vf-muted uppercase tracking-wide">Families</div>
                         </div>
                         <div className="w-px bg-vf-border" />
                         <div>
-                          <div className="text-[13px] font-semibold text-vf-dark">{cat.lines}</div>
-                          <div className="text-[10px] text-vf-muted uppercase tracking-wide">Lines</div>
+                          <div className="text-[0.8125rem] font-semibold text-vf-dark">{cat.lines}</div>
+                          <div className="text-[0.625rem] text-vf-muted uppercase tracking-wide">Lines</div>
                         </div>
                       </div>
                     </button>
@@ -198,7 +198,7 @@ export default function ProductCatalog() {
             <ChevronRight size={13} className="text-vf-muted" />
             {selectedCategory && (
               <span
-                className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                className="px-2.5 py-1 rounded-full text-[0.6875rem] font-semibold"
                 style={{
                   background: getStyle(selectedCategory.category).bg,
                   color: getStyle(selectedCategory.category).text,
@@ -208,7 +208,7 @@ export default function ProductCatalog() {
                 {selectedCategory.category}
               </span>
             )}
-            <span className="text-[11px] text-vf-muted ml-auto">
+            <span className="text-[0.6875rem] text-vf-muted ml-auto">
               {categoryProducts.length} products · {Object.keys(byFamily).length} families
             </span>
           </div>
@@ -225,8 +225,8 @@ export default function ProductCatalog() {
                 <div key={family} className="bg-white border border-vf-border rounded-xl overflow-hidden">
                   {/* Family header */}
                   <div className="flex items-center gap-2 px-5 py-3 border-b border-vf-border bg-vf-surface">
-                    <span className="text-[12px] font-semibold text-vf-dark">{family}</span>
-                    <span className="ml-1 bg-vf-border text-vf-muted rounded-full px-2 py-px text-[10px] font-semibold">
+                    <span className="text-[0.75rem] font-semibold text-vf-dark">{family}</span>
+                    <span className="ml-1 bg-vf-border text-vf-muted rounded-full px-2 py-px text-[0.625rem] font-semibold">
                       {products.length}
                     </span>
                   </div>
@@ -239,10 +239,10 @@ export default function ProductCatalog() {
                         onClick={() => openDrawer(p.id)}
                         className="bg-white px-4 py-3 cursor-pointer hover:bg-[#fdf9f9] transition-colors group"
                       >
-                        <div className="text-[13px] font-medium text-vf-text group-hover:text-vf-red transition-colors leading-snug">
+                        <div className="text-[0.8125rem] font-medium text-vf-text group-hover:text-vf-red transition-colors leading-snug">
                           {p.name}
                         </div>
-                        <div className="text-[11px] text-vf-muted mt-0.5 truncate">{p.productLine}</div>
+                        <div className="text-[0.6875rem] text-vf-muted mt-0.5 truncate">{p.productLine}</div>
                       </div>
                     ))}
                   </div>

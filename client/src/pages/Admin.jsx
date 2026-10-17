@@ -24,7 +24,7 @@ function Stat({ label, value, tone }) {
   return (
     <div className="bg-vf-surface rounded-lg px-3 py-2.5">
       <div className={`text-xl font-bold font-mono leading-none ${color}`}>{value}</div>
-      <div className="text-[10px] text-vf-muted uppercase tracking-wide font-semibold mt-1">{label}</div>
+      <div className="text-[0.625rem] text-vf-muted uppercase tracking-wide font-semibold mt-1">{label}</div>
     </div>
   );
 }
@@ -62,7 +62,7 @@ function ImportPanel({ title, description, accept = '.xlsx', onPreview, onApply,
       <div className="flex items-end gap-3 flex-wrap">
         {extraControls}
         <div className="flex-1 min-w-[260px]">
-          <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">File (.xlsx)</label>
+          <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">File (.xlsx)</label>
           <input
             ref={fileRef}
             type="file"
@@ -84,7 +84,7 @@ function ImportPanel({ title, description, accept = '.xlsx', onPreview, onApply,
 
       {preview && !result && (
         <div className="mt-5 border-t border-vf-border pt-4">
-          <div className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-3">Preview — nothing has been changed yet</div>
+          <div className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-3">Preview — nothing has been changed yet</div>
           {renderSummary(preview)}
           <div className="flex items-center gap-2 mt-4">
             <button
@@ -229,7 +229,7 @@ function ProductFormPanel({ product, products, onClose, onSaved, onDeleted }) {
 
   const inputCls = 'w-full border border-vf-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-vf-red bg-white';
   const label = (text, required) => (
-    <label className="block text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1">
+    <label className="block text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">
       {text}{required && <span className="text-vf-red ml-0.5">*</span>}
     </label>
   );
@@ -241,7 +241,7 @@ function ProductFormPanel({ product, products, onClose, onSaved, onDeleted }) {
         <div className="px-6 py-4 border-b border-vf-border flex items-center justify-between flex-shrink-0">
           <div>
             <h3 className="text-base font-semibold text-vf-dark">{isEdit ? 'Edit product' : 'Add product'}</h3>
-            {isEdit && product.offeringId && <div className="text-[11px] font-mono text-vf-muted mt-0.5">{product.offeringId}</div>}
+            {isEdit && product.offeringId && <div className="text-[0.6875rem] font-mono text-vf-muted mt-0.5">{product.offeringId}</div>}
           </div>
           <button onClick={onClose} className="text-vf-muted hover:text-vf-dark text-2xl leading-none">×</button>
         </div>
@@ -321,7 +321,7 @@ function ProductFormPanel({ product, products, onClose, onSaved, onDeleted }) {
             <div className="border border-vf-border rounded-lg px-3 py-3 flex items-center justify-between gap-3">
               <div>
                 <div className="text-sm font-medium text-vf-dark">Show in Product Catalog</div>
-                <div className="text-[11px] text-vf-muted mt-0.5">
+                <div className="text-[0.6875rem] text-vf-muted mt-0.5">
                   {showChoice === undefined
                     ? `Following the rule (Portal List = Yes, or New VBI Checked = Yes / Move to VBI)`
                     : 'Set manually — kept on future uploads'}
@@ -346,7 +346,7 @@ function ProductFormPanel({ product, products, onClose, onSaved, onDeleted }) {
                 {confirmDelete ? 'Confirm delete' : 'Delete'}
               </button>
             )}
-            {confirmDelete && <span className="text-[11px] text-red-600 leading-tight">Also deletes its costs, SLA, coverage, trading and business case.</span>}
+            {confirmDelete && <span className="text-[0.6875rem] text-red-600 leading-tight">Also deletes its costs, SLA, coverage, trading and business case.</span>}
             <div className="flex-1" />
             <button type="button" onClick={onClose} className="text-sm font-medium text-vf-muted hover:text-vf-dark px-3 py-2">Cancel</button>
             <button type="submit" disabled={saving} className="text-sm font-semibold bg-vf-red text-white px-5 py-2 rounded-lg hover:bg-vf-red-hover disabled:opacity-50">
@@ -464,7 +464,7 @@ function TaxonomyTab() {
 
       <div className="bg-white border border-vf-border rounded-[10px] overflow-hidden">
         <div className="px-4 py-3 border-b border-vf-border bg-vf-surface flex items-center gap-2 flex-wrap">
-          <div className="text-[13px] font-semibold text-vf-dark mr-2">
+          <div className="text-[0.8125rem] font-semibold text-vf-dark mr-2">
             All products <span className="text-vf-muted font-normal">· {products.length} total · <span className="text-vf-success font-semibold">{shownCount} shown</span> in catalog</span>
           </div>
           <div className="flex-1" />
@@ -501,7 +501,7 @@ function TaxonomyTab() {
           <div className="max-h-[620px] overflow-auto">
             <table className="w-full text-xs">
               <thead className="sticky top-0 bg-white z-10 shadow-[0_1px_0_#E2E0DB]">
-                <tr className="text-left text-[10px] text-vf-muted uppercase tracking-wide">
+                <tr className="text-left text-[0.625rem] text-vf-muted uppercase tracking-wide">
                   <th className="px-4 py-2 font-semibold w-[90px]">In catalog</th>
                   <th className="px-3 py-2 font-semibold">Product</th>
                   <th className="px-3 py-2 font-semibold">Portfolio</th>
@@ -519,14 +519,14 @@ function TaxonomyTab() {
                     <td className="px-4 py-2">
                       <div className="flex items-center gap-1.5">
                         <Toggle on={p.showInCatalog} disabled={saving === p.id} onChange={() => toggle(p)} />
-                        {p.manualVisibility && <span title="Set manually — kept on future uploads" className="text-[9px] font-semibold text-vf-muted uppercase">manual</span>}
+                        {p.manualVisibility && <span title="Set manually — kept on future uploads" className="text-[0.5625rem] font-semibold text-vf-muted uppercase">manual</span>}
                       </div>
                     </td>
                     <td className="px-3 py-2">
                       <div className={`font-medium ${p.showInCatalog ? 'text-vf-dark' : ''}`}>{p.name}</div>
-                      <div className="text-[10px] font-mono text-vf-muted">
+                      <div className="text-[0.625rem] font-mono text-vf-muted">
                         {p.offeringId || '—'}
-                        {p.addedInPortal && <span className="ml-1.5 font-sans font-semibold uppercase text-[9px] text-vf-accent">added in portal</span>}
+                        {p.addedInPortal && <span className="ml-1.5 font-sans font-semibold uppercase text-[0.5625rem] text-vf-accent">added in portal</span>}
                       </div>
                     </td>
                     <td className="px-3 py-2 whitespace-nowrap">{p.category}</td>
@@ -539,7 +539,7 @@ function TaxonomyTab() {
                       <button
                         onClick={() => setEditing(p)}
                         title="Edit product"
-                        className="flex items-center gap-1 text-[11px] font-medium text-vf-muted hover:text-vf-dark border border-vf-border rounded px-2 py-0.5 hover:bg-vf-surface"
+                        className="flex items-center gap-1 text-[0.6875rem] font-medium text-vf-muted hover:text-vf-dark border border-vf-border rounded px-2 py-0.5 hover:bg-vf-surface"
                       >
                         <Pencil size={11} /> Edit
                       </button>
@@ -554,7 +554,7 @@ function TaxonomyTab() {
           </div>
         )}
       </div>
-      <div className="flex items-center gap-4 text-[11px] text-vf-muted">
+      <div className="flex items-center gap-4 text-[0.6875rem] text-vf-muted">
         <span className="flex items-center gap-1"><Eye size={12} /> Shown products appear in Product Catalog and the filter bar</span>
         <span className="flex items-center gap-1"><EyeOff size={12} /> Hidden products stay stored here but are not displayed</span>
       </div>
@@ -604,7 +604,7 @@ function NpdTab() {
       renderSummary={(s) => <NpdSummary s={s} />}
       extraControls={(
         <div>
-          <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">NPD year</label>
+          <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">NPD year</label>
           <select className="border border-vf-border rounded-md px-2.5 py-1.5 text-xs bg-white focus:outline-none focus:border-vf-red" value={fy} onChange={(e) => setFy(e.target.value)}>
             {fyOptions.map((y) => <option key={y} value={y}>{y}</option>)}
           </select>
@@ -642,7 +642,7 @@ function PasswordInput({ value, onChange, autoFocus, id }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
-      <button type="button" onClick={() => setShow((s) => !s)} className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-medium text-vf-muted hover:text-vf-dark">
+      <button type="button" onClick={() => setShow((s) => !s)} className="absolute right-2 top-1/2 -translate-y-1/2 text-[0.6875rem] font-medium text-vf-muted hover:text-vf-dark">
         {show ? 'Hide' : 'Show'}
       </button>
     </div>
@@ -713,15 +713,15 @@ function UsersTab() {
   };
 
   const inputCls = 'w-full border border-vf-border rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:border-vf-red';
-  const btn = 'text-[11px] font-medium border border-vf-border rounded px-2 py-1 hover:bg-vf-surface disabled:opacity-40 whitespace-nowrap';
+  const btn = 'text-[0.6875rem] font-medium border border-vf-border rounded px-2 py-1 hover:bg-vf-surface disabled:opacity-40 whitespace-nowrap';
 
   return (
     <div className="space-y-4">
       <div className="bg-white border border-vf-border rounded-[10px] overflow-hidden">
         <div className="px-4 py-3 border-b border-vf-border bg-vf-surface flex items-center gap-3">
           <div>
-            <div className="text-[13px] font-semibold text-vf-dark">Portal logins <span className="text-vf-muted font-normal">· {users.length}</span></div>
-            <div className="text-[11px] text-vf-muted mt-0.5">Everyone signs in with their email address and has the same access. Passwords are stored encrypted and can't be viewed — only reset.</div>
+            <div className="text-[0.8125rem] font-semibold text-vf-dark">Portal logins <span className="text-vf-muted font-normal">· {users.length}</span></div>
+            <div className="text-[0.6875rem] text-vf-muted mt-0.5">Everyone signs in with their email address and has the same access. Passwords are stored encrypted and can't be viewed — only reset.</div>
           </div>
           <div className="flex-1" />
           {!adding && (
@@ -736,22 +736,22 @@ function UsersTab() {
         {adding && (
           <form onSubmit={addUser} className="px-4 py-4 border-b border-vf-border grid grid-cols-[1.4fr_1fr_1fr_auto] gap-3 items-end">
             <div>
-              <label htmlFor="nu-email" className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Email <span className="text-vf-red">*</span></label>
+              <label htmlFor="nu-email" className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Email <span className="text-vf-red">*</span></label>
               <input id="nu-email" type="email" required autoFocus className={inputCls} placeholder="name@vodafone.com" value={newUser.email} onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
             </div>
             <div>
-              <label htmlFor="nu-name" className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Name</label>
+              <label htmlFor="nu-name" className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Name</label>
               <input id="nu-name" className={inputCls} value={newUser.name} onChange={(e) => setNewUser({ ...newUser, name: e.target.value })} />
             </div>
             <div>
-              <label htmlFor="nu-password" className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Password <span className="text-vf-red">*</span></label>
+              <label htmlFor="nu-password" className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Password <span className="text-vf-red">*</span></label>
               <PasswordInput id="nu-password" value={newUser.password} onChange={(v) => setNewUser({ ...newUser, password: v })} />
             </div>
             <div className="flex gap-2">
               <button type="button" onClick={() => { setAdding(false); setError(null); }} className="text-xs text-vf-muted hover:text-vf-dark px-2 py-1.5">Cancel</button>
               <button type="submit" disabled={busy} className="bg-vf-red text-white rounded-md px-4 py-1.5 text-xs font-semibold hover:bg-vf-red-hover disabled:opacity-50">{busy ? 'Adding…' : 'Add user'}</button>
             </div>
-            <div className="col-span-4 text-[11px] text-vf-muted -mt-1">At least 8 characters. Share the password with the person securely — they can't reset it themselves.</div>
+            <div className="col-span-4 text-[0.6875rem] text-vf-muted -mt-1">At least 8 characters. Share the password with the person securely — they can't reset it themselves.</div>
           </form>
         )}
 
@@ -761,7 +761,7 @@ function UsersTab() {
           <div className="overflow-x-auto">
           <table className="w-full text-xs min-w-[760px]">
             <thead>
-              <tr className="text-left text-[10px] text-vf-muted uppercase tracking-wide border-b border-vf-border">
+              <tr className="text-left text-[0.625rem] text-vf-muted uppercase tracking-wide border-b border-vf-border">
                 <th className="px-4 py-2 font-semibold">Email</th>
                 <th className="px-3 py-2 font-semibold">Name</th>
                 <th className="px-3 py-2 font-semibold">Status</th>
@@ -775,18 +775,18 @@ function UsersTab() {
                 <tr key={u.id} className={`border-t border-[#f0eeea] align-top ${u.active ? '' : 'text-vf-muted'}`}>
                   <td className="px-4 py-2.5 font-medium">
                     {u.email}
-                    {u.isYou && <span className="ml-1.5 text-[9px] font-semibold uppercase text-vf-accent">you</span>}
+                    {u.isYou && <span className="ml-1.5 text-[0.5625rem] font-semibold uppercase text-vf-accent">you</span>}
                     {resetFor === u.id && (
                       <form onSubmit={saveReset} className="flex items-center gap-2 mt-2 max-w-[360px]">
                         <div className="flex-1"><PasswordInput autoFocus value={resetPassword} onChange={setResetPassword} /></div>
-                        <button type="submit" disabled={busy} className="bg-vf-dark text-white rounded-md px-3 py-1.5 text-[11px] font-semibold disabled:opacity-50">Save</button>
-                        <button type="button" onClick={() => { setResetFor(null); setResetPassword(''); }} className="text-[11px] text-vf-muted">Cancel</button>
+                        <button type="submit" disabled={busy} className="bg-vf-dark text-white rounded-md px-3 py-1.5 text-[0.6875rem] font-semibold disabled:opacity-50">Save</button>
+                        <button type="button" onClick={() => { setResetFor(null); setResetPassword(''); }} className="text-[0.6875rem] text-vf-muted">Cancel</button>
                       </form>
                     )}
                   </td>
                   <td className="px-3 py-2.5">{u.name || '—'}</td>
                   <td className="px-3 py-2.5">
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${u.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{u.active ? 'Active' : 'Deactivated'}</span>
+                    <span className={`px-2 py-0.5 rounded-full text-[0.625rem] font-semibold ${u.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{u.active ? 'Active' : 'Deactivated'}</span>
                   </td>
                   <td className="px-3 py-2.5 whitespace-nowrap">{fmtWhen(u.lastLoginAt)}</td>
                   <td className="px-3 py-2.5 whitespace-nowrap">{fmtWhen(u.createdAt)}</td>
@@ -800,7 +800,7 @@ function UsersTab() {
                             disabled={busy}
                             onClick={() => remove(u)}
                             onBlur={() => setConfirmRemove(null)}
-                            className={`text-[11px] font-medium rounded px-2 py-1 border disabled:opacity-40 ${confirmRemove === u.id ? 'bg-red-600 text-white border-red-600' : 'text-red-600 border-red-200 hover:bg-red-50'}`}
+                            className={`text-[0.6875rem] font-medium rounded px-2 py-1 border disabled:opacity-40 ${confirmRemove === u.id ? 'bg-red-600 text-white border-red-600' : 'text-red-600 border-red-200 hover:bg-red-50'}`}
                           >
                             {confirmRemove === u.id ? 'Confirm remove' : 'Remove'}
                           </button>

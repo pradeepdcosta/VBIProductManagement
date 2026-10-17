@@ -63,7 +63,7 @@ function ActionForm({ initial, options, onCancel, onSave, saving }) {
   const [form, setForm] = useState(initial);
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const inputCls = 'w-full border border-vf-border rounded-md px-2.5 py-1.5 text-xs focus:outline-none focus:border-vf-red bg-white';
-  const label = (t, req) => <label className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">{t}{req && <span className="text-vf-red ml-0.5">*</span>}</label>;
+  const label = (t, req) => <label className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">{t}{req && <span className="text-vf-red ml-0.5">*</span>}</label>;
 
   return (
     <form
@@ -181,7 +181,7 @@ function CostActions({ item, onChanged }) {
       <div className="flex items-center justify-between mb-1">
         <div className="text-xs font-bold text-vf-dark uppercase tracking-wide">Cost Reduction Actions</div>
         {editing === null && (
-          <button onClick={() => { setEditing('new'); setError(null); }} className="flex items-center gap-1 bg-vf-red text-white rounded-md px-2.5 py-1 text-[11px] font-semibold hover:bg-vf-red-hover">
+          <button onClick={() => { setEditing('new'); setError(null); }} className="flex items-center gap-1 bg-vf-red text-white rounded-md px-2.5 py-1 text-[0.6875rem] font-semibold hover:bg-vf-red-hover">
             <Plus size={12} /> Add action
           </button>
         )}
@@ -190,7 +190,7 @@ function CostActions({ item, onChanged }) {
       {live.length > 0 && (
         <div className="mb-3">
           <div className="text-sm font-bold text-green-700 font-mono">Planned savings: {fmtK(totalSavings)}</div>
-          <div className="text-[10px] text-vf-muted mt-0.5">
+          <div className="text-[0.625rem] text-vf-muted mt-0.5">
             {Object.entries(byImpact).map(([t, v]) => `${t} ${fmtK(v)}`).join(' · ')}
             {item.grandTotal > 0 && ` · ${pctOf(totalSavings, item.grandTotal)}% of total cost`}
           </div>
@@ -218,20 +218,20 @@ function CostActions({ item, onChanged }) {
                 <button onClick={() => { setEditing(a.id); setError(null); }} title="Edit action" className="opacity-0 group-hover:opacity-100 text-vf-muted hover:text-vf-dark p-0.5"><Pencil size={12} /></button>
               </div>
               <div className="flex items-center gap-1.5 flex-wrap mb-1.5">
-                <span className={`px-2 py-0.5 rounded border text-[10px] font-semibold ${IMPACT_STYLE[a.impactType] || 'bg-gray-50 text-gray-600 border-gray-200'}`}>{a.impactType}</span>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${ACTION_STATUSES[a.status] || 'bg-gray-100 text-gray-600'}`}>{a.status}</span>
+                <span className={`px-2 py-0.5 rounded border text-[0.625rem] font-semibold ${IMPACT_STYLE[a.impactType] || 'bg-gray-50 text-gray-600 border-gray-200'}`}>{a.impactType}</span>
+                <span className={`px-2 py-0.5 rounded-full text-[0.625rem] font-medium ${ACTION_STATUSES[a.status] || 'bg-gray-100 text-gray-600'}`}>{a.status}</span>
                 <span className="ml-auto text-sm font-bold font-mono text-green-700">{fmtK(a.savings)}</span>
               </div>
-              <div className="flex items-center justify-between text-[10px] text-vf-muted">
+              <div className="flex items-center justify-between text-[0.625rem] text-vf-muted">
                 <span>{a.owner || '—'}</span>
                 <span>{a.targetDate ? new Date(a.targetDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' }) : 'TBC'}</span>
               </div>
-              {a.notes && <div className="text-[11px] text-vf-muted mt-1.5 leading-snug whitespace-pre-line">{a.notes}</div>}
+              {a.notes && <div className="text-[0.6875rem] text-vf-muted mt-1.5 leading-snug whitespace-pre-line">{a.notes}</div>}
               <div className="flex justify-end mt-1.5">
                 <button
                   onClick={() => remove(a)}
                   onBlur={() => setConfirmDelete(null)}
-                  className={`text-[10px] font-medium rounded px-1.5 py-0.5 ${confirmDelete === a.id ? 'bg-red-600 text-white' : 'text-vf-muted hover:text-red-600 opacity-0 group-hover:opacity-100'}`}
+                  className={`text-[0.625rem] font-medium rounded px-1.5 py-0.5 ${confirmDelete === a.id ? 'bg-red-600 text-white' : 'text-vf-muted hover:text-red-600 opacity-0 group-hover:opacity-100'}`}
                 >
                   {confirmDelete === a.id ? 'Confirm delete' : 'Delete'}
                 </button>
@@ -634,7 +634,7 @@ export default function CostManagement() {
                   <td className="py-2 px-4 font-medium text-vf-dark">
                     {r.productLine}
                     {r.actionCount > 0 && (
-                      <span className="ml-2 text-[10px] font-semibold text-green-700 bg-green-50 border border-green-200 rounded px-1.5 py-px whitespace-nowrap">
+                      <span className="ml-2 text-[0.625rem] font-semibold text-green-700 bg-green-50 border border-green-200 rounded px-1.5 py-px whitespace-nowrap">
                         {r.actionCount} action{r.actionCount === 1 ? '' : 's'} · {fmtK(r.plannedSavings)}
                       </span>
                     )}

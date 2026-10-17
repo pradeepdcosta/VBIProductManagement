@@ -57,7 +57,7 @@ export default function FilterBar() {
 
   return (
     <div className="bg-white border-b border-vf-border px-4 py-2 flex items-center gap-2.5 flex-wrap">
-      <span className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide whitespace-nowrap">
+      <span className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide whitespace-nowrap">
         Filter
       </span>
       <select
@@ -109,7 +109,7 @@ export default function FilterBar() {
           Clear
         </button>
       )}
-      <span className="text-[11px] text-vf-muted whitespace-nowrap">
+      <span className="text-[0.6875rem] text-vf-muted whitespace-nowrap">
         {totalProducts} results
       </span>
     </div>

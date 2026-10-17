@@ -56,10 +56,10 @@ export default function ProductDrawer() {
         {/* Header */}
         <div className="px-5 py-4 border-b border-vf-border flex items-start gap-3 shrink-0 bg-vf-dark text-white">
           <div className="flex-1">
-            <div className="text-[11px] text-[#aaa] mb-0.5">
+            <div className="text-[0.6875rem] text-[#aaa] mb-0.5">
               {p.category} → {p.family} → {p.productLine}
             </div>
-            <div className="text-[15px] font-semibold">{p.name}</div>
+            <div className="text-[0.9375rem] font-semibold">{p.name}</div>
           </div>
           <button
             onClick={closeDrawer}

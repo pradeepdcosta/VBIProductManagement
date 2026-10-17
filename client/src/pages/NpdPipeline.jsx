@@ -115,7 +115,7 @@ const NPD_IMPORTANCE_STYLE = {
 function NpdImportanceBadge({ level, prefix = 'VBI importance' }) {
   if (!level) return null;
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${NPD_IMPORTANCE_STYLE[level] || NPD_IMPORTANCE_STYLE['Not rated']}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[0.6875rem] font-semibold ${NPD_IMPORTANCE_STYLE[level] || NPD_IMPORTANCE_STYLE['Not rated']}`}>
       {prefix}: {level}
     </span>
   );
@@ -132,7 +132,7 @@ const NEXT_OUTCOME = { Pending: 'Approved', Approved: 'Not approved', 'Not appro
 function DbReviewControl({ review, onChange }) {
   return (
     <div>
-      <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">Budget review (VBI)</div>
+      <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">Budget review (VBI)</div>
       <div className="flex flex-wrap gap-1.5">
         {DB_STAGES.map((s) => {
           const outcome = review?.[s.key] || 'Pending';
@@ -141,7 +141,7 @@ function DbReviewControl({ review, onChange }) {
               key={s.key}
               onClick={() => onChange({ ...Object.fromEntries(DB_STAGES.map((x) => [x.key, review?.[x.key] || null])), [s.key]: NEXT_OUTCOME[outcome] })}
               title="Click to change: Pending → Approved → Not approved"
-              className={`px-2 py-1 rounded border text-[11px] font-semibold transition-colors hover:shadow-sm ${OUTCOME_STYLE[outcome]}`}
+              className={`px-2 py-1 rounded border text-[0.6875rem] font-semibold transition-colors hover:shadow-sm ${OUTCOME_STYLE[outcome]}`}
             >
               {s.label}: {outcome}
             </button>
@@ -167,7 +167,7 @@ function StatusBadge({ status }) {
 function CategoryTag({ category }) {
   const color = CATEGORY_COLORS[category] || '#6B6A66';
   return (
-    <span className="inline-block px-2 py-0.5 rounded text-[11px] font-medium text-white" style={{ backgroundColor: color }}>
+    <span className="inline-block px-2 py-0.5 rounded text-[0.6875rem] font-medium text-white" style={{ backgroundColor: color }}>
       {category}
     </span>
   );
@@ -176,7 +176,7 @@ function CategoryTag({ category }) {
 function RiskBadge({ level }) {
   const c = RISK_CONFIG[level] || RISK_CONFIG.Medium;
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold ${c.bg} ${c.text}`}>
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6875rem] font-semibold ${c.bg} ${c.text}`}>
       <span className={`w-1.5 h-1.5 rounded-full ${c.dot}`} />
       {c.label}
     </span>
@@ -188,7 +188,7 @@ function ReviewFlag({ label, value }) {
   const yes = /^yes/i.test(value);
   const no = /^no/i.test(value);
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium border ${yes ? 'bg-green-50 text-green-800 border-green-200' : no ? 'bg-gray-50 text-gray-600 border-gray-200' : 'bg-vf-surface text-vf-dark border-vf-border'}`}>
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[0.6875rem] font-medium border ${yes ? 'bg-green-50 text-green-800 border-green-200' : no ? 'bg-gray-50 text-gray-600 border-gray-200' : 'bg-vf-surface text-vf-dark border-vf-border'}`}>
       <span className="text-vf-muted font-normal">{label}:</span> {value}
     </span>
   );
@@ -208,7 +208,7 @@ const importanceLabel = (level) => (level === 'Mid' ? 'Medium' : level);
 function ImportanceBadge({ level }) {
   if (!level) return null;
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${IMPORTANCE_STYLE[level] || IMPORTANCE_STYLE.Unrated}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[0.6875rem] font-semibold ${IMPORTANCE_STYLE[level] || IMPORTANCE_STYLE.Unrated}`}>
       VBI: {importanceLabel(level)}
     </span>
   );
@@ -292,9 +292,9 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
         <div className="flex items-center gap-3 text-xs">
           <span className="text-vf-muted"><span className="font-bold text-green-600">{completeCount}</span> of {STAGE_KEYS.length} complete</span>
           {inProgressCount > 0 && <span className="text-vf-muted"><span className="font-bold text-blue-600">{inProgressCount}</span> in progress</span>}
-          {saving && <span className="text-vf-muted italic text-[11px]">Saving…</span>}
-          {saveError && <span className="text-[11px] text-red-600 font-medium">Save failed — change undone</span>}
-          <span className="text-[11px] text-vf-muted italic">Click any stage to update</span>
+          {saving && <span className="text-vf-muted italic text-[0.6875rem]">Saving…</span>}
+          {saveError && <span className="text-[0.6875rem] text-red-600 font-medium">Save failed — change undone</span>}
+          <span className="text-[0.6875rem] text-vf-muted italic">Click any stage to update</span>
         </div>
       </div>
 
@@ -323,8 +323,8 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
               <div className={`text-xs mt-0.5 text-center font-mono font-medium ${overdue ? 'text-red-500' : 'text-vf-muted'}`}>
                 {s.date ? new Date(s.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : 'TBC'}
               </div>
-              {overdue && <div className="text-[10px] text-red-400 font-semibold text-center">Overdue</div>}
-              {s.owner && <div className="text-[10px] text-vf-muted text-center truncate max-w-[72px] mt-0.5">{s.owner}</div>}
+              {overdue && <div className="text-[0.625rem] text-red-400 font-semibold text-center">Overdue</div>}
+              {s.owner && <div className="text-[0.625rem] text-vf-muted text-center truncate max-w-[72px] mt-0.5">{s.owner}</div>}
             </div>
           );
         })}
@@ -342,14 +342,14 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
             <div className="flex items-start justify-between mb-3 gap-4">
               <div>
                 <span className="text-sm font-semibold text-vf-dark">{STAGE_LABELS[stageIdx]}</span>
-                <p className="text-[11px] text-vf-muted mt-0.5 leading-relaxed max-w-lg">{STAGE_DEFINITIONS[stageIdx]}</p>
+                <p className="text-[0.6875rem] text-vf-muted mt-0.5 leading-relaxed max-w-lg">{STAGE_DEFINITIONS[stageIdx]}</p>
               </div>
               <button onClick={() => setActiveKey(null)} className="text-vf-muted hover:text-vf-dark text-lg leading-none px-1 flex-shrink-0">×</button>
             </div>
 
             {/* Status pills */}
             <div className="mb-3">
-              <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-2">Status — stages are independent and can be updated in any order</div>
+              <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-2">Status — stages are independent and can be updated in any order</div>
               <div className="flex flex-wrap gap-2">
                 {STAGE_STATUS_OPTIONS.map((opt) => (
                   <button
@@ -366,7 +366,7 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
 
             <div className="grid grid-cols-2 gap-3 mb-3">
               <div>
-                <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1">Target / Actual Date</div>
+                <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">Target / Actual Date</div>
                 <input
                   type="date"
                   className="w-full border border-vf-border rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:border-vf-red bg-white"
@@ -375,7 +375,7 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
                 />
               </div>
               <div>
-                <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1">Stage Owner</div>
+                <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">Stage Owner</div>
                 <input
                   type="text"
                   placeholder="Name or team"
@@ -387,7 +387,7 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
             </div>
 
             <div>
-              <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1">Notes / Blockers</div>
+              <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">Notes / Blockers</div>
               <textarea
                 rows={2}
                 placeholder="Any blockers, dependencies, or context…"
@@ -460,50 +460,50 @@ function AddEpicModal({ initiative, onClose, onCreated }) {
           )}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1 col-span-2">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Epic Name / ID *</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Epic Name / ID *</label>
               <input required className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={form.epicName} onChange={(e) => set('epicName', e.target.value)} placeholder="e.g. EP-001 VBTS Ordering Integration" />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Epic Type</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Epic Type</label>
               <select className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red bg-white" value={form.epicType} onChange={(e) => set('epicType', e.target.value)}>
                 <option value="">Select type…</option>
                 {EPIC_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Canvas</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Canvas</label>
               <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={form.productCanvas} onChange={(e) => set('productCanvas', e.target.value)} placeholder="Canvas name" />
             </div>
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Description — what this epic delivers</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Description — what this epic delivers</label>
             <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={form.description} onChange={(e) => set('description', e.target.value)} placeholder="Brief description of scope and deliverable…" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">CAPEX Draw (€M)</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">CAPEX Draw (€M)</label>
               <input type="number" step="0.1" className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={form.capex} onChange={(e) => set('capex', e.target.value)} placeholder="0.0" />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">OPEX Draw (€M)</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">OPEX Draw (€M)</label>
               <input type="number" step="0.1" className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={form.opex} onChange={(e) => set('opex', e.target.value)} placeholder="0.0" />
             </div>
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Markets Agreed for This Launch</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Markets Agreed for This Launch</label>
             <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={form.marketsAgreed} onChange={(e) => set('marketsAgreed', e.target.value)} placeholder="e.g. UK, DE, NL, AU" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Planned Go-Live — Overall</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Planned Go-Live — Overall</label>
               <input type="date" className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={form.goLiveDateOverall} onChange={(e) => set('goLiveDateOverall', e.target.value)} />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Per-Market Go-Live Notes</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Per-Market Go-Live Notes</label>
               <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={form.goLiveDatePerMarket} onChange={(e) => set('goLiveDatePerMarket', e.target.value)} placeholder="e.g. UK: Aug 26, DE: Sep 26…" />
             </div>
           </div>
@@ -692,10 +692,10 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               {epic.epicType && (
-                <span className="text-[11px] font-semibold bg-white/20 px-2 py-0.5 rounded text-white">{epic.epicType}</span>
+                <span className="text-[0.6875rem] font-semibold bg-white/20 px-2 py-0.5 rounded text-white">{epic.epicType}</span>
               )}
               {epic.epicCategory && (
-                <span className="text-[11px] font-semibold bg-white/20 px-2 py-0.5 rounded text-white">{epic.epicCategory}</span>
+                <span className="text-[0.6875rem] font-semibold bg-white/20 px-2 py-0.5 rounded text-white">{epic.epicCategory}</span>
               )}
               <RiskBadge level={epic.riskLevel} />
               <ImportanceBadge level={epic.vbiImportance} />
@@ -712,7 +712,7 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
                 <button
                   key={level}
                   onClick={() => updateRisk(level)}
-                  className={`px-2.5 py-1 rounded text-[11px] font-semibold transition-all ${epic.riskLevel === level ? 'bg-white text-vf-dark' : 'bg-white/10 text-white hover:bg-white/20'}`}
+                  className={`px-2.5 py-1 rounded text-[0.6875rem] font-semibold transition-all ${epic.riskLevel === level ? 'bg-white text-vf-dark' : 'bg-white/10 text-white hover:bg-white/20'}`}
                 >
                   {level}
                 </button>
@@ -750,52 +750,52 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
           <div className="px-6 py-5 space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1 col-span-2">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Epic Name *</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Epic Name *</label>
                 <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.epicName} onChange={(e) => hSet('epicName', e.target.value)} />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Epic Type</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Epic Type</label>
                 <select className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red bg-white" value={headerForm.epicType} onChange={(e) => hSet('epicType', e.target.value)}>
                   <option value="">Select…</option>
                   {EPIC_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Product Canvas</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Product Canvas</label>
                 <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.productCanvas} onChange={(e) => hSet('productCanvas', e.target.value)} />
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Description</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Description</label>
               <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={headerForm.description} onChange={(e) => hSet('description', e.target.value)} />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">CAPEX Draw (€M)</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">CAPEX Draw (€M)</label>
                 <input type="number" step="0.1" className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.capex} onChange={(e) => hSet('capex', e.target.value)} />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">OPEX Draw (€M)</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">OPEX Draw (€M)</label>
                 <input type="number" step="0.1" className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.opex} onChange={(e) => hSet('opex', e.target.value)} />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Markets Agreed</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Markets Agreed</label>
                 <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.marketsAgreed} onChange={(e) => hSet('marketsAgreed', e.target.value)} placeholder="e.g. UK, DE, NL" />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Planned Go-Live (Overall)</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Planned Go-Live (Overall)</label>
                 <input type="date" className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.goLiveDateOverall} onChange={(e) => hSet('goLiveDateOverall', e.target.value)} />
               </div>
               <div className="flex flex-col gap-1 col-span-2">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Per-Market Go-Live Notes</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Per-Market Go-Live Notes</label>
                 <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.goLiveDatePerMarket} onChange={(e) => hSet('goLiveDatePerMarket', e.target.value)} placeholder="e.g. UK: Aug 26, DE: Sep 26…" />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Epic Category</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Epic Category</label>
                 <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.epicCategory} onChange={(e) => hSet('epicCategory', e.target.value)} placeholder="e.g. New Capability/Feature" />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI Importance</label>
+                <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">VBI Importance</label>
                 <select className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red bg-white" value={headerForm.vbiImportance} onChange={(e) => hSet('vbiImportance', e.target.value)}>
                   <option value="">—</option>
                   {Object.keys(IMPORTANCE_STYLE).map((l) => <option key={l} value={l}>{l}</option>)}
@@ -803,15 +803,15 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Group Accountability</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Group Accountability</label>
               <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={headerForm.groupAccountability} onChange={(e) => hSet('groupAccountability', e.target.value)} />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI (Market) Accountability</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">VBI (Market) Accountability</label>
               <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={headerForm.vbiAccountability} onChange={(e) => hSet('vbiAccountability', e.target.value)} />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI Epic Response</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">VBI Epic Response</label>
               <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={headerForm.vbiResponse} onChange={(e) => hSet('vbiResponse', e.target.value)} />
             </div>
             <div className="flex justify-end gap-2">
@@ -842,12 +842,12 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
           <div className="px-5 py-3 border-b border-vf-border bg-vf-surface flex items-center justify-between gap-3">
             <div>
               <h4 className="text-xs font-semibold text-vf-muted uppercase tracking-wide">NPD Cycle Review</h4>
-              <p className="text-[11px] text-vf-muted mt-0.5">Accountability split and VBI's response to this epic.</p>
+              <p className="text-[0.6875rem] text-vf-muted mt-0.5">Accountability split and VBI's response to this epic.</p>
             </div>
             <div className="flex items-center gap-2 flex-wrap justify-end">
               {epic.vbiTargetPortfolio && <ReviewFlag label="Target Portfolio" value={epic.vbiTargetPortfolio} />}
               {epic.checkFlag && (
-                <span className="text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">{epic.checkFlag}</span>
+                <span className="text-[0.6875rem] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">{epic.checkFlag}</span>
               )}
             </div>
           </div>
@@ -858,7 +858,7 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
               ['VBI Epic Response', epic.vbiResponse],
             ].map(([label, text]) => (
               <div key={label} className="px-5 py-4">
-                <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">{label}</div>
+                <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">{label}</div>
                 <p className={`text-sm leading-relaxed whitespace-pre-line ${text ? 'text-vf-dark' : 'text-vf-muted italic'}`}>{text || 'Not provided'}</p>
               </div>
             ))}
@@ -870,7 +870,7 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
       <div className="bg-white border border-vf-border rounded-xl overflow-hidden">
         <div className="px-5 py-3 border-b border-vf-border bg-vf-surface">
           <h4 className="text-xs font-semibold text-vf-muted uppercase tracking-wide">Launch Readiness Checklist</h4>
-          <p className="text-[11px] text-vf-muted mt-0.5">Tick complete or mark N/A for each gate. N/A items are excluded from progress.</p>
+          <p className="text-[0.6875rem] text-vf-muted mt-0.5">Tick complete or mark N/A for each gate. N/A items are excluded from progress.</p>
         </div>
 
         <div className="divide-y divide-vf-border">
@@ -894,7 +894,7 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
 
         {/* Add custom milestone */}
         <div className="px-5 py-4 border-t border-vf-border bg-vf-surface">
-          <p className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-2">Add Custom Milestone</p>
+          <p className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-2">Add Custom Milestone</p>
           <div className="flex gap-2">
             <input
               className="flex-1 border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red"
@@ -919,10 +919,10 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
         <div className="px-5 py-3 border-b border-vf-border bg-vf-surface flex items-center justify-between">
           <div>
             <h4 className="text-xs font-semibold text-vf-muted uppercase tracking-wide">VBI Sign-Off</h4>
-            <p className="text-[11px] text-vf-muted mt-0.5">All launch gates confirmed and formally signed off.</p>
+            <p className="text-[0.6875rem] text-vf-muted mt-0.5">All launch gates confirmed and formally signed off.</p>
           </div>
           {epic.signOffComplete && (
-            <span className="text-[11px] font-semibold bg-green-100 text-green-700 px-2.5 py-1 rounded-full">Signed Off</span>
+            <span className="text-[0.6875rem] font-semibold bg-green-100 text-green-700 px-2.5 py-1 rounded-full">Signed Off</span>
           )}
         </div>
         <div className="px-5 py-5 space-y-4">
@@ -937,16 +937,16 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
           </label>
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Sign-Off By (Name)</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Sign-Off By (Name)</label>
               <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={signOffForm.signOffBy} onChange={(e) => soSet('signOffBy', e.target.value)} placeholder="Full name" />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Sign-Off Date</label>
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Sign-Off Date</label>
               <input type="date" className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={signOffForm.signOffDate} onChange={(e) => soSet('signOffDate', e.target.value)} />
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Notes / Caveats / Deferred Markets</label>
+            <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">Notes / Caveats / Deferred Markets</label>
             <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={signOffForm.signOffNotes} onChange={(e) => soSet('signOffNotes', e.target.value)} placeholder="Any market where launch was deferred and new agreed date, caveats, etc." />
           </div>
           <div className="flex justify-end">
@@ -963,13 +963,13 @@ function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
 function InfoField({ label, value, highlight }) {
   if (!value || value === '—') return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide">{label}</span>
+      <span className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide">{label}</span>
       <span className="text-sm text-vf-muted">—</span>
     </div>
   );
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide">{label}</span>
+      <span className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide">{label}</span>
       <span className={`text-sm font-semibold ${highlight ? 'text-vf-red' : 'text-vf-dark'}`}>{value}</span>
     </div>
   );
@@ -986,11 +986,11 @@ function ChecklistSection({ category, items, done, applicable, onToggle }) {
         onClick={() => setOpen((o) => !o)}
       >
         <span className="text-xs font-semibold text-vf-dark flex-1">{category}</span>
-        <span className="text-[11px] text-vf-muted font-mono">{done}/{applicable}</span>
+        <span className="text-[0.6875rem] text-vf-muted font-mono">{done}/{applicable}</span>
         <div className="w-20">
           <ProgressBar pct={pct} />
         </div>
-        <span className={`text-[10px] font-mono ${pct === 100 ? 'text-green-600' : 'text-vf-muted'}`}>{pct}%</span>
+        <span className={`text-[0.625rem] font-mono ${pct === 100 ? 'text-green-600' : 'text-vf-muted'}`}>{pct}%</span>
         <span className="text-vf-muted text-xs ml-1">{open ? '▲' : '▼'}</span>
       </button>
       {open && (
@@ -1021,15 +1021,15 @@ function ActivityRow({ activity, onToggle }) {
           isDone ? 'bg-green-500 border-green-500 text-white' : 'border-gray-300 hover:border-vf-red'
         }`}
       >
-        {isDone && <span className="text-[10px] leading-none">✓</span>}
+        {isDone && <span className="text-[0.625rem] leading-none">✓</span>}
       </button>
       <span className={`flex-1 text-xs leading-relaxed ${isDone ? 'text-green-800 line-through decoration-green-400' : isNa ? 'text-gray-400' : 'text-vf-dark'}`}>
         {activity.label}
-        {activity.isCustom && <span className="ml-1.5 text-[10px] text-vf-muted italic">(custom)</span>}
+        {activity.isCustom && <span className="ml-1.5 text-[0.625rem] text-vf-muted italic">(custom)</span>}
       </span>
       <button
         onClick={() => onToggle(activity, isNa ? 'pending' : 'na')}
-        className={`text-[11px] font-semibold px-2 py-0.5 rounded transition-all flex-shrink-0 ${
+        className={`text-[0.6875rem] font-semibold px-2 py-0.5 rounded transition-all flex-shrink-0 ${
           isNa ? 'bg-gray-200 text-gray-600' : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'
         }`}
       >
@@ -1117,7 +1117,7 @@ function InitiativeFormModal({ item, years, portfolios, defaultFy, onClose, onSa
 
   const field = (label, required, children) => (
     <div>
-      <label className="block text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1">
+      <label className="block text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">
         {label}{required && <span className="text-vf-red ml-0.5">*</span>}
       </label>
       {children}
@@ -1299,7 +1299,7 @@ function PipelineCard({ item, onClick, onSave, onEdit }) {
                 >
                   <span className={`w-2 h-2 rounded-full flex-shrink-0 ${STATUS_COLORS[s].dot}`} />
                   <span className="text-vf-dark">{s}</span>
-                  {s === status && <span className="ml-auto text-vf-muted text-[10px]">✓</span>}
+                  {s === status && <span className="ml-auto text-vf-muted text-[0.625rem]">✓</span>}
                 </button>
               ))}
             </div>
@@ -1312,12 +1312,12 @@ function PipelineCard({ item, onClick, onSave, onEdit }) {
       </div>
       {(item.epicCount > 0 || item.npdImportance) && (
         <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-          {item.epicCount > 0 && <span className="text-[10px] text-vf-muted font-medium">{item.epicCount} epic{item.epicCount === 1 ? '' : 's'}</span>}
+          {item.epicCount > 0 && <span className="text-[0.625rem] text-vf-muted font-medium">{item.epicCount} epic{item.epicCount === 1 ? '' : 's'}</span>}
           {item.npdImportance && <NpdImportanceBadge level={item.npdImportance} prefix="VBI" />}
         </div>
       )}
       {(item.capex != null || item.opex != null) && (
-        <div className="text-[10px] text-vf-muted mt-1 font-mono">
+        <div className="text-[0.625rem] text-vf-muted mt-1 font-mono">
           CapEx {fmt(item.capex)} · OpEx {fmt(item.opex)}
         </div>
       )}
@@ -1413,7 +1413,7 @@ function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
               </button>
               {showStatusPicker && (
                 <div className="absolute right-0 top-full mt-1 bg-white border border-vf-border rounded-xl shadow-lg z-20 p-2 min-w-[160px]">
-                  <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide px-2 pb-1.5">Set Status</div>
+                  <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide px-2 pb-1.5">Set Status</div>
                   {Object.keys(STATUS_COLORS).map((s) => (
                     <button
                       key={s}
@@ -1426,7 +1426,7 @@ function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
                     </button>
                   ))}
                   <div className="border-t border-vf-border mt-1 pt-1 px-2">
-                    <p className="text-[10px] text-vf-muted italic">Status is set manually by the product manager. It is not auto-calculated.</p>
+                    <p className="text-[0.625rem] text-vf-muted italic">Status is set manually by the product manager. It is not auto-calculated.</p>
                   </div>
                 </div>
               )}
@@ -1506,7 +1506,7 @@ function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
               {item.description || item.vbiResponse || 'No description available.'}
               {item.description && item.vbiResponse && (
                 <>
-                  <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mt-3 mb-1">VBI Response</div>
+                  <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mt-3 mb-1">VBI Response</div>
                   {item.vbiResponse}
                 </>
               )}
@@ -1520,7 +1520,7 @@ function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
         <div className="px-5 py-4 border-b border-vf-border flex items-center justify-between">
           <div>
             <h4 className="text-sm font-semibold text-vf-dark">Epics</h4>
-            <p className="text-[11px] text-vf-muted mt-0.5">Scoped work packages and delivery tracking against this initiative.</p>
+            <p className="text-[0.6875rem] text-vf-muted mt-0.5">Scoped work packages and delivery tracking against this initiative.</p>
           </div>
           <button
             onClick={() => setShowAddEpic(true)}
@@ -1555,7 +1555,7 @@ function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
               {(epicFilter.importance || epicFilter.category) && (
                 <button onClick={() => setEpicFilter({ importance: '', category: '' })} className="text-xs text-vf-red hover:underline">Clear</button>
               )}
-              <span className="text-[11px] text-vf-muted ml-auto">Showing {visibleEpics.length} of {epics.length} epics</span>
+              <span className="text-[0.6875rem] text-vf-muted ml-auto">Showing {visibleEpics.length} of {epics.length} epics</span>
             </div>
             <div className="divide-y divide-vf-border">
               {visibleEpics.map((epic) => (
@@ -1593,7 +1593,7 @@ function EpicCard({ epic, index, onClick }) {
     >
       {/* Epic ID (from the NPD file), or its position for epics added in the portal */}
       <div className="flex-shrink-0 w-14 text-center">
-        <div className="text-[9px] font-semibold text-vf-muted uppercase tracking-wide">{epic.externalEpicId != null ? 'Epic ID' : 'Epic'}</div>
+        <div className="text-[0.5625rem] font-semibold text-vf-muted uppercase tracking-wide">{epic.externalEpicId != null ? 'Epic ID' : 'Epic'}</div>
         <div className="text-sm font-bold font-mono text-vf-dark bg-vf-surface border border-vf-border rounded-md py-1 mt-0.5">
           {epic.externalEpicId ?? `#${index}`}
         </div>
@@ -1604,28 +1604,28 @@ function EpicCard({ epic, index, onClick }) {
         <div className="flex items-center gap-2 mb-0.5 flex-wrap">
           <span className="text-sm font-bold text-vf-dark leading-tight">{epic.epicName}</span>
           {epic.signOffComplete && (
-            <span className="text-[10px] bg-green-100 text-green-700 font-semibold px-1.5 py-0.5 rounded-full">Signed Off</span>
+            <span className="text-[0.625rem] bg-green-100 text-green-700 font-semibold px-1.5 py-0.5 rounded-full">Signed Off</span>
           )}
         </div>
         {(epic.epicType || epic.vbiImportance || epic.checkFlag) && (
           <div className="flex items-center gap-2 flex-wrap mt-0.5">
-            {epic.epicType && <span className="text-[11px] font-medium text-vf-muted">{epic.epicType}</span>}
+            {epic.epicType && <span className="text-[0.6875rem] font-medium text-vf-muted">{epic.epicType}</span>}
             <ImportanceBadge level={epic.vbiImportance} />
             {epic.checkFlag && (
-              <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">{epic.checkFlag}</span>
+              <span className="text-[0.625rem] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">{epic.checkFlag}</span>
             )}
           </div>
         )}
         {epic.description && (
-          <p className="text-[11px] text-vf-muted leading-snug line-clamp-2 mt-0.5 pr-4">{epic.description}</p>
+          <p className="text-[0.6875rem] text-vf-muted leading-snug line-clamp-2 mt-0.5 pr-4">{epic.description}</p>
         )}
         {(epic.goLiveDateOverall || epic.marketsAgreed) && (
           <div className="flex items-center gap-3 mt-1 flex-wrap">
             {epic.goLiveDateOverall && (
-              <span className="text-[10px] text-vf-muted">Go-live: <span className="font-medium text-vf-dark">{fmtDate(epic.goLiveDateOverall)}</span></span>
+              <span className="text-[0.625rem] text-vf-muted">Go-live: <span className="font-medium text-vf-dark">{fmtDate(epic.goLiveDateOverall)}</span></span>
             )}
             {epic.marketsAgreed && (
-              <span className="text-[10px] text-vf-muted">Markets: <span className="font-medium text-vf-dark">{epic.marketsAgreed}</span></span>
+              <span className="text-[0.625rem] text-vf-muted">Markets: <span className="font-medium text-vf-dark">{epic.marketsAgreed}</span></span>
             )}
           </div>
         )}
@@ -1635,18 +1635,18 @@ function EpicCard({ epic, index, onClick }) {
       <div className="flex-shrink-0 flex items-center divide-x divide-vf-border border-l border-vf-border ml-2">
         {/* Epic category */}
         <div className="px-4 w-[150px]">
-          <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1">Category</div>
-          <div className="text-[11px] font-semibold text-vf-dark leading-snug">{epic.epicCategory || '—'}</div>
+          <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">Category</div>
+          <div className="text-[0.6875rem] font-semibold text-vf-dark leading-snug">{epic.epicCategory || '—'}</div>
         </div>
 
         {/* Budget draw */}
         <div className="px-4 text-right">
-          <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1">Budget Draw</div>
+          <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">Budget Draw</div>
           <div className="text-lg font-bold text-vf-dark font-mono leading-none">
             {totalDraw > 0 ? fmt(totalDraw) : '—'}
           </div>
           {totalDraw > 0 && (
-            <div className="text-[10px] text-vf-muted font-mono mt-1 whitespace-nowrap">
+            <div className="text-[0.625rem] text-vf-muted font-mono mt-1 whitespace-nowrap">
               {fmt(epic.capex)} Cap · {fmt(epic.opex)} Op
             </div>
           )}
@@ -1654,21 +1654,21 @@ function EpicCard({ epic, index, onClick }) {
 
         {/* Completion */}
         <div className="px-4 text-right">
-          <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1">Completion</div>
+          <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1">Completion</div>
           <div className={`text-2xl font-bold font-mono leading-none ${progressColor}`}>
             {epic.progress}%
           </div>
           <div className="mt-1.5 w-14 ml-auto">
             <ProgressBar pct={epic.progress} />
           </div>
-          <div className="text-[10px] text-vf-muted mt-1 whitespace-nowrap">
+          <div className="text-[0.625rem] text-vf-muted mt-1 whitespace-nowrap">
             {epic.completedActivities}/{epic.totalActivities} gates
           </div>
         </div>
 
         {/* Risk */}
         <div className="px-4">
-          <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">Risk</div>
+          <div className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">Risk</div>
           <RiskBadge level={epic.riskLevel} />
         </div>
 
@@ -1923,7 +1923,7 @@ export default function NpdPipeline() {
 
       {/* NPD cycle review filters — narrow the tiles and the pipeline below */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <span className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mr-1">NPD Review</span>
+        <span className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide mr-1">NPD Review</span>
         <ReviewSelect value={reviewFilters.db} onChange={(v) => setReview('db', v)} label="Budget review">
           <option value="">All budget review stages</option>
           {DB_STAGES.map((s) => (
@@ -1986,7 +1986,7 @@ export default function NpdPipeline() {
                   >
                     <td className={`py-1.5 text-xs font-semibold select-none ${isActive ? 'text-vf-red' : 'text-vf-dark'}`}>
                       {q}
-                      {isActive && <span className="ml-1 text-[9px] font-bold tracking-wide text-vf-red">●</span>}
+                      {isActive && <span className="ml-1 text-[0.5625rem] font-bold tracking-wide text-vf-red">●</span>}
                     </td>
                     {matrix.years.map((y) => (
                       <td key={y} className={`py-1.5 text-center font-mono font-bold ${isActive ? 'text-vf-red' : 'text-vf-dark'}`}>{matrix.grid[q][y] || <span className="text-gray-300">—</span>}</td>
@@ -2025,7 +2025,7 @@ export default function NpdPipeline() {
                   className={`text-left rounded-lg border px-3 py-2.5 flex flex-col gap-1 transition-all ${active ? 'border-vf-red ring-2 ring-vf-red/30 bg-red-50/40' : 'border-[#e8e6e1] hover:bg-gray-50 hover:shadow-sm'}`}
                   style={{ borderLeftWidth: 3, borderLeftColor: color }}
                 >
-                  <span className="text-[11px] font-semibold text-vf-dark leading-tight">{c}</span>
+                  <span className="text-[0.6875rem] font-semibold text-vf-dark leading-tight">{c}</span>
                   <span className="text-lg font-bold font-mono leading-none" style={{ color }}>{n}</span>
                 </button>
               );
@@ -2046,7 +2046,7 @@ export default function NpdPipeline() {
                   aria-pressed={active}
                   className={`text-left rounded-lg border px-3 py-2.5 flex flex-col gap-1 transition-all ${active ? 'border-vf-red ring-2 ring-vf-red/30 bg-red-50/40' : 'border-[#e8e6e1] bg-[#fafaf9] hover:bg-gray-100 hover:shadow-sm'}`}
                 >
-                  <span className={`text-[11px] font-semibold leading-tight ${active ? 'text-vf-red' : 'text-vf-dark'}`}>{p}</span>
+                  <span className={`text-[0.6875rem] font-semibold leading-tight ${active ? 'text-vf-red' : 'text-vf-dark'}`}>{p}</span>
                   <span className={`text-lg font-bold font-mono leading-none ${active ? 'text-vf-red' : 'text-vf-dark'}`}>{n}</span>
                 </button>
               );
@@ -2068,7 +2068,7 @@ export default function NpdPipeline() {
                   aria-pressed={active}
                   className={`text-left rounded-lg border px-3 py-2.5 flex flex-col gap-1 transition-all ${col.bg} ${active ? 'border-vf-red ring-2 ring-vf-red/30' : 'border-[#e8e6e1] hover:shadow-sm hover:brightness-95'}`}
                 >
-                  <span className={`text-[11px] font-semibold leading-tight ${col.text}`}>{s}</span>
+                  <span className={`text-[0.6875rem] font-semibold leading-tight ${col.text}`}>{s}</span>
                   <span className={`text-lg font-bold font-mono leading-none ${col.text}`}>{c}</span>
                 </button>
               );

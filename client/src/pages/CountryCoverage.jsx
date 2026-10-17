@@ -50,11 +50,11 @@ export default function CountryCoverage() {
         <table className="w-full border-collapse text-xs">
           <thead>
             <tr>
-              <th className="px-3 py-2 text-left border-b border-vf-border bg-vf-surface text-[11px] font-semibold text-vf-muted whitespace-nowrap">
+              <th className="px-3 py-2 text-left border-b border-vf-border bg-vf-surface text-[0.6875rem] font-semibold text-vf-muted whitespace-nowrap">
                 Product
               </th>
               {COUNTRIES.map((cc) => (
-                <th key={cc} className="px-3 py-2 border-b border-vf-border bg-vf-surface text-[11px] font-semibold text-vf-muted whitespace-nowrap text-center">
+                <th key={cc} className="px-3 py-2 border-b border-vf-border bg-vf-surface text-[0.6875rem] font-semibold text-vf-muted whitespace-nowrap text-center">
                   {cc}
                 </th>
               ))}
@@ -93,7 +93,7 @@ export default function CountryCoverage() {
         </table>
       </div>
 
-      <div className="mt-2.5 text-[11px] text-vf-muted">
+      <div className="mt-2.5 text-[0.6875rem] text-vf-muted">
         🟢 Available &nbsp;🟡 Partial &nbsp;🔴 Not available &nbsp;⚪ N/A
       </div>
     </div>

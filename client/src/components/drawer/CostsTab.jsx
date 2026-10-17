@@ -32,7 +32,7 @@ export default function CostsTab({ product, lineProducts }) {
     <div>
       {row.placeholder && <PlaceholderNote>this product line shows the dummy cost profile until real costs are entered in Cost Management.</PlaceholderNote>}
 
-      <SectionTitle right={<span className="text-[10px] text-vf-muted">{row.fy} · product line level</span>}>Cost to Serve</SectionTitle>
+      <SectionTitle right={<span className="text-[0.625rem] text-vf-muted">{row.fy} · product line level</span>}>Cost to Serve</SectionTitle>
       <div className="grid grid-cols-3 gap-2.5">
         <Stat label="Opex" value={fmtMoney(row.opex)} />
         <Stat label="Depreciation" value={fmtMoney(row.dep)} />
@@ -49,7 +49,7 @@ export default function CostsTab({ product, lineProducts }) {
       <div className="mt-5">
         <SectionTitle>Open cost reduction actions ({open.length})</SectionTitle>
         {open.length === 0 ? (
-          <p className="text-[11px] text-vf-muted italic">None planned.</p>
+          <p className="text-[0.6875rem] text-vf-muted italic">None planned.</p>
         ) : (
           <ul className="space-y-1.5">
             {open.map((a) => (

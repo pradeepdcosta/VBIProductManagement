@@ -14,7 +14,7 @@ function Field({ label, value }) {
   if (!value) return null;
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide">{label}</span>
+      <span className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide">{label}</span>
       <span className="text-xs text-vf-text">{value}</span>
     </div>
   );
@@ -95,13 +95,13 @@ export default function ProductReviewPage() {
         <div className="bg-white border border-vf-border rounded-xl overflow-hidden">
           <div className="px-5 py-4 border-b border-vf-border bg-vf-surface">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide">{request.type}</span>
-              <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${statusStyle(request.status)}`}>
+              <span className="text-[0.625rem] font-semibold text-vf-muted uppercase tracking-wide">{request.type}</span>
+              <span className={`px-2 py-0.5 rounded-full text-[0.625rem] font-semibold ${statusStyle(request.status)}`}>
                 {request.status}
               </span>
             </div>
             <h1 className="text-base font-semibold text-vf-text">{request.title}</h1>
-            <p className="text-[11px] text-vf-muted mt-0.5">
+            <p className="text-[0.6875rem] text-vf-muted mt-0.5">
               {request.productName}
               {request.submitterName ? ` · Raised by ${request.submitterName}` : ''}
               {' · '}Submitted {new Date(request.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -134,10 +134,10 @@ export default function ProductReviewPage() {
         ) : (
           <form onSubmit={handleSubmit} className="bg-white border border-vf-border rounded-xl p-5 space-y-3">
             <div>
-              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">
+              <label className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide block mb-1">
                 VBI Product &amp; Services Feedback
               </label>
-              <p className="text-[11px] text-vf-muted mb-2">
+              <p className="text-[0.6875rem] text-vf-muted mb-2">
                 Provide your product team assessment — feasibility, timeline, existing roadmap alignment, or any blockers.
               </p>
               <textarea
@@ -160,7 +160,7 @@ export default function ProductReviewPage() {
         )}
       </div>
 
-      <p className="mt-6 text-[11px] text-vf-muted text-center">
+      <p className="mt-6 text-[0.6875rem] text-vf-muted text-center">
         This link is for VBI Product Team use only — do not forward externally.
       </p>
     </div>

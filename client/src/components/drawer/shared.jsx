@@ -20,7 +20,7 @@ export function fmtMoney(v, unit = 'eur') {
 export function SectionTitle({ children, right }) {
   return (
     <div className="flex items-center justify-between mb-2">
-      <h4 className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">{children}</h4>
+      <h4 className="text-[0.6875rem] font-semibold text-vf-muted uppercase tracking-wide">{children}</h4>
       {right}
     </div>
   );
@@ -29,16 +29,16 @@ export function SectionTitle({ children, right }) {
 export function Stat({ label, value, sub, tone }) {
   return (
     <div className="bg-vf-surface border border-vf-border rounded-lg p-3">
-      <div className="text-[10px] text-vf-muted uppercase tracking-wide font-semibold">{label}</div>
+      <div className="text-[0.625rem] text-vf-muted uppercase tracking-wide font-semibold">{label}</div>
       <div className={`text-lg font-semibold font-mono mt-0.5 ${tone === 'red' ? 'text-vf-red' : 'text-vf-dark'}`}>{value}</div>
-      {sub && <div className="text-[10px] text-vf-muted mt-0.5">{sub}</div>}
+      {sub && <div className="text-[0.625rem] text-vf-muted mt-0.5">{sub}</div>}
     </div>
   );
 }
 
 export function PlaceholderNote({ children }) {
   return (
-    <div className="bg-amber-50 border border-amber-200 text-amber-900 text-[11px] px-3 py-2 rounded-lg mb-4">
+    <div className="bg-amber-50 border border-amber-200 text-amber-900 text-[0.6875rem] px-3 py-2 rounded-lg mb-4">
       <span className="font-semibold">Placeholder figures</span> — {children}
     </div>
   );
@@ -49,17 +49,17 @@ export function LineProducts({ productLine, products, currentId, note }) {
   return (
     <div className="mt-5">
       <SectionTitle>Products in {productLine} ({products.length})</SectionTitle>
-      {note && <p className="text-[11px] text-vf-muted mb-2">{note}</p>}
+      {note && <p className="text-[0.6875rem] text-vf-muted mb-2">{note}</p>}
       <div className="flex flex-wrap gap-1.5">
         {products.map((p) => (
           <span
             key={p.id}
-            className={`px-2.5 py-1 rounded-md text-[11px] border ${p.id === currentId ? 'bg-red-50 border-red-200 text-vf-red font-semibold' : 'bg-white border-vf-border text-vf-text'}`}
+            className={`px-2.5 py-1 rounded-md text-[0.6875rem] border ${p.id === currentId ? 'bg-red-50 border-red-200 text-vf-red font-semibold' : 'bg-white border-vf-border text-vf-text'}`}
           >
             {p.name}
           </span>
         ))}
-        {products.length === 0 && <span className="text-[11px] text-vf-muted">—</span>}
+        {products.length === 0 && <span className="text-[0.6875rem] text-vf-muted">—</span>}
       </div>
     </div>
   );

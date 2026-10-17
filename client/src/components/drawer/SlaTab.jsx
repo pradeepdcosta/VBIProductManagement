@@ -13,7 +13,7 @@ const FIELDS = [
 export default function SlaTab({ sla }) {
   return (
     <div>
-      <SectionTitle right={!sla && <span className="text-[10px] text-vf-muted">No SLA data loaded yet</span>}>Service Level Agreement</SectionTitle>
+      <SectionTitle right={!sla && <span className="text-[0.625rem] text-vf-muted">No SLA data loaded yet</span>}>Service Level Agreement</SectionTitle>
       <div className="bg-white border border-vf-border rounded-[10px] overflow-hidden">
         {FIELDS.map(([label, key]) => (
           <div key={key} className="flex justify-between items-center gap-4 px-4 py-2.5 border-b border-[#f0eeea] last:border-b-0">
