@@ -32,7 +32,7 @@ export default function Topbar() {
       </div>
       <div className="text-[0.9375rem] font-semibold tracking-tight text-[#aaa] ml-1">| VBI Product Intelligence Portal</div>
       <div className="ml-auto flex items-center gap-3">
-        <span className="text-[0.6875rem] text-[#888]">VBI · FY27</span>
+        <span className="text-[0.6875rem] text-[#888]">VBI · FY28</span>
         <button
           onClick={() => navigate('/features')}
           className="bg-vf-red border border-vf-red text-white rounded-md px-3 py-1 text-xs cursor-pointer font-sans hover:bg-vf-red-hover"
