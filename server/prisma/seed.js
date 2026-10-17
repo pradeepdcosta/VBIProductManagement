@@ -189,30 +189,6 @@ async function main() {
 
   console.log('Inserted sample SLA data');
 
-  // Seed sample business cases
-  const bcProducts = await prisma.product.findMany({
-    where: { name: { in: ['Cisco Catalyst SD-WAN', 'CyberHub', 'MPN Dedicated'] } },
-    take: 3,
-  });
-
-  const bcTemplates = [
-    { npv: 12.4, irr: 28.5, paybackMonths: 18, status: 'Approved', summary: 'Cisco Catalyst SD-WAN migration provides a 28.5% IRR with payback in 18 months. Strong customer demand from enterprise segment.' },
-    { npv: 8.2, irr: 22.0, paybackMonths: 24, status: 'In Review', summary: 'CyberHub consolidation platform reduces tooling costs by 35% while improving threat detection. Investment required for partner integrations.' },
-    { npv: 15.6, irr: 34.0, paybackMonths: 14, status: 'Draft', summary: 'MPN Dedicated expansion into DE and NL markets. High-margin opportunity driven by Industry 4.0 demand in manufacturing sector.' },
-  ];
-
-  // Business cases belong to a product line (family + line)
-  for (let i = 0; i < bcProducts.length; i++) {
-    const { family, productLine } = bcProducts[i];
-    await prisma.businessCase.upsert({
-      where: { productFamily_productLine: { productFamily: family, productLine } },
-      create: { productFamily: family, productLine, ...bcTemplates[i] },
-      update: {},
-    });
-  }
-
-  console.log('Inserted sample business cases');
-
   // Seed sample country coverage
   const coverageProducts = await prisma.product.findMany({
     where: { name: { in: ['IPVPN', 'SDN-WAN', 'Zscaler Managed Security', 'MPN Dedicated', 'Ethernet VPN'] } },

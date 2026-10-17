@@ -24,11 +24,7 @@ run('node server/prisma/seed.js');
 console.log('\nSeeding NPD data...');
 run('node server/scripts/seed-npd.mjs');
 
-// 4. Seed business cases
-console.log('\nSeeding business case data...');
-run('node server/scripts/seed-bizcase.mjs');
-
-// 5. Start server (spawn so it takes over the process)
+// 4. Start server (spawn so it takes over the process)
 console.log('\nStarting Express server...');
 const server = spawn('node', ['server/index.js'], {
   cwd: root,
