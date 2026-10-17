@@ -59,7 +59,11 @@ export default function Sidebar() {
     <div className="w-[204px] shrink-0 bg-white border-r border-vf-border overflow-y-auto py-3">
       {sections.map((section) => (
         <div key={section.label}>
-          <div className="px-3 pt-1 pb-0.5 text-[10px] font-semibold text-vf-muted uppercase tracking-wider mt-2">
+          <div className={`px-3 pt-1 pb-0.5 uppercase tracking-wider mt-2 ${
+            section.label.startsWith('Product ')
+              ? 'text-[11px] font-extrabold text-vf-dark'   // the three main areas
+              : 'text-[10px] font-semibold text-vf-muted'
+          }`}>
             {section.label}
           </div>
           {section.items.map((item) => (
