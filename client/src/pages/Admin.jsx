@@ -5,6 +5,7 @@ import useProductStore from '../store/useProductStore.js';
 const TABS = [
   { key: 'taxonomy', label: 'Product Taxonomy' },
   { key: 'npd', label: 'NPD Import' },
+  { key: 'users', label: 'Users' },
 ];
 
 // Upload a file to an admin import endpoint (preview unless apply=true)
@@ -613,6 +614,211 @@ function NpdTab() {
   );
 }
 
+// ─── Users tab ────────────────────────────────────────────────────────────────
+
+async function sendUser(url, method, body) {
+  const res = await fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+const fmtWhen = (d) => (d ? new Date(d).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—');
+
+function PasswordInput({ value, onChange, autoFocus, id }) {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="relative">
+      <input
+        id={id}
+        type={show ? 'text' : 'password'}
+        autoComplete="new-password"
+        autoFocus={autoFocus}
+        className="w-full border border-vf-border rounded-md px-2.5 py-1.5 pr-14 text-sm focus:outline-none focus:border-vf-red"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      <button type="button" onClick={() => setShow((s) => !s)} className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-medium text-vf-muted hover:text-vf-dark">
+        {show ? 'Hide' : 'Show'}
+      </button>
+    </div>
+  );
+}
+
+function UsersTab() {
+  const showToast = useProductStore((s) => s.showToast);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [adding, setAdding] = useState(false);
+  const [newUser, setNewUser] = useState({ email: '', name: '', password: '' });
+  const [resetFor, setResetFor] = useState(null); // user id
+  const [resetPassword, setResetPassword] = useState('');
+  const [confirmRemove, setConfirmRemove] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(null);
+
+  const load = async () => {
+    setLoading(true);
+    try { setUsers(await sendUser('/api/users', 'GET')); } catch (err) { setError(err.message); }
+    setLoading(false);
+  };
+  useEffect(() => { load(); }, []);
+
+  const run = async (fn) => {
+    setBusy(true);
+    setError(null);
+    try { await fn(); } catch (err) { setError(err.message); }
+    setBusy(false);
+  };
+
+  const addUser = (e) => {
+    e.preventDefault();
+    run(async () => {
+      const created = await sendUser('/api/users', 'POST', newUser);
+      setUsers((list) => [...list, created].sort((a, b) => a.email.localeCompare(b.email)));
+      setNewUser({ email: '', name: '', password: '' });
+      setAdding(false);
+      showToast(`Added ${created.email}`);
+    });
+  };
+
+  const saveReset = (e) => {
+    e.preventDefault();
+    run(async () => {
+      const u = await sendUser(`/api/users/${resetFor}`, 'PUT', { password: resetPassword });
+      setResetFor(null);
+      setResetPassword('');
+      showToast(`Password reset for ${u.email}`);
+    });
+  };
+
+  const setActive = (u, active) => run(async () => {
+    const updated = await sendUser(`/api/users/${u.id}`, 'PUT', { active });
+    setUsers((list) => list.map((x) => (x.id === u.id ? updated : x)));
+    showToast(`${updated.email} ${active ? 'activated' : 'deactivated'}`);
+  });
+
+  const remove = (u) => {
+    if (confirmRemove !== u.id) { setConfirmRemove(u.id); return; }
+    run(async () => {
+      await sendUser(`/api/users/${u.id}`, 'DELETE');
+      setUsers((list) => list.filter((x) => x.id !== u.id));
+      setConfirmRemove(null);
+      showToast(`Removed ${u.email}`);
+    });
+  };
+
+  const inputCls = 'w-full border border-vf-border rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:border-vf-red';
+  const btn = 'text-[11px] font-medium border border-vf-border rounded px-2 py-1 hover:bg-vf-surface disabled:opacity-40 whitespace-nowrap';
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-white border border-vf-border rounded-[10px] overflow-hidden">
+        <div className="px-4 py-3 border-b border-vf-border bg-vf-surface flex items-center gap-3">
+          <div>
+            <div className="text-[13px] font-semibold text-vf-dark">Portal logins <span className="text-vf-muted font-normal">· {users.length}</span></div>
+            <div className="text-[11px] text-vf-muted mt-0.5">Everyone signs in with their email address and has the same access. Passwords are stored encrypted and can't be viewed — only reset.</div>
+          </div>
+          <div className="flex-1" />
+          {!adding && (
+            <button onClick={() => { setAdding(true); setError(null); }} className="flex items-center gap-1.5 bg-vf-red text-white rounded-md px-3 py-1.5 text-xs font-semibold hover:bg-vf-red-hover whitespace-nowrap">
+              <Plus size={13} /> Add user
+            </button>
+          )}
+        </div>
+
+        {error && <div className="mx-4 mt-3 bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded-lg">{error}</div>}
+
+        {adding && (
+          <form onSubmit={addUser} className="px-4 py-4 border-b border-vf-border grid grid-cols-[1.4fr_1fr_1fr_auto] gap-3 items-end">
+            <div>
+              <label htmlFor="nu-email" className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Email <span className="text-vf-red">*</span></label>
+              <input id="nu-email" type="email" required autoFocus className={inputCls} placeholder="name@vodafone.com" value={newUser.email} onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
+            </div>
+            <div>
+              <label htmlFor="nu-name" className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Name</label>
+              <input id="nu-name" className={inputCls} value={newUser.name} onChange={(e) => setNewUser({ ...newUser, name: e.target.value })} />
+            </div>
+            <div>
+              <label htmlFor="nu-password" className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide block mb-1">Password <span className="text-vf-red">*</span></label>
+              <PasswordInput id="nu-password" value={newUser.password} onChange={(v) => setNewUser({ ...newUser, password: v })} />
+            </div>
+            <div className="flex gap-2">
+              <button type="button" onClick={() => { setAdding(false); setError(null); }} className="text-xs text-vf-muted hover:text-vf-dark px-2 py-1.5">Cancel</button>
+              <button type="submit" disabled={busy} className="bg-vf-red text-white rounded-md px-4 py-1.5 text-xs font-semibold hover:bg-vf-red-hover disabled:opacity-50">{busy ? 'Adding…' : 'Add user'}</button>
+            </div>
+            <div className="col-span-4 text-[11px] text-vf-muted -mt-1">At least 8 characters. Share the password with the person securely — they can't reset it themselves.</div>
+          </form>
+        )}
+
+        {loading ? (
+          <div className="p-8 text-center text-vf-muted text-sm">Loading users…</div>
+        ) : (
+          <div className="overflow-x-auto">
+          <table className="w-full text-xs min-w-[760px]">
+            <thead>
+              <tr className="text-left text-[10px] text-vf-muted uppercase tracking-wide border-b border-vf-border">
+                <th className="px-4 py-2 font-semibold">Email</th>
+                <th className="px-3 py-2 font-semibold">Name</th>
+                <th className="px-3 py-2 font-semibold">Status</th>
+                <th className="px-3 py-2 font-semibold">Last sign-in</th>
+                <th className="px-3 py-2 font-semibold">Added</th>
+                <th className="px-3 py-2 font-semibold" />
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr key={u.id} className={`border-t border-[#f0eeea] align-top ${u.active ? '' : 'text-vf-muted'}`}>
+                  <td className="px-4 py-2.5 font-medium">
+                    {u.email}
+                    {u.isYou && <span className="ml-1.5 text-[9px] font-semibold uppercase text-vf-accent">you</span>}
+                    {resetFor === u.id && (
+                      <form onSubmit={saveReset} className="flex items-center gap-2 mt-2 max-w-[360px]">
+                        <div className="flex-1"><PasswordInput autoFocus value={resetPassword} onChange={setResetPassword} /></div>
+                        <button type="submit" disabled={busy} className="bg-vf-dark text-white rounded-md px-3 py-1.5 text-[11px] font-semibold disabled:opacity-50">Save</button>
+                        <button type="button" onClick={() => { setResetFor(null); setResetPassword(''); }} className="text-[11px] text-vf-muted">Cancel</button>
+                      </form>
+                    )}
+                  </td>
+                  <td className="px-3 py-2.5">{u.name || '—'}</td>
+                  <td className="px-3 py-2.5">
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${u.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{u.active ? 'Active' : 'Deactivated'}</span>
+                  </td>
+                  <td className="px-3 py-2.5 whitespace-nowrap">{fmtWhen(u.lastLoginAt)}</td>
+                  <td className="px-3 py-2.5 whitespace-nowrap">{fmtWhen(u.createdAt)}</td>
+                  <td className="px-3 py-2.5">
+                    <div className="flex items-center gap-1.5 justify-end">
+                      <button className={btn} disabled={busy} onClick={() => { setResetFor(u.id); setResetPassword(''); setError(null); }}>Reset password</button>
+                      {!u.isYou && (
+                        <>
+                          <button className={btn} disabled={busy} onClick={() => setActive(u, !u.active)}>{u.active ? 'Deactivate' : 'Activate'}</button>
+                          <button
+                            disabled={busy}
+                            onClick={() => remove(u)}
+                            onBlur={() => setConfirmRemove(null)}
+                            className={`text-[11px] font-medium rounded px-2 py-1 border disabled:opacity-40 ${confirmRemove === u.id ? 'bg-red-600 text-white border-red-600' : 'text-red-600 border-red-200 hover:bg-red-50'}`}
+                          >
+                            {confirmRemove === u.id ? 'Confirm remove' : 'Remove'}
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function Admin() {
   const [tab, setTab] = useState('taxonomy');
   return (
@@ -634,7 +840,7 @@ export default function Admin() {
           </button>
         ))}
       </div>
-      {tab === 'taxonomy' ? <TaxonomyTab /> : <NpdTab />}
+      {tab === 'taxonomy' ? <TaxonomyTab /> : tab === 'npd' ? <NpdTab /> : <UsersTab />}
     </div>
   );
 }

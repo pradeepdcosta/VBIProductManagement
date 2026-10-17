@@ -14,10 +14,16 @@ import uploadsRouter from './routes/uploads.js';
 import exportsRouter from './routes/exports.js';
 import npdEpicsRouter from './routes/npdEpics.js';
 import adminRouter from './routes/admin.js';
+import authRouter from './routes/auth.js';
+import usersRouter from './routes/users.js';
+import { requireAuth, ensureInitialUser, pruneSessions } from './lib/auth.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.API_PORT || process.env.PORT || 3001;
+
+// Behind Railway's / the office load balancer's proxy: use the real client IP
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
 
 // Middleware
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -39,7 +45,13 @@ app.get('/health', async (req, res) => {
   }
 });
 
+// Sign-in endpoints are open; every other /api route needs a signed-in user
+// (except the few calls the public request pages make — see lib/auth.js)
+app.use('/api/auth', authRouter);
+app.use('/api', requireAuth);
+
 // API routes
+app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/requests', featureRequestsRouter);
 app.use('/api/trading', tradingRouter);
@@ -60,14 +72,18 @@ if (process.env.NODE_ENV === 'production') {
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({
-    error: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message,
+  const status = err.status || 500;
+  res.status(status).json({
+    // Client errors (bad upload etc.) carry a useful message; hide internals for 5xx in production
+    error: process.env.NODE_ENV === 'production' && status >= 500 ? 'Internal server error' : err.message,
   });
 });
 
 // Start server
 const server = app.listen(PORT, () => {
   console.log(`API server running on port ${PORT}`);
+  ensureInitialUser().catch((err) => console.error('Could not create first user:', err.message));
+  pruneSessions().catch(() => {});
 });
 
 // Graceful shutdown
