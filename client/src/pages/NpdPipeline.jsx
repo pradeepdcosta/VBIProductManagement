@@ -1559,6 +1559,9 @@ export default function NpdPipeline() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [formItem, setFormItem] = useState(null);
   const [quarterFilter, setQuarterFilter] = useState(null);
+  // Summary-tile filters (category / portfolio / status); click a tile again to clear it
+  const [tileFilter, setTileFilter] = useState({ roadmapCategory: null, portfolio: null, status: null });
+  const toggleTile = (field, value) => setTileFilter((f) => ({ ...f, [field]: f[field] === value ? null : value }));
   const [dragOverCell, setDragOverCell] = useState(null);
   const showToast = useProductStore((s) => s.showToast);
 
@@ -1677,8 +1680,10 @@ export default function NpdPipeline() {
   }, [summary]);
 
   const filteredInitiatives = useMemo(() =>
-    quarterFilter ? initiatives.filter((i) => i.quarter === quarterFilter) : initiatives,
-  [initiatives, quarterFilter]);
+    initiatives.filter((i) =>
+      (!quarterFilter || i.quarter === quarterFilter) &&
+      Object.entries(tileFilter).every(([field, value]) => !value || i[field] === value)),
+  [initiatives, quarterFilter, tileFilter]);
 
   const timelineData = useMemo(() => {
     const grouped = {};
@@ -1754,14 +1759,29 @@ export default function NpdPipeline() {
           <option value="">All Categories</option>
           {Object.keys(CATEGORY_COLORS).map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        {quarterFilter && (
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-vf-red text-white">
-            {quarterFilter}
-            <button onClick={() => setQuarterFilter(null)} className="hover:opacity-70 leading-none ml-0.5">×</button>
+        {/* Active tile filters */}
+        {[
+          ['quarter', quarterFilter, () => setQuarterFilter(null)],
+          ...Object.entries(tileFilter).map(([field, value]) => [field, value, () => toggleTile(field, value)]),
+        ].filter(([, value]) => value).map(([field, value, clear]) => (
+          <span key={field} className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-vf-red text-white">
+            {value}
+            <button onClick={clear} aria-label={`Remove ${value} filter`} className="hover:opacity-70 leading-none ml-0.5">×</button>
           </span>
+        ))}
+        {(fyFilter || statusFilter || categoryFilter || quarterFilter || Object.values(tileFilter).some(Boolean)) && (
+          <button
+            onClick={() => {
+              setFyFilter(''); setStatusFilter(''); setCategoryFilter('');
+              setQuarterFilter(null); setTileFilter({ roadmapCategory: null, portfolio: null, status: null });
+            }}
+            className="text-xs text-vf-red hover:underline ml-1"
+          >
+            Clear filters
+          </button>
         )}
-        {(fyFilter || statusFilter || categoryFilter) && (
-          <button onClick={() => { setFyFilter(''); setStatusFilter(''); setCategoryFilter(''); }} className="text-xs text-vf-red hover:underline ml-1">Clear filters</button>
+        {(quarterFilter || Object.values(tileFilter).some(Boolean)) && (
+          <span className="text-xs text-vf-muted ml-auto">Showing {filteredInitiatives.length} of {initiatives.length} initiatives</span>
         )}
       </div>
 
@@ -1823,11 +1843,18 @@ export default function NpdPipeline() {
           <div className="grid grid-cols-2 gap-2">
             {Object.entries(summary.categoryCounts || {}).sort((a, b) => b[1] - a[1]).map(([c, n]) => {
               const color = CATEGORY_COLORS[c] || '#6B6A66';
+              const active = tileFilter.roadmapCategory === c;
               return (
-                <div key={c} className="rounded-lg border border-[#e8e6e1] px-3 py-2.5 flex flex-col gap-1" style={{ borderLeftWidth: 3, borderLeftColor: color }}>
+                <button
+                  key={c}
+                  onClick={() => toggleTile('roadmapCategory', c)}
+                  aria-pressed={active}
+                  className={`text-left rounded-lg border px-3 py-2.5 flex flex-col gap-1 transition-all ${active ? 'border-vf-red ring-2 ring-vf-red/30 bg-red-50/40' : 'border-[#e8e6e1] hover:bg-gray-50 hover:shadow-sm'}`}
+                  style={{ borderLeftWidth: 3, borderLeftColor: color }}
+                >
                   <span className="text-[11px] font-semibold text-vf-dark leading-tight">{c}</span>
                   <span className="text-lg font-bold font-mono leading-none" style={{ color }}>{n}</span>
-                </div>
+                </button>
               );
             })}
           </div>
@@ -1837,12 +1864,20 @@ export default function NpdPipeline() {
         <div className="bg-white border border-vf-border rounded-[10px] px-4 py-4">
           <div className="text-xs font-semibold text-vf-muted uppercase tracking-wide mb-3">By Portfolio</div>
           <div className="grid grid-cols-2 gap-2">
-            {Object.entries(summary.portfolioCounts || {}).sort((a, b) => b[1] - a[1]).map(([p, n]) => (
-              <div key={p} className="rounded-lg border border-[#e8e6e1] bg-[#fafaf9] px-3 py-2.5 flex flex-col gap-1">
-                <span className="text-[11px] font-semibold text-vf-dark leading-tight">{p}</span>
-                <span className="text-lg font-bold font-mono text-vf-dark leading-none">{n}</span>
-              </div>
-            ))}
+            {Object.entries(summary.portfolioCounts || {}).sort((a, b) => b[1] - a[1]).map(([p, n]) => {
+              const active = tileFilter.portfolio === p;
+              return (
+                <button
+                  key={p}
+                  onClick={() => toggleTile('portfolio', p)}
+                  aria-pressed={active}
+                  className={`text-left rounded-lg border px-3 py-2.5 flex flex-col gap-1 transition-all ${active ? 'border-vf-red ring-2 ring-vf-red/30 bg-red-50/40' : 'border-[#e8e6e1] bg-[#fafaf9] hover:bg-gray-100 hover:shadow-sm'}`}
+                >
+                  <span className={`text-[11px] font-semibold leading-tight ${active ? 'text-vf-red' : 'text-vf-dark'}`}>{p}</span>
+                  <span className={`text-lg font-bold font-mono leading-none ${active ? 'text-vf-red' : 'text-vf-dark'}`}>{n}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -1852,11 +1887,17 @@ export default function NpdPipeline() {
           <div className="grid grid-cols-2 gap-2">
             {Object.entries(summary.statusCounts || {}).sort((a, b) => b[1] - a[1]).map(([s, c]) => {
               const col = STATUS_COLORS[s] || STATUS_COLORS['Not Started'];
+              const active = tileFilter.status === s;
               return (
-                <div key={s} className={`rounded-lg border border-[#e8e6e1] px-3 py-2.5 flex flex-col gap-1 ${col.bg}`}>
+                <button
+                  key={s}
+                  onClick={() => toggleTile('status', s)}
+                  aria-pressed={active}
+                  className={`text-left rounded-lg border px-3 py-2.5 flex flex-col gap-1 transition-all ${col.bg} ${active ? 'border-vf-red ring-2 ring-vf-red/30' : 'border-[#e8e6e1] hover:shadow-sm hover:brightness-95'}`}
+                >
                   <span className={`text-[11px] font-semibold leading-tight ${col.text}`}>{s}</span>
                   <span className={`text-lg font-bold font-mono leading-none ${col.text}`}>{c}</span>
-                </div>
+                </button>
               );
             })}
           </div>
