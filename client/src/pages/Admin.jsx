@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Upload, Search, Eye, EyeOff } from 'lucide-react';
+import { Upload, Search, Eye, EyeOff, Plus, Pencil } from 'lucide-react';
 import useProductStore from '../store/useProductStore.js';
 
 const TABS = [
@@ -145,6 +145,7 @@ function TaxonomySummary({ s }) {
 function Toggle({ on, onChange, disabled }) {
   return (
     <button
+      type="button"
       role="switch"
       aria-checked={on}
       disabled={disabled}
@@ -153,6 +154,207 @@ function Toggle({ on, onChange, disabled }) {
     >
       <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${on ? 'translate-x-4' : ''}`} />
     </button>
+  );
+}
+
+const EMPTY_PRODUCT = {
+  offeringId: '', name: '', category: '', family: '', productLine: '', market: 'VBI',
+  mainLifecycle: 'Live', lifecycleStage: 'Live', portalList: 'Yes', vbiChecked: '',
+  managerEmail: '', description: '',
+};
+const LIFECYCLE_MAIN = ['Live', 'Development', 'Rationalisation', 'Retired', 'Dropped'];
+const LIFECYCLE_STAGE = ['Strategy', 'Planning', 'Product Development', 'Market Readiness', 'Launch', 'Live', 'Stop Sell', 'Retired', 'Dropped'];
+const VBI_CHECKED = ['Yes', 'Move to VBI', 'TBC', 'No', 'Remove', 'Dedupe & use VBI PRD ID'];
+
+// Same rule the server applies: Portal List = Yes, or New VBI Checked = Yes / Move to VBI
+const ruleShows = (f) => f.portalList?.toLowerCase() === 'yes' || ['yes', 'move to vbi'].includes(f.vbiChecked?.toLowerCase());
+
+// Slide-in form to add a product or edit one taxonomy row
+function ProductFormPanel({ product, products, onClose, onSaved, onDeleted }) {
+  const isEdit = !!product?.id;
+  const [form, setForm] = useState(() => {
+    const base = { ...EMPTY_PRODUCT };
+    if (isEdit) for (const k of Object.keys(EMPTY_PRODUCT)) base[k] = product[k] ?? '';
+    return base;
+  });
+  // undefined = follow the rule; true/false = explicit choice
+  const [showChoice, setShowChoice] = useState(isEdit && product.manualVisibility ? product.showInCatalog : undefined);
+  const [saving, setSaving] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [error, setError] = useState(null);
+  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+
+  const showInCatalog = showChoice === undefined ? ruleShows(form) : showChoice;
+  const uniq = (list) => [...new Set(list.filter(Boolean))].sort();
+  const portfolios = uniq(products.map((p) => p.category));
+  const families = uniq(products.filter((p) => !form.category || p.category === form.category).map((p) => p.family));
+  const lines = uniq(products.filter((p) => (!form.category || p.category === form.category) && (!form.family || p.family === form.family)).map((p) => p.productLine));
+
+  const save = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setError(null);
+    try {
+      const res = await fetch(isEdit ? `/api/admin/products/${product.id}` : '/api/admin/products', {
+        method: isEdit ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, showInCatalog }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Save failed');
+      onSaved(data, isEdit);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const remove = async () => {
+    if (!confirmDelete) { setConfirmDelete(true); return; }
+    setSaving(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/admin/products/${product.id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Delete failed');
+      onDeleted(product.id);
+    } catch (err) {
+      setError(err.message);
+      setConfirmDelete(false);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const inputCls = 'w-full border border-vf-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-vf-red bg-white';
+  const label = (text, required) => (
+    <label className="block text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-1">
+      {text}{required && <span className="text-vf-red ml-0.5">*</span>}
+    </label>
+  );
+
+  return (
+    <div className="fixed inset-0 z-50 flex bg-black/20" onClick={onClose}>
+      <div className="flex-1" />
+      <div className="w-[520px] bg-white h-full shadow-2xl flex flex-col border-l border-vf-border" onClick={(e) => e.stopPropagation()}>
+        <div className="px-6 py-4 border-b border-vf-border flex items-center justify-between flex-shrink-0">
+          <div>
+            <h3 className="text-base font-semibold text-vf-dark">{isEdit ? 'Edit product' : 'Add product'}</h3>
+            {isEdit && product.offeringId && <div className="text-[11px] font-mono text-vf-muted mt-0.5">{product.offeringId}</div>}
+          </div>
+          <button onClick={onClose} className="text-vf-muted hover:text-vf-dark text-2xl leading-none">×</button>
+        </div>
+
+        <form onSubmit={save} className="flex-1 flex flex-col min-h-0">
+          <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
+            {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded-lg">{error}</div>}
+            {isEdit && !product.addedInPortal && (
+              <div className="bg-vf-surface border border-vf-border text-xs text-vf-muted px-3 py-2 rounded-lg leading-relaxed">
+                This product comes from the taxonomy file. Your edits apply now, but the next taxonomy upload will overwrite them with the file's values (a show/hide choice is kept). Make permanent changes in the file too.
+              </div>
+            )}
+            {!isEdit && (
+              <div className="bg-vf-surface border border-vf-border text-xs text-vf-muted px-3 py-2 rounded-lg leading-relaxed">
+                Products added here are kept when a new taxonomy file is uploaded. If the file later includes the same Offering ID or name, the file's row takes over.
+              </div>
+            )}
+
+            <div>{label('Product name', true)}<input required className={inputCls} value={form.name} onChange={(e) => set('name', e.target.value)} /></div>
+            <div>{label('Product Offering ID')}<input className={`${inputCls} font-mono`} value={form.offeringId} onChange={(e) => set('offeringId', e.target.value)} placeholder="e.g. PO10077" /></div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                {label('Portfolio', true)}
+                <input required list="adm-portfolios" className={inputCls} value={form.category} onChange={(e) => set('category', e.target.value)} />
+                <datalist id="adm-portfolios">{portfolios.map((v) => <option key={v} value={v} />)}</datalist>
+              </div>
+              <div>
+                {label('Market')}
+                <select className={inputCls} value={form.market} onChange={(e) => set('market', e.target.value)}>
+                  {uniq(['VBI', 'VGE', form.market]).map((v) => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              <div>
+                {label('Product family', true)}
+                <input required list="adm-families" className={inputCls} value={form.family} onChange={(e) => set('family', e.target.value)} />
+                <datalist id="adm-families">{families.map((v) => <option key={v} value={v} />)}</datalist>
+              </div>
+              <div>
+                {label('Product line', true)}
+                <input required list="adm-lines" className={inputCls} value={form.productLine} onChange={(e) => set('productLine', e.target.value)} />
+                <datalist id="adm-lines">{lines.map((v) => <option key={v} value={v} />)}</datalist>
+              </div>
+              <div>
+                {label('Main lifecycle')}
+                <select className={inputCls} value={form.mainLifecycle} onChange={(e) => set('mainLifecycle', e.target.value)}>
+                  <option value="">—</option>
+                  {uniq([...LIFECYCLE_MAIN, form.mainLifecycle]).map((v) => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              <div>
+                {label('Lifecycle stage')}
+                <select className={inputCls} value={form.lifecycleStage} onChange={(e) => set('lifecycleStage', e.target.value)}>
+                  <option value="">—</option>
+                  {uniq([...LIFECYCLE_STAGE, form.lifecycleStage]).map((v) => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+              <div>
+                {label('VBI Portal List')}
+                <select className={inputCls} value={form.portalList} onChange={(e) => set('portalList', e.target.value)}>
+                  <option value="">—</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+              <div>
+                {label('New VBI Checked')}
+                <select className={inputCls} value={form.vbiChecked} onChange={(e) => set('vbiChecked', e.target.value)}>
+                  <option value="">—</option>
+                  {uniq([...VBI_CHECKED, form.vbiChecked]).map((v) => <option key={v} value={v}>{v}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div>{label('Product manager email')}<input className={inputCls} value={form.managerEmail} onChange={(e) => set('managerEmail', e.target.value)} placeholder="name@vodafone.com; separate several with ;" /></div>
+            <div>{label('Description')}<textarea rows={4} className={`${inputCls} resize-y`} value={form.description} onChange={(e) => set('description', e.target.value)} /></div>
+
+            <div className="border border-vf-border rounded-lg px-3 py-3 flex items-center justify-between gap-3">
+              <div>
+                <div className="text-sm font-medium text-vf-dark">Show in Product Catalog</div>
+                <div className="text-[11px] text-vf-muted mt-0.5">
+                  {showChoice === undefined
+                    ? `Following the rule (Portal List = Yes, or New VBI Checked = Yes / Move to VBI)`
+                    : 'Set manually — kept on future uploads'}
+                  {showChoice !== undefined && (
+                    <button type="button" onClick={() => setShowChoice(undefined)} className="ml-1 text-vf-red hover:underline">Use rule</button>
+                  )}
+                </div>
+              </div>
+              <Toggle on={showInCatalog} onChange={() => setShowChoice(!showInCatalog)} />
+            </div>
+          </div>
+
+          <div className="px-6 py-4 border-t border-vf-border flex items-center gap-3 flex-shrink-0 bg-white">
+            {isEdit && (
+              <button
+                type="button"
+                onClick={remove}
+                onBlur={() => setConfirmDelete(false)}
+                disabled={saving}
+                className={`text-sm font-medium px-3 py-2 rounded-lg border transition-all ${confirmDelete ? 'bg-red-600 text-white border-red-600 hover:bg-red-700' : 'text-red-600 border-red-200 hover:bg-red-50'}`}
+              >
+                {confirmDelete ? 'Confirm delete' : 'Delete'}
+              </button>
+            )}
+            {confirmDelete && <span className="text-[11px] text-red-600 leading-tight">Also deletes its costs, SLA, coverage, trading and business case.</span>}
+            <div className="flex-1" />
+            <button type="button" onClick={onClose} className="text-sm font-medium text-vf-muted hover:text-vf-dark px-3 py-2">Cancel</button>
+            <button type="submit" disabled={saving} className="text-sm font-semibold bg-vf-red text-white px-5 py-2 rounded-lg hover:bg-vf-red-hover disabled:opacity-50">
+              {saving ? 'Saving…' : isEdit ? 'Save changes' : 'Add product'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 
@@ -168,6 +370,22 @@ function TaxonomyTab() {
   const [visibility, setVisibility] = useState('');
   const [market, setMarket] = useState('');
   const [saving, setSaving] = useState(null);
+  const [editing, setEditing] = useState(null); // null | {} (new) | product
+
+  const handleSaved = (saved, isEdit) => {
+    setProducts((list) => (isEdit ? list.map((p) => (p.id === saved.id ? saved : p)) : [saved, ...list]));
+    setEditing(null);
+    refreshFilters();
+    showToast(isEdit ? `Saved "${saved.name}"` : `Added "${saved.name}"`);
+  };
+
+  const handleDeleted = (id) => {
+    const name = products.find((p) => p.id === id)?.name;
+    setProducts((list) => list.filter((p) => p.id !== id));
+    setEditing(null);
+    refreshFilters();
+    showToast(`Deleted "${name}"`);
+  };
 
   const load = async () => {
     setLoading(true);
@@ -197,7 +415,9 @@ function TaxonomyTab() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ showInCatalog: next }),
       });
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Save failed');
+      const saved = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(saved.error || 'Save failed');
+      setProducts((list) => list.map((x) => (x.id === p.id ? saved : x)));
       refreshFilters();
     } catch (err) {
       setProducts((list) => list.map((x) => (x.id === p.id ? p : x)));
@@ -224,6 +444,15 @@ function TaxonomyTab() {
 
   return (
     <div className="space-y-4">
+      {editing && (
+        <ProductFormPanel
+          product={editing}
+          products={products}
+          onClose={() => setEditing(null)}
+          onSaved={handleSaved}
+          onDeleted={handleDeleted}
+        />
+      )}
       <ImportPanel
         title="Upload product taxonomy"
         description="Loads every product from the 'Prd List View' sheet as the master list. A product is shown in the Product Catalog when VBI Portal List is Yes, or New VBI Checked is Yes / Move to VBI. Products missing from the file are removed. Visibility you set manually below is kept on future uploads."
@@ -255,6 +484,12 @@ function TaxonomyTab() {
             <option value="shown">Shown only</option>
             <option value="hidden">Hidden only</option>
           </select>
+          <button
+            onClick={() => setEditing({})}
+            className="flex items-center gap-1.5 bg-vf-red text-white rounded-md px-3 py-1.5 text-xs font-semibold hover:bg-vf-red-hover"
+          >
+            <Plus size={13} /> Add product
+          </button>
         </div>
 
         {loading ? (
@@ -274,6 +509,7 @@ function TaxonomyTab() {
                   <th className="px-3 py-2 font-semibold">Market</th>
                   <th className="px-3 py-2 font-semibold">VBI Portal List</th>
                   <th className="px-3 py-2 font-semibold">New VBI Checked</th>
+                  <th className="px-3 py-2 font-semibold w-[60px]" />
                 </tr>
               </thead>
               <tbody>
@@ -287,7 +523,10 @@ function TaxonomyTab() {
                     </td>
                     <td className="px-3 py-2">
                       <div className={`font-medium ${p.showInCatalog ? 'text-vf-dark' : ''}`}>{p.name}</div>
-                      <div className="text-[10px] font-mono text-vf-muted">{p.offeringId || '—'}</div>
+                      <div className="text-[10px] font-mono text-vf-muted">
+                        {p.offeringId || '—'}
+                        {p.addedInPortal && <span className="ml-1.5 font-sans font-semibold uppercase text-[9px] text-vf-accent">added in portal</span>}
+                      </div>
                     </td>
                     <td className="px-3 py-2 whitespace-nowrap">{p.category}</td>
                     <td className="px-3 py-2">{p.family} <span className="text-vf-muted">›</span> {p.productLine}</td>
@@ -295,10 +534,19 @@ function TaxonomyTab() {
                     <td className="px-3 py-2">{p.market || '—'}</td>
                     <td className="px-3 py-2">{p.portalList || '—'}</td>
                     <td className="px-3 py-2 whitespace-nowrap">{p.vbiChecked || '—'}</td>
+                    <td className="px-3 py-2">
+                      <button
+                        onClick={() => setEditing(p)}
+                        title="Edit product"
+                        className="flex items-center gap-1 text-[11px] font-medium text-vf-muted hover:text-vf-dark border border-vf-border rounded px-2 py-0.5 hover:bg-vf-surface"
+                      >
+                        <Pencil size={11} /> Edit
+                      </button>
+                    </td>
                   </tr>
                 ))}
                 {filtered.length === 0 && (
-                  <tr><td colSpan={8} className="p-6 text-center text-vf-muted">No products match these filters.</td></tr>
+                  <tr><td colSpan={9} className="p-6 text-center text-vf-muted">No products match these filters.</td></tr>
                 )}
               </tbody>
             </table>

@@ -115,7 +115,11 @@ async function planTaxonomy(buffer) {
     actions.push({ product: p, match, matchedBy });
   }
 
-  const toDelete = existing.filter((p) => !claimed.has(p.id));
+  // Products added by hand in Admin are kept even though the file doesn't list them
+  const isManual = (p) => p.taxonomy?._source === 'manual';
+  const unclaimed = existing.filter((p) => !claimed.has(p.id));
+  const toDelete = unclaimed.filter((p) => !isManual(p));
+  const keptManual = unclaimed.filter(isManual);
   const hasLinked = hasLinkedData;
   const shown = actions.filter((a) => {
     const override = a.match?.taxonomy?._visibilityOverride;
@@ -135,8 +139,9 @@ async function planTaxonomy(buffer) {
       toUpdate: actions.filter((a) => a.match).length,
       adoptedByName: actions.filter((a) => a.matchedBy === 'name' && a.match).length,
       toDelete: toDelete.length,
-      shownInCatalog: shown.length,
-      hiddenInCatalog: incoming.length - shown.length,
+      keptAddedInPortal: keptManual.map((p) => p.name),
+      shownInCatalog: shown.length + keptManual.filter((p) => p.showInCatalog).length,
+      hiddenInCatalog: incoming.length - shown.length + keptManual.filter((p) => !p.showInCatalog).length,
       shownByPortfolio: byPortfolio,
       linkedDataKept: actions.filter((a) => a.match && hasLinked(a.match)).map((a) => a.product.name),
       linkedDataLost: toDelete.filter(hasLinked).map((p) => p.name),
@@ -190,15 +195,121 @@ router.post('/taxonomy', upload.single('file'), async (req, res, next) => {
 router.get('/products', async (req, res, next) => {
   try {
     const products = await prisma.product.findMany({
-      select: {
-        id: true, offeringId: true, name: true, category: true, family: true, productLine: true,
-        market: true, mainLifecycle: true, lifecycleStage: true, portalList: true, vbiChecked: true,
-        managerEmail: true, showInCatalog: true, taxonomy: true,
-      },
+      select: ADMIN_PRODUCT_SELECT,
       orderBy: [{ category: 'asc' }, { family: 'asc' }, { productLine: 'asc' }, { name: 'asc' }],
     });
-    res.json(products.map(({ taxonomy, ...p }) => ({ ...p, manualVisibility: typeof taxonomy?._visibilityOverride === 'boolean' })));
+    res.json(products.map(toAdminProduct));
   } catch (err) { next(err); }
+});
+
+const ADMIN_PRODUCT_SELECT = {
+  id: true, offeringId: true, name: true, category: true, family: true, productLine: true,
+  market: true, mainLifecycle: true, lifecycleStage: true, portalList: true, vbiChecked: true,
+  managerEmail: true, description: true, showInCatalog: true, taxonomy: true,
+};
+
+function toAdminProduct({ taxonomy, ...p }) {
+  return {
+    ...p,
+    manualVisibility: typeof taxonomy?._visibilityOverride === 'boolean',
+    addedInPortal: taxonomy?._source === 'manual',
+  };
+}
+
+// Editable product fields → matching column in the taxonomy file, so the stored
+// copy of the row stays consistent with what the portal shows.
+const PRODUCT_FIELDS = {
+  offeringId: 'Product Offering ID',
+  name: 'Product Name',
+  category: 'Product Portfolio Name',
+  family: 'Product Family Name',
+  productLine: 'Product Line Name',
+  market: 'Market',
+  mainLifecycle: 'Main Lifecycle Stage',
+  lifecycleStage: 'Lifecycle Stage',
+  portalList: 'VBI Portal List',
+  vbiChecked: 'New VBI Checked',
+  managerEmail: 'Product Manager Email',
+  description: 'Product Offering Description',
+};
+const REQUIRED_PRODUCT_FIELDS = ['name', 'category', 'family', 'productLine'];
+
+// Validate an admin product form and build the Prisma data for it.
+function buildProductData(body, current) {
+  const values = {};
+  for (const k of Object.keys(PRODUCT_FIELDS)) {
+    if (body[k] !== undefined) values[k] = str(body[k]) || null;
+    else if (current) values[k] = current[k] ?? null;
+    else values[k] = null;
+  }
+  for (const k of REQUIRED_PRODUCT_FIELDS) {
+    if (!values[k]) return { error: `${k === 'productLine' ? 'Product line' : k[0].toUpperCase() + k.slice(1)} is required` };
+  }
+  if (values.managerEmail && !values.managerEmail.split(';').every((e) => /^\S+@\S+\.\S+$/.test(e.trim()))) {
+    return { error: 'Product manager email is not a valid email address' };
+  }
+
+  const taxonomy = { ...(current?.taxonomy || {}) };
+  for (const [k, column] of Object.entries(PRODUCT_FIELDS)) taxonomy[column] = values[k] ?? '';
+  if (!current) taxonomy._source = 'manual';
+
+  // Visibility: follow the Yes / Move to VBI rule unless the admin chose otherwise
+  const ruleShow = defaultVisibility(values.portalList || '', values.vbiChecked || '');
+  let showInCatalog = ruleShow;
+  if (typeof body.showInCatalog === 'boolean') showInCatalog = body.showInCatalog;
+  else if (typeof taxonomy._visibilityOverride === 'boolean') showInCatalog = taxonomy._visibilityOverride;
+  if (showInCatalog === ruleShow) delete taxonomy._visibilityOverride;
+  else taxonomy._visibilityOverride = showInCatalog;
+
+  return {
+    data: {
+      ...values,
+      status: values.mainLifecycle || 'Live',
+      owner: values.managerEmail ? values.managerEmail.split(';')[0].trim() : 'VBI Product Team',
+      showInCatalog,
+      taxonomy,
+    },
+  };
+}
+
+function productWriteError(err, res, next) {
+  if (err.code === 'P2002') return res.status(409).json({ error: 'Another product already uses that Product Offering ID' });
+  if (err.code === 'P2025') return res.status(404).json({ error: 'Product not found' });
+  return next(err);
+}
+
+// POST /api/admin/products — add a product by hand (kept on future taxonomy uploads)
+router.post('/products', async (req, res, next) => {
+  try {
+    const { data, error } = buildProductData(req.body, null);
+    if (error) return res.status(400).json({ error });
+    const created = await prisma.product.create({ data, select: ADMIN_PRODUCT_SELECT });
+    res.status(201).json(toAdminProduct(created));
+  } catch (err) { productWriteError(err, res, next); }
+});
+
+// PUT /api/admin/products/:id — edit a product's taxonomy fields
+router.put('/products/:id', async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'Invalid id' });
+    const current = await prisma.product.findUnique({ where: { id }, select: ADMIN_PRODUCT_SELECT });
+    if (!current) return res.status(404).json({ error: 'Product not found' });
+    const { data, error } = buildProductData(req.body, current);
+    if (error) return res.status(400).json({ error });
+    const updated = await prisma.product.update({ where: { id }, data, select: ADMIN_PRODUCT_SELECT });
+    res.json(toAdminProduct(updated));
+  } catch (err) { productWriteError(err, res, next); }
+});
+
+// DELETE /api/admin/products/:id — removes the product and its linked data
+router.delete('/products/:id', async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ error: 'Invalid id' });
+    await prisma.product.delete({ where: { id } });
+    res.json({ ok: true });
+  } catch (err) { productWriteError(err, res, next); }
 });
 
 // PATCH /api/admin/products/:id — show/hide a product in the catalog.
@@ -212,9 +323,9 @@ router.patch('/products/:id', async (req, res, next) => {
     const updated = await prisma.product.update({
       where: { id },
       data: { showInCatalog: req.body.showInCatalog, taxonomy: { ...(current.taxonomy || {}), _visibilityOverride: req.body.showInCatalog } },
-      select: { id: true, showInCatalog: true },
+      select: ADMIN_PRODUCT_SELECT,
     });
-    res.json({ ...updated, manualVisibility: true });
+    res.json(toAdminProduct(updated));
   } catch (err) { next(err); }
 });
 

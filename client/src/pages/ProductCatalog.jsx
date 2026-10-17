@@ -34,6 +34,29 @@ function getStyle(category) {
   return CATEGORY_STYLE[category] || CATEGORY_STYLE['Other'];
 }
 
+// Display-only grouping: these small portfolios share one "Other" tile.
+// Products keep their real portfolio everywhere else.
+const DISPLAY_GROUP = {
+  'Digital Solutions': 'Other',
+  'Digital Apps': 'Other',
+  'Network API': 'Other',
+};
+
+// Merge per-portfolio summary rows into display tiles; each tile lists its member portfolios
+function toDisplayTiles(summary) {
+  const tiles = new Map();
+  for (const row of summary) {
+    const label = DISPLAY_GROUP[row.category] || row.category;
+    const tile = tiles.get(label) || { category: label, members: [], products: 0, families: 0, lines: 0 };
+    tile.members.push(row.category);
+    tile.products += row.products;
+    tile.families += row.families;
+    tile.lines += row.lines;
+    tiles.set(label, tile);
+  }
+  return [...tiles.values()];
+}
+
 export default function ProductCatalog() {
   const { openDrawer } = useProductStore();
   const [view, setView] = useState('categories'); // 'categories' | 'products'
@@ -55,9 +78,12 @@ export default function ProductCatalog() {
     setView('products');
     setLoadingCat(true);
     try {
-      const res = await fetch(`/api/products?category=${encodeURIComponent(cat.category)}&limit=999`);
-      const json = await res.json();
-      setCategoryProducts(Array.isArray(json.data) ? json.data : []);
+      const lists = await Promise.all(cat.members.map(async (member) => {
+        const res = await fetch(`/api/products?category=${encodeURIComponent(member)}&limit=999`);
+        const json = await res.json();
+        return Array.isArray(json.data) ? json.data : [];
+      }));
+      setCategoryProducts(lists.flat());
     } catch {
       setCategoryProducts([]);
     } finally {
@@ -71,12 +97,15 @@ export default function ProductCatalog() {
     setCategoryProducts([]);
   };
 
-  // Group products by family
+  // Group products by family (prefixed with the real portfolio inside a combined tile)
+  const isCombined = (selectedCategory?.members.length || 0) > 1;
   const byFamily = categoryProducts.reduce((acc, p) => {
-    (acc[p.family] = acc[p.family] || []).push(p);
+    const key = isCombined ? `${p.category} › ${p.family}` : p.family;
+    (acc[key] = acc[key] || []).push(p);
     return acc;
   }, {});
 
+  const tiles = toDisplayTiles(summary);
   const totalProducts = summary.reduce((s, c) => s + c.products, 0);
 
   return (
@@ -90,7 +119,7 @@ export default function ProductCatalog() {
               <div className="text-[11px] text-vf-muted mt-0.5 uppercase tracking-wide font-medium">Total Products</div>
             </div>
             <div className="bg-white border border-vf-border rounded-[10px] px-5 py-4">
-              <div className="text-2xl font-semibold text-vf-dark">{summary.length || '—'}</div>
+              <div className="text-2xl font-semibold text-vf-dark">{tiles.length || '—'}</div>
               <div className="text-[11px] text-vf-muted mt-0.5 uppercase tracking-wide font-medium">Categories</div>
             </div>
             <div className="bg-white border border-vf-border rounded-[10px] px-5 py-4">
@@ -107,7 +136,7 @@ export default function ProductCatalog() {
               ? Array.from({ length: 8 }).map((_, i) => (
                   <div key={i} className="bg-white border border-vf-border rounded-xl p-5 animate-pulse h-36" />
                 ))
-              : [...summary].sort((a, b) => {
+              : [...tiles].sort((a, b) => {
                 const ai = CATEGORY_ORDER.indexOf(a.category);
                 const bi = CATEGORY_ORDER.indexOf(b.category);
                 return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
