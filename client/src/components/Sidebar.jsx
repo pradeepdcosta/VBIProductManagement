@@ -23,7 +23,7 @@ const sections = [
     ],
   },
   {
-    label: 'Financials',
+    label: 'Product Financials',
     items: [
       { to: '/costs', icon: Wallet, label: 'Cost Management' },
       { to: '/trading', icon: TrendingUp, label: 'Trading Performance' },
@@ -31,7 +31,7 @@ const sections = [
     ],
   },
   {
-    label: 'Operations',
+    label: 'Product Operations',
     items: [
       { to: '/coverage', icon: Globe, label: 'Country Coverage' },
       { to: '/sla', icon: Shield, label: 'SLA & Service' },
