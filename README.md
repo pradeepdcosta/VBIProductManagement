@@ -100,6 +100,7 @@ data is entered:
 - **Cost Management:** a placeholder cost breakdown per product line. Editable in each line's breakdown sheet.
 - **Trading Performance:** per region, a €10M AOV target (50% won), €15M pipeline and €10M revenue target (50% achieved).
 - **Product drawer:** coverage and distributors.
+- **Business Case:** three generic placeholder P&Ls (Cisco Catalyst SDN: Approved; MPN Connectivity and Fortinet SD-WAN/SASE: In Review). These are created on an empty database only.
 
 Real figures entered in the portal always replace the placeholders.
 Setting `SEED_DEMO_DATA=false` and restarting hides the cost and trading placeholders. On a new install it also skips the placeholder business cases.
