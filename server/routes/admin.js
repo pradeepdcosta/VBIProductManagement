@@ -85,14 +85,14 @@ async function planTaxonomy(buffer) {
 
   const incoming = sheet.rows.map(parseTaxonomyRow).filter((p) => p.offeringId && p.name);
   const existing = await prisma.product.findMany({
-    include: { bizCase: { select: { id: true } }, sla: { select: { id: true } }, _count: { select: { costs: true, trading: true, coverage: true } } },
+    include: { sla: { select: { id: true } }, _count: { select: { costs: true, trading: true, coverage: true } } },
   });
 
   const byOffering = new Map(existing.filter((p) => p.offeringId).map((p) => [p.offeringId, p]));
   // Legacy products (no offering ID) can be adopted by name so their linked data survives.
   // Names are compared ignoring case, spaces and punctuation ("IPVPN" = "IP-VPN").
   const nameKey = (n) => n.toLowerCase().replace(/[^a-z0-9]/g, '');
-  const hasLinkedData = (p) => p.bizCase || p.sla || p._count.costs || p._count.trading || p._count.coverage;
+  const hasLinkedData = (p) => p.sla || p._count.costs || p._count.trading || p._count.coverage;
   const legacyByName = new Map();
   for (const p of existing.filter((e) => !e.offeringId)) {
     const k = nameKey(p.name);

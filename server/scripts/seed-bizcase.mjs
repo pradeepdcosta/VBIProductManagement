@@ -32,9 +32,15 @@ async function seed() {
       continue;
     }
 
+    // Business cases belong to the product's line; skip if that line already has one
+    const lineKey = { productFamily: product.family, productLine: product.productLine };
+    if (await prisma.businessCase.findUnique({ where: { productFamily_productLine: lineKey } })) {
+      console.log(`Product line "${product.productLine}" already has a business case, skipping ${item.productName}`);
+      continue;
+    }
     const bc = await prisma.businessCase.create({
       data: {
-        productId: product.id,
+        ...lineKey,
         npv: item.npv,
         roi: item.roi,
         irr: item.irr,

@@ -183,7 +183,7 @@ router.get('/bizcase-template', async (req, res, next) => {
       ['VBI Business Case P&L Template'],
       [''],
       ['Instructions:'],
-      ['1. Fill in the Product Name in cell B1 of the "P&L" sheet (must match an existing product name exactly)'],
+      ['1. Fill in the Product Line in cell B1 of the "P&L" sheet (must match a product line in the catalog), or choose the line when uploading in the portal'],
       ['2. Enter values in the FY27-FY31 columns (in €M)'],
       ['3. Fill in the Summary section at the bottom (NPV, RoI, IRR, Payback)'],
       ['4. Save and upload via Import / Export > Business Case'],
@@ -191,14 +191,15 @@ router.get('/bizcase-template', async (req, res, next) => {
       ['Notes:'],
       ['- Use negative numbers in brackets e.g. (1.5) or as -1.5'],
       ['- Percentage rows: enter as decimals e.g. 28.5 for 28.5%'],
-      ['- Total rows are auto-stored but you should fill them in for your own reference'],
+      ['- Total, margin, EBITDA and cash-flow rows are calculated by the portal; only the input lines are read'],
+      ['- Enter Revenue and Cost of Sale as positive numbers, OpEx and CapEx as negative numbers (costs)'],
     ];
     const instrWs = XLSX.utils.aoa_to_sheet(instrData);
     XLSX.utils.book_append_sheet(wb, instrWs, 'Instructions');
 
     // P&L sheet
     const plData = [
-      ['Product Name:', '', '', '', '', '', ''],
+      ['Product Line:', '', '', '', '', '', ''],
       [''],
       ['Business Case P&L', 'FY27 (€m)', 'FY28 (€m)', 'FY29 (€m)', 'FY30 (€m)', 'FY31 (€m)', 'Total FY27-FY31 (€m)'],
     ];
@@ -237,10 +238,8 @@ router.get('/bizcase-template', async (req, res, next) => {
 router.get('/bizcase', async (req, res, next) => {
   try {
     const cases = await prisma.businessCase.findMany({
-      include: {
-        product: { select: { name: true, category: true } },
-        lines: { orderBy: { sortOrder: 'asc' } },
-      },
+      include: { lines: { orderBy: { sortOrder: 'asc' } } },
+      orderBy: [{ productFamily: 'asc' }, { productLine: 'asc' }],
     });
 
     if (cases.length === 0) {
@@ -251,7 +250,7 @@ router.get('/bizcase', async (req, res, next) => {
 
     for (const bc of cases) {
       const plData = [
-        ['Product Name:', bc.product.name, '', '', '', '', ''],
+        ['Product Line:', bc.productLine, 'Family:', bc.productFamily, 'Status:', bc.status, ''],
         [''],
         ['Business Case P&L', 'FY27 (€m)', 'FY28 (€m)', 'FY29 (€m)', 'FY30 (€m)', 'FY31 (€m)', 'Total FY27-FY31 (€m)'],
       ];
@@ -283,7 +282,7 @@ router.get('/bizcase', async (req, res, next) => {
       ];
 
       // Sanitize sheet name (max 31 chars, no special chars)
-      const sheetName = bc.product.name.replace(/[\\/?*[\]]/g, '').substring(0, 31);
+      const sheetName = bc.productLine.replace(/[\\/?*[\]]/g, '').substring(0, 31);
       XLSX.utils.book_append_sheet(wb, ws, sheetName);
     }
 

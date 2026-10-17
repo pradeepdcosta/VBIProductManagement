@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import XLSX from 'xlsx';
 import prisma from '../lib/prisma.js';
+import { BIZCASE_ROWS, calculate, cleanValues, valuesFromLines, linesForStorage } from '../lib/bizcase.js';
 
 const router = Router();
 const upload = multer({
@@ -264,24 +265,23 @@ router.post('/bizcase', upload.single('file'), async (req, res, next) => {
     const sheet = workbook.Sheets[sheetName];
     const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-    // Resolve product: prefer productId query param, fall back to cell B1
-    let product;
-    if (req.query.productId) {
-      product = await prisma.product.findUnique({ where: { id: parseInt(req.query.productId) } });
-      if (!product) {
-        return res.status(400).json({ error: 'Selected product not found' });
-      }
-    } else {
-      const productName = rows[0]?.[1];
-      if (!productName) {
-        return res.status(400).json({ error: 'Product Name not found in cell B1 of P&L sheet' });
-      }
-      product = await prisma.product.findFirst({
-        where: { name: { contains: String(productName).trim(), mode: 'insensitive' } },
+    // Resolve the product line: prefer productFamily + productLine query params,
+    // fall back to cell B1 (a product line or product name from the catalog)
+    let line;
+    if (req.query.productFamily && req.query.productLine) {
+      line = await prisma.product.findFirst({
+        where: { showInCatalog: true, family: String(req.query.productFamily), productLine: String(req.query.productLine) },
+        select: { family: true, productLine: true },
       });
-      if (!product) {
-        return res.status(400).json({ error: `Product "${productName}" not found in catalog` });
-      }
+      if (!line) return res.status(400).json({ error: 'Selected product line not found in the catalog' });
+    } else {
+      const name = String(rows[0]?.[1] || '').trim();
+      if (!name) return res.status(400).json({ error: 'Product line not found in cell B1 of the P&L sheet' });
+      line = await prisma.product.findFirst({
+        where: { showInCatalog: true, OR: [{ productLine: { equals: name, mode: 'insensitive' } }, { name: { equals: name, mode: 'insensitive' } }] },
+        select: { family: true, productLine: true },
+      });
+      if (!line) return res.status(400).json({ error: `"${name}" is not a product line or product in the catalog` });
     }
 
     // Row 2 is header: [lineItem, FY27, FY28, FY29, FY30, FY31, Total]
@@ -344,50 +344,27 @@ router.post('/bizcase', upload.single('file'), async (req, res, next) => {
       }
     }
 
-    // Upsert BusinessCase
-    const bizCase = await prisma.businessCase.upsert({
-      where: { productId: product.id },
-      create: {
-        productId: product.id,
-        npv,
-        roi,
-        irr,
-        paybackMonths: paybackMonths ? Math.round(paybackMonths * 12) : null,
-        status: 'In Review',
-      },
-      update: { npv, roi, irr, paybackMonths: paybackMonths ? Math.round(paybackMonths * 12) : null },
+    // Take the input rows from the sheet; totals, margins, EBITDA and cash flow
+    // are recalculated (see lib/bizcase.js)
+    const { values, error } = cleanValues(valuesFromLines(lineItems));
+    if (error) return res.status(400).json({ error });
+    const stored = linesForStorage(calculate(values));
+    const metrics = { npv, roi, irr, paybackMonths: paybackMonths ? Math.round(paybackMonths * 12) : null };
+
+    await prisma.$transaction(async (tx) => {
+      const bizCase = await tx.businessCase.upsert({
+        where: { productFamily_productLine: { productFamily: line.family, productLine: line.productLine } },
+        create: { productFamily: line.family, productLine: line.productLine, status: 'Draft', ...metrics },
+        update: metrics,
+      });
+      await tx.businessCaseLine.deleteMany({ where: { businessCaseId: bizCase.id } });
+      await tx.businessCaseLine.createMany({ data: stored.map((l) => ({ businessCaseId: bizCase.id, ...l })) });
     });
 
-    // Known line items for section/sort mapping
-    const { BIZCASE_TEMPLATE_ROWS } = await import('./exports.js');
-    const templateMap = new Map(BIZCASE_TEMPLATE_ROWS.map(r => [r.lineItem.toLowerCase(), r]));
-
-    // Delete existing lines and re-create
-    await prisma.businessCaseLine.deleteMany({ where: { businessCaseId: bizCase.id } });
-
-    let imported = 0;
-    for (const item of lineItems) {
-      const template = templateMap.get(item.lineItem.toLowerCase());
-      await prisma.businessCaseLine.create({
-        data: {
-          businessCaseId: bizCase.id,
-          section: template?.section || 'Other',
-          lineItem: item.lineItem,
-          sortOrder: template?.sortOrder || 99,
-          isTotal: template?.isTotal || item.lineItem.toLowerCase().startsWith('total') || false,
-          fy27: item.fy27,
-          fy28: item.fy28,
-          fy29: item.fy29,
-          fy30: item.fy30,
-          fy31: item.fy31,
-        },
-      });
-      imported++;
-    }
-
+    const filled = BIZCASE_ROWS.filter((r) => r.input && Object.values(values[r.lineItem]).some((v) => v != null)).length;
     res.json({
-      imported,
-      message: `Imported business case for "${product.name}" with ${imported} line items`,
+      imported: filled,
+      message: `Imported business case for "${line.productLine}" (${filled} input lines; totals recalculated)`,
     });
   } catch (err) {
     next(err);

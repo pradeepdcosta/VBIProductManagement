@@ -201,9 +201,13 @@ async function main() {
     { npv: 15.6, irr: 34.0, paybackMonths: 14, status: 'Draft', summary: 'MPN Dedicated expansion into DE and NL markets. High-margin opportunity driven by Industry 4.0 demand in manufacturing sector.' },
   ];
 
+  // Business cases belong to a product line (family + line)
   for (let i = 0; i < bcProducts.length; i++) {
-    await prisma.businessCase.create({
-      data: { productId: bcProducts[i].id, ...bcTemplates[i] },
+    const { family, productLine } = bcProducts[i];
+    await prisma.businessCase.upsert({
+      where: { productFamily_productLine: { productFamily: family, productLine } },
+      create: { productFamily: family, productLine, ...bcTemplates[i] },
+      update: {},
     });
   }
 

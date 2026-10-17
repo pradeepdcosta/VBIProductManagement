@@ -321,21 +321,6 @@ router.get('/sla', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET /api/bizcase — all business cases with product info and lines (supports filters)
-router.get('/bizcase', async (req, res, next) => {
-  try {
-    const productWhere = buildProductWhere(req.query);
-    const cases = await prisma.businessCase.findMany({
-      where: Object.keys(productWhere).length ? { product: productWhere } : undefined,
-      include: {
-        product: { select: { id: true, name: true, category: true } },
-        lines: { orderBy: { sortOrder: 'asc' } },
-      },
-    });
-    res.json(cases);
-  } catch (err) { next(err); }
-});
-
 // GET /api/products/:id — full detail with all relations
 router.get('/:id', async (req, res, next) => {
   try {
@@ -347,12 +332,15 @@ router.get('/:id', async (req, res, next) => {
         trading: true,
         coverage: true,
         sla: true,
-        bizCase: true,
       },
     });
     if (!product) return res.status(404).json({ error: 'Product not found' });
+    // Business cases belong to the product's line (family + line)
+    const bizCase = await prisma.businessCase.findUnique({
+      where: { productFamily_productLine: { productFamily: product.family, productLine: product.productLine } },
+    });
     // Products without uploaded trading data show the placeholder profile (flagged)
-    res.json({ ...product, trading: tradingRowsFor(product, product.trading, DEFAULT_TRADING_FY) });
+    res.json({ ...product, bizCase, trading: tradingRowsFor(product, product.trading, DEFAULT_TRADING_FY) });
   } catch (err) {
     next(err);
   }
@@ -455,11 +443,13 @@ router.get('/:id/sla', async (req, res, next) => {
   }
 });
 
-// GET /api/products/:id/bizcase
+// GET /api/products/:id/bizcase — the business case of the product's line
 router.get('/:id/bizcase', async (req, res, next) => {
   try {
+    const product = await prisma.product.findUnique({ where: { id: parseInt(req.params.id) }, select: { family: true, productLine: true } });
+    if (!product) return res.status(404).json({ error: 'Product not found' });
     const bc = await prisma.businessCase.findUnique({
-      where: { productId: parseInt(req.params.id) },
+      where: { productFamily_productLine: { productFamily: product.family, productLine: product.productLine } },
     });
     res.json(bc);
   } catch (err) {
