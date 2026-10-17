@@ -6,3 +6,6 @@ client/dist/
 *.db
 .DS_Store
 Thumbs.db
+
+# Local database backups (contain real data)
+backups/
