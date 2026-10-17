@@ -1,0 +1,48 @@
+# Full portal stack for a server: PostgreSQL + the portal (API and web app in one container).
+#   1. cp .env.production.example .env   and fill it in
+#   2. docker compose -f docker-compose.prod.yml up -d --build
+# The portal is then on http://<server>:${PORTAL_PORT:-3001}. See README.md.
+#
+# (docker-compose.yml is the database-only stack used for local development.)
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: vbi
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: vbi_products
+    volumes:
+      - portal-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U vbi -d vbi_products']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  portal:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - '${PORTAL_PORT:-3001}:3001'
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgresql://vbi:${POSTGRES_PASSWORD}@postgres:5432/vbi_products
+      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL:?Set INITIAL_ADMIN_EMAIL in .env}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD:?Set INITIAL_ADMIN_PASSWORD in .env}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3001/health || exit 1']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  portal-db:

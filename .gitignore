@@ -9,3 +9,7 @@ Thumbs.db
 
 # Local database backups (contain real data)
 backups/
+
+# Taxonomy / NPD workbooks are uploaded through Admin; keep them out of git
+data/*.xlsx
+!data/prods.xlsx

@@ -55,7 +55,8 @@ export function setSessionCookie(res, token, expiresAt) {
   res.cookie(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    // https-only in production; COOKIE_SECURE=false allows a plain-http office install
+    secure: process.env.NODE_ENV === 'production' && process.env.COOKIE_SECURE !== 'false',
     expires: expiresAt,
     path: '/',
   });
