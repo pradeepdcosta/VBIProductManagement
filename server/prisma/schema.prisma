@@ -238,6 +238,8 @@ model NpdInitiative {
   aiFlag                String?  @map("ai_flag")
   localItImpact         String?  @map("local_it_impact")
   vbiResponse           String?  @map("vbi_response") @db.Text
+  // VBI outcome per budget review stage: { day1, day2, day3, final } = 'Approved' | 'Not approved' | null
+  dbReview              Json?    @map("db_review")
 
   @@index([fy, externalId])
   @@map("npd_initiatives")

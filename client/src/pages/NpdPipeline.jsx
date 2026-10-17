@@ -64,6 +64,94 @@ const CHECKLIST_CATEGORIES = [
   'Other',
 ];
 
+// ─── NPD cycle review (budget review stages, flags, importance) ───────────────
+
+const DB_STAGES = [
+  { key: 'day1', short: 'Day 1', label: 'DB Day 1' },
+  { key: 'day2', short: 'Day 2', label: 'DB Day 2' },
+  { key: 'day3', short: 'Day 3', label: 'DB Day 3' },
+  { key: 'final', short: 'Final budget', label: 'Final budget approval' },
+];
+const NPD_IMPORTANCE = ['High', 'Medium', 'Low', 'Not rated'];
+const EMPTY_REVIEW_FILTERS = { db: '', target: '', ai: '', it: '', importance: '' };
+
+const isYes = (v) => /^yes/i.test(v || '');
+const isNo = (v) => /^no/i.test(v || '');
+const yesNoMatches = (value, wanted) => !wanted || (wanted === 'Yes' ? isYes(value) : isNo(value));
+
+function matchesReviewFilters(i, f) {
+  if (f.db) {
+    const [stage, outcome] = f.db.split('|');
+    const actual = i.dbReview?.[stage] || 'Pending';
+    if (actual !== outcome) return false;
+  }
+  if (!yesNoMatches(i.vbiTargetPortfolio, f.target)) return false;
+  if (!yesNoMatches(i.aiFlag, f.ai)) return false;
+  if (!yesNoMatches(i.localItImpact, f.it)) return false;
+  if (f.importance && (i.npdImportance || 'Not rated') !== f.importance) return false;
+  return true;
+}
+
+function ReviewSelect({ value, onChange, label, children }) {
+  return (
+    <select
+      aria-label={label}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className={`border rounded-md px-2.5 py-1.5 text-xs bg-white cursor-pointer focus:outline-none focus:border-vf-red ${value ? 'border-vf-red text-vf-red font-semibold' : 'border-vf-border'}`}
+    >
+      {children}
+    </select>
+  );
+}
+
+const NPD_IMPORTANCE_STYLE = {
+  High: 'bg-red-100 text-red-700',
+  Medium: 'bg-amber-100 text-amber-700',
+  Low: 'bg-blue-100 text-blue-700',
+  'Not rated': 'bg-gray-100 text-gray-500',
+};
+
+function NpdImportanceBadge({ level, prefix = 'VBI importance' }) {
+  if (!level) return null;
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${NPD_IMPORTANCE_STYLE[level] || NPD_IMPORTANCE_STYLE['Not rated']}`}>
+      {prefix}: {level}
+    </span>
+  );
+}
+
+const OUTCOME_STYLE = {
+  Approved: 'bg-green-100 text-green-800 border-green-300',
+  'Not approved': 'bg-red-100 text-red-700 border-red-300',
+  Pending: 'bg-white text-vf-muted border-vf-border',
+};
+const NEXT_OUTCOME = { Pending: 'Approved', Approved: 'Not approved', 'Not approved': null };
+
+// One chip per budget review stage; click to cycle Pending → Approved → Not approved → Pending
+function DbReviewControl({ review, onChange }) {
+  return (
+    <div>
+      <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">Budget review (VBI)</div>
+      <div className="flex flex-wrap gap-1.5">
+        {DB_STAGES.map((s) => {
+          const outcome = review?.[s.key] || 'Pending';
+          return (
+            <button
+              key={s.key}
+              onClick={() => onChange({ ...Object.fromEntries(DB_STAGES.map((x) => [x.key, review?.[x.key] || null])), [s.key]: NEXT_OUTCOME[outcome] })}
+              title="Click to change: Pending → Approved → Not approved"
+              className={`px-2 py-1 rounded border text-[11px] font-semibold transition-colors hover:shadow-sm ${OUTCOME_STYLE[outcome]}`}
+            >
+              {s.label}: {outcome}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ─── Small shared components ──────────────────────────────────────────────────
 
 function StatusBadge({ status }) {
@@ -114,11 +202,14 @@ const IMPORTANCE_STYLE = {
   'No response': 'bg-gray-100 text-gray-500',
 };
 
+// Epic importance is stored as High / Mid / Low (as in the NPD file); shown as High / Medium / Low
+const importanceLabel = (level) => (level === 'Mid' ? 'Medium' : level);
+
 function ImportanceBadge({ level }) {
   if (!level) return null;
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${IMPORTANCE_STYLE[level] || IMPORTANCE_STYLE.Unrated}`}>
-      VBI: {level}
+      VBI: {importanceLabel(level)}
     </span>
   );
 }
@@ -1219,8 +1310,11 @@ function PipelineCard({ item, onClick, onSave, onEdit }) {
       <div className="text-xs text-vf-muted">
         {item.portfolio} › {item.productFamily}
       </div>
-      {item.epicCount > 0 && (
-        <div className="text-[10px] text-vf-muted mt-1 font-medium">{item.epicCount} epic{item.epicCount === 1 ? '' : 's'}</div>
+      {(item.epicCount > 0 || item.npdImportance) && (
+        <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+          {item.epicCount > 0 && <span className="text-[10px] text-vf-muted font-medium">{item.epicCount} epic{item.epicCount === 1 ? '' : 's'}</span>}
+          {item.npdImportance && <NpdImportanceBadge level={item.npdImportance} prefix="VBI" />}
+        </div>
       )}
       {(item.capex != null || item.opex != null) && (
         <div className="text-[10px] text-vf-muted mt-1 font-mono">
@@ -1239,6 +1333,13 @@ function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
   const [showAddEpic, setShowAddEpic] = useState(false);
   const [selectedEpic, setSelectedEpic] = useState(null);
   const [epicError, setEpicError] = useState(null);
+  const [epicFilter, setEpicFilter] = useState({ importance: '', category: '' });
+  const IMPORTANCE_ORDER = ['High', 'Mid', 'Low', 'Unrated', 'No response'];
+  const epicImportanceLevels = IMPORTANCE_ORDER.filter((l) => epics.some((e) => e.vbiImportance === l));
+  const epicCategories = [...new Set(epics.map((e) => e.epicCategory).filter(Boolean))].sort();
+  const visibleEpics = epics.filter((e) =>
+    (!epicFilter.importance || e.vbiImportance === epicFilter.importance) &&
+    (!epicFilter.category || e.epicCategory === epicFilter.category));
   const [currentStages, setCurrentStages] = useState(item.stages || {});
   const [showStatusPicker, setShowStatusPicker] = useState(false);
   const currentStatus = item.status || 'Not Started';
@@ -1366,9 +1467,14 @@ function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
             {item.investmentCanvas && <div className="text-sm"><span className="text-vf-muted">Investment Canvas:</span> <span className="font-semibold">{item.investmentCanvas}</span></div>}
             {item.externalId && <div className="text-sm"><span className="text-vf-muted">NPD ID:</span> <span className="font-semibold font-mono">{item.externalId}</span></div>}
             {item.groupOwner && <div className="text-sm"><span className="text-vf-muted">Group Owner:</span> <span className="font-semibold break-all">{item.groupOwner}</span></div>}
-            {(item.vbiReview || item.vbiTargetPortfolio || item.aiFlag || item.localItImpact) && (
+            {item.npdImportance && (
+              <div className="text-sm flex items-center gap-2">
+                <span className="text-vf-muted">VBI Importance:</span> <NpdImportanceBadge level={item.npdImportance} prefix="NPD" />
+              </div>
+            )}
+            <DbReviewControl review={item.dbReview} onChange={(dbReview) => onSave(item.id, { dbReview })} />
+            {(item.vbiTargetPortfolio || item.aiFlag || item.localItImpact) && (
               <div className="flex flex-wrap gap-1.5 pt-1">
-                {item.vbiReview && <ReviewFlag label="VBI Review" value={item.vbiReview} />}
                 {item.vbiTargetPortfolio && <ReviewFlag label="Target Portfolio" value={item.vbiTargetPortfolio} />}
                 {item.aiFlag && <ReviewFlag label="AI" value={item.aiFlag} />}
                 {item.localItImpact && <ReviewFlag label="Local IT Impact" value={item.localItImpact} />}
@@ -1435,11 +1541,29 @@ function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
             <p className="text-vf-muted text-xs">Add an epic to start tracking delivery milestones and readiness gates.</p>
           </div>
         ) : (
-          <div className="divide-y divide-vf-border">
-            {epics.map((epic, i) => (
-              <EpicCard key={epic.id} epic={epic} index={i + 1} onClick={() => openEpic(epic)} />
-            ))}
-          </div>
+          <>
+            {/* Epic filters */}
+            <div className="px-5 py-2.5 border-b border-vf-border bg-vf-surface flex items-center gap-2 flex-wrap">
+              <ReviewSelect value={epicFilter.importance} onChange={(v) => setEpicFilter((f) => ({ ...f, importance: v }))} label="Epic VBI importance">
+                <option value="">VBI importance: any</option>
+                {epicImportanceLevels.map((l) => <option key={l} value={l}>VBI importance: {importanceLabel(l)}</option>)}
+              </ReviewSelect>
+              <ReviewSelect value={epicFilter.category} onChange={(v) => setEpicFilter((f) => ({ ...f, category: v }))} label="Epic category">
+                <option value="">Category: any</option>
+                {epicCategories.map((c) => <option key={c} value={c}>{c}</option>)}
+              </ReviewSelect>
+              {(epicFilter.importance || epicFilter.category) && (
+                <button onClick={() => setEpicFilter({ importance: '', category: '' })} className="text-xs text-vf-red hover:underline">Clear</button>
+              )}
+              <span className="text-[11px] text-vf-muted ml-auto">Showing {visibleEpics.length} of {epics.length} epics</span>
+            </div>
+            <div className="divide-y divide-vf-border">
+              {visibleEpics.map((epic) => (
+                <EpicCard key={epic.id} epic={epic} index={epics.indexOf(epic) + 1} onClick={() => openEpic(epic)} />
+              ))}
+              {visibleEpics.length === 0 && <div className="p-6 text-center text-vf-muted text-sm">No epics match these filters.</div>}
+            </div>
+          </>
         )}
       </div>
 
@@ -1467,9 +1591,12 @@ function EpicCard({ epic, index, onClick }) {
       className="px-5 py-4 cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-4"
       onClick={onClick}
     >
-      {/* Number pill */}
-      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-vf-dark text-white flex items-center justify-center text-sm font-bold">
-        {index}
+      {/* Epic ID (from the NPD file), or its position for epics added in the portal */}
+      <div className="flex-shrink-0 w-14 text-center">
+        <div className="text-[9px] font-semibold text-vf-muted uppercase tracking-wide">{epic.externalEpicId != null ? 'Epic ID' : 'Epic'}</div>
+        <div className="text-sm font-bold font-mono text-vf-dark bg-vf-surface border border-vf-border rounded-md py-1 mt-0.5">
+          {epic.externalEpicId ?? `#${index}`}
+        </div>
       </div>
 
       {/* Name + description — takes remaining space */}
@@ -1480,10 +1607,9 @@ function EpicCard({ epic, index, onClick }) {
             <span className="text-[10px] bg-green-100 text-green-700 font-semibold px-1.5 py-0.5 rounded-full">Signed Off</span>
           )}
         </div>
-        {(epic.epicType || epic.epicCategory || epic.vbiImportance || epic.checkFlag) && (
+        {(epic.epicType || epic.vbiImportance || epic.checkFlag) && (
           <div className="flex items-center gap-2 flex-wrap mt-0.5">
             {epic.epicType && <span className="text-[11px] font-medium text-vf-muted">{epic.epicType}</span>}
-            {epic.epicCategory && <span className="text-[11px] font-medium text-vf-muted">{epic.epicCategory}</span>}
             <ImportanceBadge level={epic.vbiImportance} />
             {epic.checkFlag && (
               <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">{epic.checkFlag}</span>
@@ -1507,6 +1633,12 @@ function EpicCard({ epic, index, onClick }) {
 
       {/* Stats */}
       <div className="flex-shrink-0 flex items-center divide-x divide-vf-border border-l border-vf-border ml-2">
+        {/* Epic category */}
+        <div className="px-4 w-[150px]">
+          <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1">Category</div>
+          <div className="text-[11px] font-semibold text-vf-dark leading-snug">{epic.epicCategory || '—'}</div>
+        </div>
+
         {/* Budget draw */}
         <div className="px-4 text-right">
           <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1">Budget Draw</div>
@@ -1562,6 +1694,9 @@ export default function NpdPipeline() {
   // Summary-tile filters (category / portfolio / status); click a tile again to clear it
   const [tileFilter, setTileFilter] = useState({ roadmapCategory: null, portfolio: null, status: null });
   const toggleTile = (field, value) => setTileFilter((f) => ({ ...f, [field]: f[field] === value ? null : value }));
+  // NPD cycle review filters (budget review stage, target portfolio, AI, local IT, VBI importance)
+  const [reviewFilters, setReviewFilters] = useState(EMPTY_REVIEW_FILTERS);
+  const setReview = (k, v) => setReviewFilters((f) => ({ ...f, [k]: v }));
   const [dragOverCell, setDragOverCell] = useState(null);
   const showToast = useProductStore((s) => s.showToast);
 
@@ -1648,8 +1783,8 @@ export default function NpdPipeline() {
   const portfolios = useMemo(() => [...new Set(data.initiatives.map((i) => i.portfolio))].sort(), [data.initiatives]);
 
   const initiatives = useMemo(
-    () => (fyFilter ? data.initiatives.filter((i) => i.fy === fyFilter) : data.initiatives),
-    [data.initiatives, fyFilter],
+    () => data.initiatives.filter((i) => (!fyFilter || i.fy === fyFilter) && matchesReviewFilters(i, reviewFilters)),
+    [data.initiatives, fyFilter, reviewFilters],
   );
 
   const summary = useMemo(() => {
@@ -1769,11 +1904,12 @@ export default function NpdPipeline() {
             <button onClick={clear} aria-label={`Remove ${value} filter`} className="hover:opacity-70 leading-none ml-0.5">×</button>
           </span>
         ))}
-        {(fyFilter || statusFilter || categoryFilter || quarterFilter || Object.values(tileFilter).some(Boolean)) && (
+        {(fyFilter || statusFilter || categoryFilter || quarterFilter || Object.values(tileFilter).some(Boolean) || Object.values(reviewFilters).some(Boolean)) && (
           <button
             onClick={() => {
               setFyFilter(''); setStatusFilter(''); setCategoryFilter('');
               setQuarterFilter(null); setTileFilter({ roadmapCategory: null, portfolio: null, status: null });
+              setReviewFilters(EMPTY_REVIEW_FILTERS);
             }}
             className="text-xs text-vf-red hover:underline ml-1"
           >
@@ -1782,6 +1918,43 @@ export default function NpdPipeline() {
         )}
         {(quarterFilter || Object.values(tileFilter).some(Boolean)) && (
           <span className="text-xs text-vf-muted ml-auto">Showing {filteredInitiatives.length} of {initiatives.length} initiatives</span>
+        )}
+      </div>
+
+      {/* NPD cycle review filters — narrow the tiles and the pipeline below */}
+      <div className="flex items-center gap-2 mb-4 flex-wrap">
+        <span className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mr-1">NPD Review</span>
+        <ReviewSelect value={reviewFilters.db} onChange={(v) => setReview('db', v)} label="Budget review">
+          <option value="">All budget review stages</option>
+          {DB_STAGES.map((s) => (
+            <optgroup key={s.key} label={s.label}>
+              <option value={`${s.key}|Approved`}>{s.short} — VBI approved</option>
+              <option value={`${s.key}|Not approved`}>{s.short} — VBI not approved</option>
+              <option value={`${s.key}|Pending`}>{s.short} — pending</option>
+            </optgroup>
+          ))}
+        </ReviewSelect>
+        <ReviewSelect value={reviewFilters.target} onChange={(v) => setReview('target', v)} label="Target portfolio">
+          <option value="">Target portfolio: any</option>
+          <option value="Yes">Target portfolio: Yes</option>
+          <option value="No">Target portfolio: No</option>
+        </ReviewSelect>
+        <ReviewSelect value={reviewFilters.ai} onChange={(v) => setReview('ai', v)} label="AI">
+          <option value="">AI: any</option>
+          <option value="Yes">AI: Yes</option>
+          <option value="No">AI: No</option>
+        </ReviewSelect>
+        <ReviewSelect value={reviewFilters.it} onChange={(v) => setReview('it', v)} label="Local IT impact">
+          <option value="">Local IT impact: any</option>
+          <option value="Yes">Local IT impact: Yes</option>
+          <option value="No">Local IT impact: No</option>
+        </ReviewSelect>
+        <ReviewSelect value={reviewFilters.importance} onChange={(v) => setReview('importance', v)} label="VBI importance">
+          <option value="">VBI importance: any</option>
+          {NPD_IMPORTANCE.map((l) => <option key={l} value={l}>VBI importance: {l}</option>)}
+        </ReviewSelect>
+        {Object.values(reviewFilters).some(Boolean) && (
+          <button onClick={() => setReviewFilters(EMPTY_REVIEW_FILTERS)} className="text-xs text-vf-red hover:underline ml-1">Clear review filters</button>
         )}
       </div>
 

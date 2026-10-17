@@ -163,8 +163,21 @@ const INITIATIVE_FIELDS = {
   investmentCanvas: 'text', primaryInvestmentDriver: 'text', description: 'text',
   groupOwner: 'text', vbiReview: 'text', vbiTargetPortfolio: 'text', aiFlag: 'text',
   localItImpact: 'text', vbiResponse: 'text',
-  capex: 'number', opex: 'number', stages: 'json',
+  capex: 'number', opex: 'number', stages: 'json', dbReview: 'review',
 };
+
+// Budget review stages and the outcomes VBI can record at each
+export const DB_REVIEW_STAGES = ['day1', 'day2', 'day3', 'final'];
+export const DB_REVIEW_OUTCOMES = ['Approved', 'Not approved'];
+
+// NPD-level VBI importance rolled up from its epics: any High → High; otherwise any
+// Mid → Medium; otherwise all Low → Low. Unrated / no-response epics don't count.
+export function npdImportance(epicLevels) {
+  if (epicLevels.includes('High')) return 'High';
+  if (epicLevels.includes('Mid')) return 'Medium';
+  if (epicLevels.includes('Low')) return 'Low';
+  return 'Not rated';
+}
 
 // Returns { data } or { error }. With partial=true, only the fields present are validated.
 function cleanInitiative(body, partial) {
@@ -187,6 +200,17 @@ function cleanInitiative(body, partial) {
     } else if (kind === 'json') {
       if (v === null || typeof v !== 'object') return { error: `${k} must be an object` };
       data[k] = v;
+    } else if (kind === 'review') {
+      if (v === null || typeof v !== 'object' || Array.isArray(v)) return { error: 'dbReview must be an object' };
+      const review = {};
+      for (const stage of DB_REVIEW_STAGES) {
+        const outcome = v[stage] ?? null;
+        if (outcome !== null && !DB_REVIEW_OUTCOMES.includes(outcome)) {
+          return { error: `DB review ${stage} must be ${DB_REVIEW_OUTCOMES.join(' or ')}, or empty` };
+        }
+        review[stage] = outcome;
+      }
+      data[k] = review;
     }
   }
   if (data.quarter && !['Q1', 'Q2', 'Q3', 'Q4'].includes(data.quarter)) return { error: 'quarter must be Q1–Q4' };
@@ -259,10 +283,20 @@ router.get('/npd-initiatives', async (req, res, next) => {
         where,
         orderBy: [{ fy: 'asc' }, { quarter: 'asc' }, { portfolio: 'asc' }],
       }),
-      prisma.npdEpic.groupBy({ by: ['initiativeId'], _count: { _all: true } }),
+      prisma.npdEpic.groupBy({ by: ['initiativeId', 'vbiImportance'], _count: { _all: true } }),
     ]);
-    const epicCountById = new Map(epicCounts.map((c) => [c.initiativeId, c._count._all]));
-    const initiatives = rows.map((i) => ({ ...i, epicCount: epicCountById.get(String(i.id)) || 0 }));
+    // Epic count and the importance levels of each initiative's epics
+    const epicsById = new Map();
+    for (const c of epicCounts) {
+      const e = epicsById.get(c.initiativeId) || { count: 0, levels: [] };
+      e.count += c._count._all;
+      if (c.vbiImportance) e.levels.push(c.vbiImportance);
+      epicsById.set(c.initiativeId, e);
+    }
+    const initiatives = rows.map((i) => {
+      const e = epicsById.get(String(i.id));
+      return { ...i, epicCount: e?.count || 0, npdImportance: e ? npdImportance(e.levels) : null };
+    });
 
     // Compute summary stats
     const statusCounts = {};

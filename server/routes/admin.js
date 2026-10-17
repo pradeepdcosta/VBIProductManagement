@@ -372,6 +372,21 @@ function inferRoadmapCategory(driver, epics) {
   return ranked[0]?.[0] || fromDriver || 'Feature Release';
 }
 
+// Budget review columns: "VBI Review (Day 1)", "VBI Review (Day 2)", ..., "VBI Review (Final)".
+// Values like "Yes - Day 1" / "No" become Approved / Not approved for that stage.
+function parseDbReview(row) {
+  const review = {};
+  for (const [header, value] of Object.entries(row)) {
+    const m = /^VBI Review \((Day ([123])|Final[^)]*)\)$/i.exec(str(header));
+    if (!m) continue;
+    const stage = m[2] ? `day${m[2]}` : 'final';
+    const v = str(value).toLowerCase();
+    if (v.startsWith('yes')) review[stage] = 'Approved';
+    else if (v.startsWith('no')) review[stage] = 'Not approved';
+  }
+  return review;
+}
+
 function parseNpd(buffer) {
   const sheet = readSheet(buffer, NPD_HEADERS);
   if (!sheet) throw Object.assign(new Error(`No sheet with columns: ${NPD_HEADERS.join(', ')}`), { status: 400 });
@@ -395,6 +410,7 @@ function parseNpd(buffer) {
         primaryInvestmentDriver: driver || null,
         groupOwner: orNull(r['Group Owner']),
         vbiReview: orNull(r['VBI Review (Day 1)']),
+        dbReviewFromFile: parseDbReview(r),
         vbiTargetPortfolio: orNull(r['VBI Target Portfolio?']),
         aiFlag: orNull(r['AI?']),
         localItImpact: orNull(r['Local IT Impact?']),
@@ -429,7 +445,7 @@ function staggerQuarters(actions) {
 
 async function planNpd(buffer, fy) {
   const parsed = parseNpd(buffer);
-  const existing = await prisma.npdInitiative.findMany({ where: { fy }, select: { id: true, externalId: true, initiativeName: true } });
+  const existing = await prisma.npdInitiative.findMany({ where: { fy }, select: { id: true, externalId: true, initiativeName: true, dbReview: true } });
   const existingByExt = new Map(existing.filter((e) => e.externalId != null).map((e) => [e.externalId, e]));
   const incomingIds = new Set(parsed.actions.map((a) => a.externalId));
   const newActions = parsed.actions.filter((a) => !existingByExt.has(a.externalId));
@@ -471,11 +487,15 @@ router.post('/npd', upload.single('file'), async (req, res, next) => {
     await prisma.$transaction(async (tx) => {
       for (const a of plan.parsed.actions) {
         const found = plan.existingByExt.get(a.externalId);
+        // Review stages in the file are added to (not replacing) stages already set in the portal
+        const { dbReviewFromFile, ...fields } = a.initiative;
+        const dbReview = { day1: null, day2: null, day3: null, final: null, ...(found?.dbReview || {}), ...dbReviewFromFile };
         const initiative = found
-          ? await tx.npdInitiative.update({ where: { id: found.id }, data: a.initiative })
+          ? await tx.npdInitiative.update({ where: { id: found.id }, data: { ...fields, dbReview } })
           : await tx.npdInitiative.create({
               data: {
-                ...a.initiative,
+                ...fields,
+                dbReview,
                 externalId: a.externalId,
                 fy,
                 quarter: plan.quarterOf.get(a.externalId),
