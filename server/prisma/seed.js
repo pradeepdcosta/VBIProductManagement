@@ -122,40 +122,8 @@ async function main() {
 
   console.log(`Inserted ${sampleNpdProducts.length} sample NPD stages`);
 
-  // Seed sample trading data
-  const tradingProducts = await prisma.product.findMany({
-    where: { name: { in: ['IPVPN', 'SDN-WAN', 'Zscaler Managed Security', 'MPN Dedicated', 'Ethernet VPN'] } },
-    take: 5,
-  });
-
-  const regions = ['Americas', 'APAC & ME', 'Europe International'];
-  for (const prod of tradingProducts) {
-    for (const region of regions) {
-      const revenueTarget = Math.round((Math.random() * 40 + 10) * 10) / 10;
-      const revenueYtd = Math.round(revenueTarget * (0.4 + Math.random() * 0.35) * 10) / 10;
-      const py = Math.round(revenueTarget * (0.7 + Math.random() * 0.3) * 10) / 10;
-      const aovTarget = Math.round((Math.random() * 60 + 20) * 10) / 10;
-      const aovWon = Math.round(aovTarget * (0.3 + Math.random() * 0.4) * 10) / 10;
-      const aovPipelineOpen = Math.round(aovTarget * (0.5 + Math.random() * 0.6) * 10) / 10;
-      const aovPipelineOpened = Math.round(aovTarget * (0.6 + Math.random() * 0.5) * 10) / 10;
-      await prisma.tradingData.create({
-        data: {
-          productId: prod.id,
-          region,
-          fy: 'FY26',
-          actualEur: revenueYtd,
-          targetEur: revenueTarget,
-          pyActualEur: py,
-          aovWonYtd: aovWon,
-          aovTarget,
-          aovPipelineOpen,
-          aovPipelineOpenedYtd: aovPipelineOpened,
-        },
-      });
-    }
-  }
-
-  console.log('Inserted sample trading data');
+  // Trading figures need no seeding: products without uploaded trading data
+  // show a placeholder profile (see routes/trading.js)
 
   // Seed sample costs
   const costProducts = await prisma.product.findMany({

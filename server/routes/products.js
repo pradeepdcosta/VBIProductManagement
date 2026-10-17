@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import prisma from '../lib/prisma.js';
+import { tradingRowsFor, DEFAULT_TRADING_FY } from './trading.js';
 
 const router = Router();
 
@@ -350,7 +351,8 @@ router.get('/:id', async (req, res, next) => {
       },
     });
     if (!product) return res.status(404).json({ error: 'Product not found' });
-    res.json(product);
+    // Products without uploaded trading data show the placeholder profile (flagged)
+    res.json({ ...product, trading: tradingRowsFor(product, product.trading, DEFAULT_TRADING_FY) });
   } catch (err) {
     next(err);
   }

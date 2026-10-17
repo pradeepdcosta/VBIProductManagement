@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
+import { Info } from 'lucide-react';
 import useProductStore from '../store/useProductStore.js';
 
 const REGIONS = ['Americas', 'APAC & ME', 'Europe International'];
 
+// Values are in €M
 function fmt(v) {
   if (v == null) return '—';
+  if (Math.abs(v) >= 1000) return `€${(v / 1000).toFixed(2)}B`;
   return `€${(Math.round(v * 10) / 10).toFixed(1)}M`;
 }
 
@@ -25,7 +28,7 @@ function BarLabel({ x, y, width, value }) {
 
 export default function TradingPerformance() {
   const { tradingSummary, fetchTradingSummary, filters } = useProductStore();
-  const [fy, setFy] = useState('FY26');
+  const [fy, setFy] = useState('FY28');
 
   useEffect(() => {
     fetchTradingSummary(fy);
@@ -55,7 +58,7 @@ export default function TradingPerformance() {
           aovPipelineOpen: pipeline,
           pipelineCoverLabel: ttg > 0 ? `${(Math.round((pipeline / ttg) * 10) / 10).toFixed(1)}x` : '—',
           targetToGo: ttg,
-          targetToGoLabel: `€${ttg.toFixed(1)}M`,
+          targetToGoLabel: fmt(ttg),
           aovPipelineOpenedYtd: Math.round((r.aovPipelineOpenedYtd || 0) * 10) / 10,
           revenueYtd: revYtd,
           revenueTarget: revTgt,
@@ -73,11 +76,22 @@ export default function TradingPerformance() {
           value={fy}
           onChange={(e) => setFy(e.target.value)}
         >
+          <option>FY28</option>
+          <option>FY27</option>
           <option>FY26</option>
-          <option>FY25</option>
-          <option>FY24</option>
         </select>
       </div>
+
+      {s?.placeholderProducts > 0 && (
+        <div className="flex items-start gap-2 bg-amber-50 border border-amber-200 text-amber-900 text-xs px-3 py-2 rounded-lg mb-4">
+          <Info size={14} className="shrink-0 mt-px" />
+          <span>
+            <span className="font-semibold">Placeholder figures.</span>{' '}
+            {s.placeholderProducts === s.products ? `All ${s.products}` : `${s.placeholderProducts} of ${s.products}`} catalog products show the same dummy trading profile in every region
+            (€10M AOV and revenue targets, 50% achieved, 3× pipeline cover) until real trading data is uploaded. These are not actual results.
+          </span>
+        </div>
+      )}
 
       {/* KPI Tiles — 4 tiles */}
       <div className="grid grid-cols-4 gap-3 mb-5">
@@ -149,7 +163,7 @@ export default function TradingPerformance() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0eeea" />
                 <XAxis dataKey="region" tick={{ fontSize: 13, fill: '#333', fontWeight: 500 }} interval={0} />
                 <YAxis tick={{ fontSize: 12, fill: '#6B6A66' }} />
-                <Tooltip formatter={(v) => `€${v.toFixed(1)}M`} />
+                <Tooltip formatter={(v) => fmt(v)} />
                 <Bar dataKey="aovWonYtd" fill="#E60000" name="AOV Won YTD" radius={[4, 4, 0, 0]}>
                   <LabelList dataKey="aovWonLabel" content={BarLabel} />
                 </Bar>
@@ -165,7 +179,7 @@ export default function TradingPerformance() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0eeea" />
                 <XAxis dataKey="region" tick={{ fontSize: 13, fill: '#333', fontWeight: 500 }} interval={0} />
                 <YAxis tick={{ fontSize: 12, fill: '#6B6A66' }} />
-                <Tooltip formatter={(v) => `€${v.toFixed(1)}M`} />
+                <Tooltip formatter={(v) => fmt(v)} />
                 <Bar dataKey="aovPipelineOpen" fill="#0066CC" name="Pipeline Open" radius={[4, 4, 0, 0]}>
                   <LabelList dataKey="pipelineCoverLabel" content={BarLabel} />
                 </Bar>
@@ -181,7 +195,7 @@ export default function TradingPerformance() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0eeea" />
                 <XAxis dataKey="region" tick={{ fontSize: 13, fill: '#333', fontWeight: 500 }} interval={0} />
                 <YAxis tick={{ fontSize: 12, fill: '#6B6A66' }} />
-                <Tooltip formatter={(v) => `€${v.toFixed(1)}M`} />
+                <Tooltip formatter={(v) => fmt(v)} />
                 <Bar dataKey="targetToGo" fill="#FF9900" name="Target to Go" radius={[4, 4, 0, 0]}>
                   <LabelList dataKey="targetToGoLabel" content={BarLabel} />
                 </Bar>
@@ -197,7 +211,7 @@ export default function TradingPerformance() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0eeea" />
                 <XAxis dataKey="region" tick={{ fontSize: 13, fill: '#333', fontWeight: 500 }} interval={0} />
                 <YAxis tick={{ fontSize: 12, fill: '#6B6A66' }} />
-                <Tooltip formatter={(v) => `€${v.toFixed(1)}M`} />
+                <Tooltip formatter={(v) => fmt(v)} />
                 <Legend wrapperStyle={{ fontSize: 13 }} />
                 <Bar dataKey="revenueYtd" fill="#E60000" name="Revenue YTD" radius={[4, 4, 0, 0]}>
                   <LabelList dataKey="revenueAttLabel" content={BarLabel} />

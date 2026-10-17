@@ -12,6 +12,11 @@ export default function TradingTab({ trading }) {
 
   return (
     <div>
+      {trading.some((t) => t.placeholder) && (
+        <div className="bg-amber-50 border border-amber-200 text-amber-900 text-[11px] px-3 py-2 rounded-lg mb-4">
+          <span className="font-semibold">Placeholder figures</span> — the same dummy trading profile is shown for every product until real trading data is uploaded. Not actual results.
+        </div>
+      )}
       {trading.map((t) => {
         const pct = maxVal > 0 ? (t.actualEur / t.targetEur) * 100 : 0;
         const barWidth = maxVal > 0 ? (t.actualEur / maxVal) * 100 : 0;
