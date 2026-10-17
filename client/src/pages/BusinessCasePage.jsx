@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Pencil, Upload, Download, Plus } from 'lucide-react';
 import useProductStore from '../store/useProductStore.js';
 
@@ -355,7 +356,13 @@ export default function BusinessCasePage() {
   const [data, setData] = useState({ rows: [], summary: {} });
   const [template, setTemplate] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedKey, setSelectedKey] = useState(null);
+  // ?line=<family>|<product line> opens that line's business case (e.g. from the product drawer)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedKey, setSelectedKeyState] = useState(() => searchParams.get('line'));
+  const setSelectedKey = (key) => {
+    setSelectedKeyState(key);
+    setSearchParams(key ? { line: key } : {}, { replace: true });
+  };
   const [reloadKey, setReloadKey] = useState(0);
 
   // Upload state

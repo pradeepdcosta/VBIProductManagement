@@ -1,29 +1,62 @@
-export default function CostsTab({ costs }) {
-  if (!costs || costs.length === 0) {
-    return (
-      <div className="text-center py-8 text-vf-muted text-sm">
-        <p className="mb-2">No cost data available</p>
-        <p className="text-xs">Upload P&L data via Import tab to populate</p>
-      </div>
-    );
-  }
+import { useEffect, useState } from 'react';
+import { getJson, fmtMoney, Stat, SectionTitle, PlaceholderNote, LineProducts, Loading, ErrorNote } from './shared.jsx';
 
-  const total = costs.reduce((s, c) => s + c.amountEur, 0);
+// Costs are held per product line, so this shows the line's cost for every product on it
+export default function CostsTab({ product, lineProducts }) {
+  const [row, setRow] = useState(null);
+  const [actions, setActions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const line = new URLSearchParams({ family: product.family, productLine: product.productLine });
+        const act = new URLSearchParams({ productFamily: product.family, productLine: product.productLine });
+        const [costs, acts] = await Promise.all([getJson(`/api/costs?${line}`), getJson(`/api/costs/actions?${act}`)]);
+        setRow(costs.rows.find((r) => r.productFamily === product.family && r.productLine === product.productLine) || null);
+        setActions(acts);
+      } catch (err) { setError(err.message); }
+      setLoading(false);
+    })();
+  }, [product.id]);
+
+  if (loading) return <Loading />;
+  if (error) return <ErrorNote message={error} />;
+  if (!row) return <div className="text-center py-8 text-vf-muted text-sm">No cost data for this product line.</div>;
+
+  const open = actions.filter((a) => a.status !== 'Completed' && a.status !== 'Cancelled');
 
   return (
-    <div className="bg-white border border-vf-border rounded-[10px] p-4">
-      <h4 className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide mb-2.5">
-        Cost Breakdown — {costs[0]?.fy || 'FY26'}
-      </h4>
-      {costs.map((c) => (
-        <div key={c.id} className="flex justify-between items-center py-1.5 border-b border-[#f0eeea] last:border-b-0">
-          <span className="text-xs text-vf-text">{c.component}</span>
-          <span className="text-xs font-medium font-mono">€{c.amountEur.toFixed(1)}M</span>
-        </div>
-      ))}
-      <div className="flex justify-between items-center pt-2 mt-1 border-t border-vf-border font-semibold">
-        <span className="text-xs">Total Cost to Serve</span>
-        <span className="text-xs font-mono text-vf-red">€{total.toFixed(1)}M</span>
+    <div>
+      {row.placeholder && <PlaceholderNote>this product line shows the dummy cost profile until real costs are entered in Cost Management.</PlaceholderNote>}
+
+      <SectionTitle right={<span className="text-[10px] text-vf-muted">{row.fy} · product line level</span>}>Cost to Serve</SectionTitle>
+      <div className="grid grid-cols-3 gap-2.5">
+        <Stat label="Opex" value={fmtMoney(row.opex)} />
+        <Stat label="Depreciation" value={fmtMoney(row.dep)} />
+        <Stat label="Total Cost" value={fmtMoney(row.grandTotal)} tone="red" sub={`Direct ${fmtMoney(row.direct)} · Allocations ${fmtMoney(row.allocations)}`} />
+      </div>
+
+      <LineProducts
+        productLine={product.productLine}
+        products={lineProducts}
+        currentId={product.id}
+        note="Cost is tracked for the whole product line and shared by these products."
+      />
+
+      <div className="mt-5">
+        <SectionTitle>Open cost reduction actions ({open.length})</SectionTitle>
+        {open.length === 0 ? (
+          <p className="text-[11px] text-vf-muted italic">None planned.</p>
+        ) : (
+          <ul className="space-y-1.5">
+            {open.map((a) => (
+              <li key={a.id} className="text-xs text-vf-text border border-vf-border rounded-md px-3 py-2 bg-white">{a.action}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
