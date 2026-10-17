@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { X, Copy, Check, ExternalLink, Link } from 'lucide-react';
+import { X, Copy, Check, ExternalLink, Link, Download } from 'lucide-react';
 import useProductStore from '../store/useProductStore.js';
 
 function useCascadingDropdowns() {
@@ -355,7 +355,7 @@ function PublicLinkBar() {
 }
 
 export default function FeatureRequests() {
-  const { featureRequests, fetchFeatureRequests, addFeatureRequest, updateRequestStatus } = useProductStore();
+  const { featureRequests, fetchFeatureRequests, addFeatureRequest, updateRequestStatus, showToast } = useProductStore();
   const [selectedRequest, setSelectedRequest] = useState(null);
   const { categories, families, lines, onCategoryChange, onFamilyChange } = useCascadingDropdowns();
 
@@ -415,6 +415,27 @@ export default function FeatureRequests() {
     Completed: featureRequests.filter((r) => r.status === 'Completed').length,
   };
   const totalCount = featureRequests.length;
+
+  // Download every request as an Excel sheet (one row per request, one column per field)
+  const [exporting, setExporting] = useState(false);
+  const exportRequests = async () => {
+    setExporting(true);
+    try {
+      const res = await fetch('/api/export/requests');
+      if (!res.ok) throw new Error();
+      const name = res.headers.get('Content-Disposition')?.match(/filename=([^;]+)/)?.[1] || 'vbi_product_requests.xlsx';
+      const url = URL.createObjectURL(await res.blob());
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast(`Exported ${totalCount} requests`);
+    } catch {
+      showToast('Export failed', 'warning');
+    }
+    setExporting(false);
+  };
 
   return (
     <div className="p-5">
@@ -594,6 +615,13 @@ export default function FeatureRequests() {
           All Requests
           <span className="bg-vf-dark text-white rounded-full px-2 py-px text-[11px] font-semibold">{totalCount}</span>
           <span className="text-[11px] text-vf-muted font-normal ml-1">— click any row to view, edit or copy magic link</span>
+          <button
+            onClick={exportRequests}
+            disabled={exporting || totalCount === 0}
+            className="ml-auto flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold border border-vf-border rounded-md bg-white text-vf-dark hover:bg-vf-surface disabled:opacity-40"
+          >
+            <Download size={13} /> {exporting ? 'Exporting…' : 'Export to Excel'}
+          </button>
         </div>
         {featureRequests.length === 0 ? (
           <div className="p-8 text-center text-vf-muted text-sm">No requests yet.</div>

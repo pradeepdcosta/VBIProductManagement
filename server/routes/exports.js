@@ -295,5 +295,53 @@ router.get('/bizcase', async (req, res, next) => {
   }
 });
 
+// GET /api/export/requests — every product request, one row each, for analysis in Excel.
+// The private magic-link tokens are deliberately left out (they grant edit access).
+router.get('/requests', async (req, res, next) => {
+  try {
+    const requests = await prisma.featureRequest.findMany({ orderBy: { createdAt: 'desc' } });
+    const data = requests.map((r) => {
+      const created = new Date(r.createdAt);
+      return {
+        'Request ID': r.id,
+        'Date Submitted': created.toISOString().slice(0, 10),
+        'Month': created.toISOString().slice(0, 7),
+        Type: r.type,
+        Title: r.title,
+        Status: r.status,
+        Priority: r.priority,
+        'Product Category': r.category || '',
+        'Product Family': r.productFamily || '',
+        'Product Line': r.productLine || '',
+        'Product Name': r.productName,
+        'Deal / Account': r.dealAccount || '',
+        'Submitter Name': r.submitterName || '',
+        'Submitter Email': r.submitterEmail || '',
+        Description: r.description || '',
+        'Business Justification': r.justification || '',
+        'VBI Product & Services Feedback': r.vbiFeedback || '',
+      };
+    });
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(data, { header: data.length ? undefined : ['Request ID'] });
+    ws['!cols'] = [
+      { wch: 10 }, { wch: 14 }, { wch: 9 }, { wch: 22 }, { wch: 45 }, { wch: 11 }, { wch: 9 },
+      { wch: 22 }, { wch: 24 }, { wch: 26 }, { wch: 28 }, { wch: 24 }, { wch: 20 }, { wch: 28 },
+      { wch: 60 }, { wch: 60 }, { wch: 60 },
+    ];
+    ws['!autofilter'] = { ref: ws['!ref'] }; // filter buttons on the header row
+    XLSX.utils.book_append_sheet(wb, ws, 'Product Requests');
+
+    const buffer = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+    const stamp = new Date().toISOString().slice(0, 10);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename=vbi_product_requests_${stamp}.xlsx`);
+    res.send(buffer);
+  } catch (err) {
+    next(err);
+  }
+});
+
 export { BIZCASE_TEMPLATE_ROWS };
 export default router;
