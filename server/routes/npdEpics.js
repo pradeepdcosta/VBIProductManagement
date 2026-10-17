@@ -3,7 +3,7 @@ import prisma from '../lib/prisma.js';
 
 const router = Router();
 
-const STANDARD_ACTIVITIES = [
+export const STANDARD_ACTIVITIES = [
   // 1. Market & Go-Live Dates
   { category: 'Market & Go-Live Dates', label: 'Overall go-live date confirmed', sortOrder: 1 },
   { category: 'Market & Go-Live Dates', label: 'Per-market go-live date confirmed (or noted as consistent across all markets)', sortOrder: 2 },
@@ -124,6 +124,8 @@ router.put('/:id', async (req, res, next) => {
       'capex', 'opex', 'marketsAgreed', 'goLiveDateOverall',
       'goLiveDatePerMarket', 'riskLevel',
       'signOffComplete', 'signOffBy', 'signOffDate', 'signOffNotes',
+      'epicCategory', 'vbiTargetPortfolio', 'groupAccountability',
+      'vbiAccountability', 'vbiImportance', 'vbiResponse',
     ];
     const data = {};
     for (const k of allowed) {

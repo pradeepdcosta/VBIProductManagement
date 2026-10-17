@@ -11,6 +11,7 @@ import CountryCoverage from './pages/CountryCoverage.jsx';
 import SlaService from './pages/SlaService.jsx';
 import FeatureRequests from './pages/FeatureRequests.jsx';
 import ImportExport from './pages/ImportExport.jsx';
+import Admin from './pages/Admin.jsx';
 import MagicLinkPage from './pages/MagicLinkPage.jsx';
 import PublicSubmitPage from './pages/PublicSubmitPage.jsx';
 import ProductReviewPage from './pages/ProductReviewPage.jsx';
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="sla" element={<SlaService />} />
           <Route path="features" element={<FeatureRequests />} />
           <Route path="import-export" element={<ImportExport />} />
+          <Route path="admin" element={<Admin />} />
         </Route>
       </Routes>
     </BrowserRouter>

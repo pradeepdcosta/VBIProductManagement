@@ -6,7 +6,7 @@ import Toast from './Toast.jsx';
 import FilterBar from './FilterBar.jsx';
 
 // Pages where the global filter bar is NOT shown
-const NO_FILTER_PAGES = ['/import-export', '/features'];
+const NO_FILTER_PAGES = ['/import-export', '/features', '/admin'];
 
 export default function Layout() {
   const { pathname } = useLocation();

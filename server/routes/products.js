@@ -5,7 +5,8 @@ const router = Router();
 
 // Helper: build Prisma where clause from filter query params
 function buildProductWhere(query) {
-  const where = {};
+  // Only products switched on in the taxonomy appear in the portal
+  const where = { showInCatalog: true };
   if (query.category) where.category = query.category;
   if (query.family) where.family = query.family;
   if (query.productLine) where.productLine = query.productLine;
@@ -69,7 +70,8 @@ router.get('/', async (req, res, next) => {
 router.get('/families', async (req, res, next) => {
   try {
     const { category } = req.query;
-    const where = category ? { category } : {};
+    const where = { showInCatalog: true };
+    if (category) where.category = category;
     const results = await prisma.product.findMany({
       where,
       select: { family: true },
@@ -86,7 +88,7 @@ router.get('/families', async (req, res, next) => {
 router.get('/lines', async (req, res, next) => {
   try {
     const { category, family } = req.query;
-    const where = {};
+    const where = { showInCatalog: true };
     if (category) where.category = category;
     if (family) where.family = family;
     const results = await prisma.product.findMany({
@@ -105,6 +107,7 @@ router.get('/lines', async (req, res, next) => {
 router.get('/summary', async (req, res, next) => {
   try {
     const all = await prisma.product.findMany({
+      where: { showInCatalog: true },
       select: { category: true, family: true, productLine: true },
       orderBy: { category: 'asc' },
     });
@@ -128,6 +131,7 @@ router.get('/summary', async (req, res, next) => {
 router.get('/categories', async (req, res, next) => {
   try {
     const results = await prisma.product.findMany({
+      where: { showInCatalog: true },
       select: { category: true },
       distinct: ['category'],
       orderBy: { category: 'asc' },
@@ -150,37 +154,54 @@ router.get('/npd', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
+// Fields an initiative can be created/updated with, and how each is cleaned.
+const INITIATIVE_FIELDS = {
+  initiativeName: 'required', portfolio: 'required', productFamily: 'required',
+  productLine: 'required', roadmapCategory: 'required', fy: 'required', quarter: 'required',
+  status: 'text', market: 'text', roadmapHorizon: 'text', roadmapType: 'text',
+  investmentCanvas: 'text', primaryInvestmentDriver: 'text', description: 'text',
+  groupOwner: 'text', vbiReview: 'text', vbiTargetPortfolio: 'text', aiFlag: 'text',
+  localItImpact: 'text', vbiResponse: 'text',
+  capex: 'number', opex: 'number', stages: 'json',
+};
+
+// Returns { data } or { error }. With partial=true, only the fields present are validated.
+function cleanInitiative(body, partial) {
+  const data = {};
+  for (const [k, kind] of Object.entries(INITIATIVE_FIELDS)) {
+    if (body[k] === undefined) {
+      if (kind === 'required' && !partial) return { error: `${k} is required` };
+      continue;
+    }
+    const v = body[k];
+    if (kind === 'required') {
+      if (typeof v !== 'string' || !v.trim()) return { error: `${k} cannot be empty` };
+      data[k] = v.trim();
+    } else if (kind === 'text') {
+      data[k] = v == null || String(v).trim() === '' ? null : String(v).trim();
+    } else if (kind === 'number') {
+      if (v == null || v === '') data[k] = null;
+      else if (isNaN(parseFloat(v))) return { error: `${k} must be a number` };
+      else data[k] = parseFloat(v);
+    } else if (kind === 'json') {
+      if (v === null || typeof v !== 'object') return { error: `${k} must be an object` };
+      data[k] = v;
+    }
+  }
+  if (data.quarter && !['Q1', 'Q2', 'Q3', 'Q4'].includes(data.quarter)) return { error: 'quarter must be Q1–Q4' };
+  if (data.fy && !/^FY\d{2}$/.test(data.fy)) return { error: 'fy must look like FY28' };
+  if (data.status === null) delete data.status;
+  if (data.market === null) delete data.market;
+  return { data };
+}
+
 // POST /api/products/npd-initiatives — create new initiative
 router.post('/npd-initiatives', async (req, res, next) => {
   try {
-    const {
-      initiativeName, portfolio, productFamily, productLine,
-      roadmapCategory, fy, quarter, status,
-      capex, opex, investmentCanvas, primaryInvestmentDriver,
-      description, market, roadmapHorizon, roadmapType,
-    } = req.body;
-    if (!initiativeName || !portfolio || !productFamily || !productLine || !roadmapCategory || !fy || !quarter) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+    const { data, error } = cleanInitiative(req.body, false);
+    if (error) return res.status(400).json({ error });
     const initiative = await prisma.npdInitiative.create({
-      data: {
-        market: market || 'VBI',
-        portfolio,
-        productFamily,
-        productLine,
-        initiativeName,
-        roadmapCategory,
-        roadmapHorizon: roadmapHorizon || null,
-        roadmapType: roadmapType || null,
-        fy,
-        quarter,
-        status: status || 'Not Started',
-        investmentCanvas: investmentCanvas || null,
-        primaryInvestmentDriver: primaryInvestmentDriver || null,
-        description: description || null,
-        capex: capex != null && capex !== '' ? parseFloat(capex) : null,
-        opex: opex != null && opex !== '' ? parseFloat(opex) : null,
-      },
+      data: { market: 'VBI', status: 'Not Started', ...data },
     });
     res.status(201).json(initiative);
   } catch (err) { next(err); }
@@ -191,7 +212,11 @@ router.delete('/npd-initiatives/:id', async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     if (isNaN(id)) return res.status(400).json({ error: 'Invalid id' });
-    await prisma.npdInitiative.delete({ where: { id } });
+    // Epics reference initiatives by id string (no FK), so remove them explicitly
+    await prisma.$transaction([
+      prisma.npdEpic.deleteMany({ where: { initiativeId: String(id) } }),
+      prisma.npdInitiative.delete({ where: { id } }),
+    ]);
     res.json({ ok: true });
   } catch (err) { next(err); }
 });
@@ -201,11 +226,8 @@ router.put('/npd-initiatives/:id', async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     if (isNaN(id)) return res.status(400).json({ error: 'Invalid id' });
-    const allowed = ['stages', 'status', 'description', 'capex', 'opex'];
-    const data = {};
-    for (const k of allowed) {
-      if (req.body[k] !== undefined) data[k] = req.body[k];
-    }
+    const { data, error } = cleanInitiative(req.body, true);
+    if (error) return res.status(400).json({ error });
     const updated = await prisma.npdInitiative.update({ where: { id }, data });
     res.json(updated);
   } catch (err) { next(err); }
@@ -231,10 +253,15 @@ router.get('/npd-initiatives', async (req, res, next) => {
         { investmentCanvas: { contains: q, mode: 'insensitive' } },
       ];
     }
-    const initiatives = await prisma.npdInitiative.findMany({
-      where,
-      orderBy: [{ fy: 'asc' }, { quarter: 'asc' }, { portfolio: 'asc' }],
-    });
+    const [rows, epicCounts] = await Promise.all([
+      prisma.npdInitiative.findMany({
+        where,
+        orderBy: [{ fy: 'asc' }, { quarter: 'asc' }, { portfolio: 'asc' }],
+      }),
+      prisma.npdEpic.groupBy({ by: ['initiativeId'], _count: { _all: true } }),
+    ]);
+    const epicCountById = new Map(epicCounts.map((c) => [c.initiativeId, c._count._all]));
+    const initiatives = rows.map((i) => ({ ...i, epicCount: epicCountById.get(String(i.id)) || 0 }));
 
     // Compute summary stats
     const statusCounts = {};

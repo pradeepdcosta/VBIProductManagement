@@ -13,6 +13,7 @@ import tradingRouter from './routes/trading.js';
 import uploadsRouter from './routes/uploads.js';
 import exportsRouter from './routes/exports.js';
 import npdEpicsRouter from './routes/npdEpics.js';
+import adminRouter from './routes/admin.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -45,6 +46,7 @@ app.use('/api/trading', tradingRouter);
 app.use('/api/upload', uploadsRouter);
 app.use('/api/export', exportsRouter);
 app.use('/api/npd-epics', npdEpicsRouter);
+app.use('/api/admin', adminRouter);
 
 // Production: serve client build
 if (process.env.NODE_ENV === 'production') {

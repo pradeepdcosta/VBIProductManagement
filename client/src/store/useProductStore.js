@@ -39,6 +39,7 @@ const useProductStore = create((set, get) => ({
     try {
       const res = await fetch(`/api/products?${params}`);
       const json = await res.json();
+      if (!res.ok || !Array.isArray(json.data)) throw new Error(json.error);
       set({
         products: page === 1 ? json.data : [...get().products, ...json.data],
         totalProducts: json.total,
@@ -76,7 +77,7 @@ const useProductStore = create((set, get) => ({
     try {
       const res = await fetch('/api/products/categories');
       const data = await res.json();
-      set({ categories: data });
+      if (Array.isArray(data)) set({ categories: data });
     } catch {}
   },
 
@@ -85,7 +86,7 @@ const useProductStore = create((set, get) => ({
       const params = category ? `?category=${encodeURIComponent(category)}` : '';
       const res = await fetch(`/api/products/families${params}`);
       const data = await res.json();
-      set({ families: data });
+      if (Array.isArray(data)) set({ families: data });
     } catch {}
   },
 
@@ -97,7 +98,7 @@ const useProductStore = create((set, get) => ({
       const qs = params.toString();
       const res = await fetch(`/api/products/lines${qs ? '?' + qs : ''}`);
       const data = await res.json();
-      set({ productLines: data });
+      if (Array.isArray(data)) set({ productLines: data });
     } catch {}
   },
 
@@ -127,7 +128,7 @@ const useProductStore = create((set, get) => ({
     try {
       const res = await fetch('/api/requests');
       const data = await res.json();
-      set({ featureRequests: data });
+      if (Array.isArray(data)) set({ featureRequests: data });
     } catch {}
   },
 

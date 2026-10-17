@@ -2,26 +2,32 @@ import { useEffect, useState } from 'react';
 import { ChevronRight, ArrowLeft, Layers } from 'lucide-react';
 import useProductStore from '../store/useProductStore.js';
 
+// Product portfolios from the product taxonomy (unknown ones sort last, styled neutral)
 const CATEGORY_ORDER = [
-  'Mobile Connectivity',
   'Fixed Connectivity',
-  'IoT',
-  'Cloud and Security',
-  'Converged Comms',
-  'Carrier',
+  'Mobility',
+  'Internet Of Things',
+  'Cloud & Edge Computing',
+  'Cybersecurity',
+  'Unified Communications',
   'Services',
-  'Other',
+  'Digital Solutions',
+  'Digital Apps',
+  'Network API',
 ];
 
 const CATEGORY_STYLE = {
-  'Fixed Connectivity': { bg: '#e8f4fe', text: '#1355a0', border: '#b8d8fc' },
-  'Mobile Connectivity': { bg: '#e8fef0', text: '#1a6b3a', border: '#b0e8c8' },
-  'Cloud and Security':  { bg: '#f0e8fe', text: '#5a1a90', border: '#d0b0f8' },
-  'IoT':                 { bg: '#fef3e8', text: '#8a4a00', border: '#f8d8a0' },
-  'Converged Comms':     { bg: '#feeae8', text: '#8a1a10', border: '#f8c0b8' },
-  'Services':            { bg: '#e8f0fe', text: '#1a3a90', border: '#b0c8f8' },
-  'Carrier':             { bg: '#f0fee8', text: '#1a5a10', border: '#b8e8b0' },
-  'Other':               { bg: '#f0eeea', text: '#4a4a42', border: '#d8d4d0' },
+  'Fixed Connectivity':     { bg: '#e8f4fe', text: '#1355a0', border: '#b8d8fc' },
+  'Mobility':               { bg: '#e8fef0', text: '#1a6b3a', border: '#b0e8c8' },
+  'Internet Of Things':     { bg: '#fef3e8', text: '#8a4a00', border: '#f8d8a0' },
+  'Cloud & Edge Computing': { bg: '#e8f0fe', text: '#1a3a90', border: '#b0c8f8' },
+  'Cybersecurity':          { bg: '#f0e8fe', text: '#5a1a90', border: '#d0b0f8' },
+  'Unified Communications': { bg: '#feeae8', text: '#8a1a10', border: '#f8c0b8' },
+  'Services':               { bg: '#f0fee8', text: '#1a5a10', border: '#b8e8b0' },
+  'Digital Solutions':      { bg: '#e8fbfe', text: '#0f5f6b', border: '#b0e4ee' },
+  'Digital Apps':           { bg: '#fdeaf4', text: '#8a1a5a', border: '#f4c0dc' },
+  'Network API':            { bg: '#f3f0e6', text: '#5c4a12', border: '#e2d8b4' },
+  'Other':                  { bg: '#f0eeea', text: '#4a4a42', border: '#d8d4d0' },
 };
 
 function getStyle(category) {
@@ -40,7 +46,7 @@ export default function ProductCatalog() {
   useEffect(() => {
     fetch('/api/products/summary')
       .then(r => r.json())
-      .then(data => { setSummary(data); setSummaryLoading(false); })
+      .then(data => { setSummary(Array.isArray(data) ? data : []); setSummaryLoading(false); })
       .catch(() => setSummaryLoading(false));
   }, []);
 
@@ -51,7 +57,9 @@ export default function ProductCatalog() {
     try {
       const res = await fetch(`/api/products?category=${encodeURIComponent(cat.category)}&limit=999`);
       const json = await res.json();
-      setCategoryProducts(json.data);
+      setCategoryProducts(Array.isArray(json.data) ? json.data : []);
+    } catch {
+      setCategoryProducts([]);
     } finally {
       setLoadingCat(false);
     }

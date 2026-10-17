@@ -19,6 +19,18 @@ model Product {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
+  // Product taxonomy (admin-managed master list)
+  offeringId     String?  @unique @map("offering_id")
+  market         String?
+  lifecycleStage String?  @map("lifecycle_stage")
+  mainLifecycle  String?  @map("main_lifecycle")
+  portalList     String?  @map("portal_list")
+  vbiChecked     String?  @map("vbi_checked")
+  showInCatalog  Boolean  @default(true) @map("show_in_catalog")
+  managerEmail   String?  @map("manager_email")
+  description    String?  @db.Text
+  taxonomy       Json?
+
   costs    ProductCost[]
   npd      NpdStage?
   trading  TradingData[]
@@ -204,6 +216,15 @@ model NpdInitiative {
   stages                Json?    @default("{}")
   createdAt             DateTime @default(now()) @map("created_at")
 
+  // NPD cycle review fields (FY28 onwards)
+  groupOwner            String?  @map("group_owner")
+  vbiReview             String?  @map("vbi_review")
+  vbiTargetPortfolio    String?  @map("vbi_target_portfolio")
+  aiFlag                String?  @map("ai_flag")
+  localItImpact         String?  @map("local_it_impact")
+  vbiResponse           String?  @map("vbi_response") @db.Text
+
+  @@index([fy, externalId])
   @@map("npd_initiatives")
 }
 
@@ -226,7 +247,19 @@ model NpdEpic {
   signOffNotes        String?   @map("sign_off_notes") @db.Text
   createdAt           DateTime  @default(now()) @map("created_at")
 
+  // NPD cycle review fields (FY28 onwards)
+  externalEpicId      Int?      @map("external_epic_id")
+  epicCategory        String?   @map("epic_category")
+  vbiTargetPortfolio  String?   @map("vbi_target_portfolio")
+  groupAccountability String?   @map("group_accountability") @db.Text
+  vbiAccountability   String?   @map("vbi_accountability") @db.Text
+  vbiImportance       String?   @map("vbi_importance")
+  vbiResponse         String?   @map("vbi_response") @db.Text
+  checkFlag           String?   @map("check_flag")
+
   activities NpdEpicActivity[]
+
+  @@index([initiativeId])
 
   @@map("npd_epics")
 }

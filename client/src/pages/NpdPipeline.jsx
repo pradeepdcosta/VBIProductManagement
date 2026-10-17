@@ -23,14 +23,6 @@ const CATEGORY_COLORS = {
   'Aspirational':            '#9B59B6',
 };
 
-const PORTFOLIO_ICONS = {
-  'Cybersecurity':           '🛡️',
-  'Fixed Connectivity':      '🔌',
-  'Mobility':                '📱',
-  'Unified Communications':  '📞',
-  'Cloud & Edge Computing':  '☁️',
-};
-
 const QUARTERS   = ['Q1', 'Q2', 'Q3', 'Q4'];
 const STAGE_KEYS = ['concept', 'bizCase', 'development', 'deliveryReadiness', 'regulatoryCompliance', 'commercialApproval', 'gtm', 'channelPartner', 'salesEnable', 'launch'];
 const STAGE_LABELS = ['Concept', 'Business Case', 'Development', 'Delivery Readiness', 'Regulatory & Compliance', 'Commercial Approval', 'GTM', 'Channel & Partner Readiness', 'Sales Enablement', 'Launch'];
@@ -103,6 +95,34 @@ function RiskBadge({ level }) {
   );
 }
 
+// Yes/No review flags from the NPD cycle (e.g. "VBI Review: Yes - Day 1")
+function ReviewFlag({ label, value }) {
+  const yes = /^yes/i.test(value);
+  const no = /^no/i.test(value);
+  return (
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium border ${yes ? 'bg-green-50 text-green-800 border-green-200' : no ? 'bg-gray-50 text-gray-600 border-gray-200' : 'bg-vf-surface text-vf-dark border-vf-border'}`}>
+      <span className="text-vf-muted font-normal">{label}:</span> {value}
+    </span>
+  );
+}
+
+const IMPORTANCE_STYLE = {
+  High:          'bg-red-100 text-red-700',
+  Mid:           'bg-amber-100 text-amber-700',
+  Low:           'bg-blue-100 text-blue-700',
+  Unrated:       'bg-gray-100 text-gray-600',
+  'No response': 'bg-gray-100 text-gray-500',
+};
+
+function ImportanceBadge({ level }) {
+  if (!level) return null;
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold ${IMPORTANCE_STYLE[level] || IMPORTANCE_STYLE.Unrated}`}>
+      VBI: {level}
+    </span>
+  );
+}
+
 function fmt(v) {
   if (v == null) return '—';
   return `€${Number(v).toFixed(1)}M`;
@@ -146,22 +166,27 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
   const [activeKey, setActiveKey] = useState(null);
   const [localStages, setLocalStages] = useState(stages);
   const [saving, setSaving] = useState(false);
-  const isReadOnly = String(initiativeId).startsWith('fy28-');
+  const [saveError, setSaveError] = useState(false);
 
   const toggleStage = (key) => setActiveKey((k) => (k === key ? null : key));
 
   const updateStageField = async (key, field, value) => {
+    const previous = localStages;
     const updated = { ...localStages, [key]: { ...(localStages[key] || {}), [field]: value } };
     setLocalStages(updated);
-    if (isReadOnly) return;
     setSaving(true);
+    setSaveError(false);
     try {
       const res = await fetch(`/api/products/npd-initiatives/${initiativeId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stages: updated }),
       });
-      if (res.ok) onStagesChange?.(updated);
+      if (!res.ok) throw new Error();
+      onStagesChange?.(updated);
+    } catch {
+      setLocalStages(previous);
+      setSaveError(true);
     } finally { setSaving(false); }
   };
 
@@ -177,10 +202,8 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
           <span className="text-vf-muted"><span className="font-bold text-green-600">{completeCount}</span> of {STAGE_KEYS.length} complete</span>
           {inProgressCount > 0 && <span className="text-vf-muted"><span className="font-bold text-blue-600">{inProgressCount}</span> in progress</span>}
           {saving && <span className="text-vf-muted italic text-[11px]">Saving…</span>}
-          {isReadOnly
-            ? <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded font-medium">FY28 — read only</span>
-            : <span className="text-[11px] text-vf-muted italic">Click any stage to update</span>
-          }
+          {saveError && <span className="text-[11px] text-red-600 font-medium">Save failed — change undone</span>}
+          <span className="text-[11px] text-vf-muted italic">Click any stage to update</span>
         </div>
       </div>
 
@@ -197,9 +220,9 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
                 <div className={`absolute top-[16px] right-1/2 w-full h-0.5 ${['complete','not-applicable'].includes(localStages[STAGE_KEYS[i-1]]?.status) && ['complete','not-applicable'].includes(s.status) ? 'bg-green-400' : 'bg-gray-200'}`} style={{ zIndex: 0 }} />
               )}
               <button
-                onClick={() => !isReadOnly && toggleStage(key)}
+                onClick={() => toggleStage(key)}
                 title={STAGE_DEFINITIONS[i]}
-                className={`relative z-10 w-8 h-8 rounded-full ${meta.dot} border-2 flex items-center justify-center text-white text-sm font-bold shadow-sm transition-all ${isActive ? `ring-2 ring-offset-2 ${meta.ring} scale-110` : !isReadOnly ? 'hover:scale-105 cursor-pointer' : 'cursor-default'}`}
+                className={`relative z-10 w-8 h-8 rounded-full ${meta.dot} border-2 flex items-center justify-center text-white text-sm font-bold shadow-sm transition-all ${isActive ? `ring-2 ring-offset-2 ${meta.ring} scale-110` : 'hover:scale-105 cursor-pointer'}`}
               >
                 {meta.icon}
               </button>
@@ -217,7 +240,7 @@ function EditableStageGate({ stages = {}, initiativeId, onStagesChange }) {
       </div>
 
       {/* Inline edit panel */}
-      {activeKey && !isReadOnly && (() => {
+      {activeKey && (() => {
         const s = localStages[activeKey] || {};
         const stageIdx = STAGE_KEYS.indexOf(activeKey);
         const pct = Math.round(((stageIdx + 0.5) / STAGE_KEYS.length) * 100);
@@ -304,12 +327,14 @@ function AddEpicModal({ initiative, onClose, onCreated }) {
     goLiveDatePerMarket: '',
   });
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(null);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
+    setError(null);
     try {
       const res = await fetch('/api/npd-epics', {
         method: 'POST',
@@ -322,7 +347,10 @@ function AddEpicModal({ initiative, onClose, onCreated }) {
         }),
       });
       const epic = await res.json();
+      if (!res.ok || !epic?.id) throw new Error(epic?.error || 'Could not create epic');
       onCreated(epic);
+    } catch (err) {
+      setError(err.message);
     } finally {
       setSaving(false);
     }
@@ -336,6 +364,9 @@ function AddEpicModal({ initiative, onClose, onCreated }) {
           <button onClick={onClose} className="text-vf-muted hover:text-vf-dark text-lg leading-none">×</button>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded-lg">{error}</div>
+          )}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1 col-span-2">
               <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Epic Name / ID *</label>
@@ -400,7 +431,21 @@ function AddEpicModal({ initiative, onClose, onCreated }) {
 
 // ─── Epic Detail ──────────────────────────────────────────────────────────────
 
-function EpicDetail({ epic: initialEpic, onBack }) {
+// fetch() wrapper for writes: throws with the server's message when the save fails
+async function sendJson(url, method, body) {
+  const res = await fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'Save failed');
+  return data;
+}
+
+function EpicDetail({ epic: initialEpic, onBack, onDeleted }) {
+  const [error, setError] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [epic, setEpic] = useState(initialEpic);
   const [activities, setActivities] = useState(initialEpic.activities || []);
   const [editingHeader, setEditingHeader] = useState(false);
@@ -433,22 +478,37 @@ function EpicDetail({ epic: initialEpic, onBack }) {
   }, [activities]);
 
   const toggleActivity = async (activity, nextStatus) => {
-    const optimistic = activities.map((a) => a.id === activity.id ? { ...a, status: nextStatus } : a);
-    setActivities(optimistic);
-    await fetch(`/api/npd-epics/${epic.id}/activities/${activity.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: nextStatus }),
-    });
+    setError(null);
+    setActivities((list) => list.map((a) => a.id === activity.id ? { ...a, status: nextStatus } : a));
+    try {
+      await sendJson(`/api/npd-epics/${epic.id}/activities/${activity.id}`, 'PUT', { status: nextStatus });
+    } catch (err) {
+      setActivities((list) => list.map((a) => a.id === activity.id ? { ...a, status: activity.status } : a));
+      setError(`Checklist not saved: ${err.message}`);
+    }
   };
 
   const updateRisk = async (level) => {
+    const previous = epic.riskLevel;
+    setError(null);
     setEpic((e) => ({ ...e, riskLevel: level }));
-    await fetch(`/api/npd-epics/${epic.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ riskLevel: level }),
-    });
+    try {
+      await sendJson(`/api/npd-epics/${epic.id}`, 'PUT', { riskLevel: level });
+    } catch (err) {
+      setEpic((e) => ({ ...e, riskLevel: previous }));
+      setError(`Risk not saved: ${err.message}`);
+    }
+  };
+
+  const deleteEpic = async () => {
+    if (!confirmDelete) { setConfirmDelete(true); return; }
+    try {
+      await sendJson(`/api/npd-epics/${epic.id}`, 'DELETE');
+      onDeleted?.();
+    } catch (err) {
+      setConfirmDelete(false);
+      setError(`Epic not deleted: ${err.message}`);
+    }
   };
 
   const startEditHeader = () => {
@@ -462,25 +522,29 @@ function EpicDetail({ epic: initialEpic, onBack }) {
       marketsAgreed: epic.marketsAgreed || '',
       goLiveDateOverall: epic.goLiveDateOverall ? epic.goLiveDateOverall.split('T')[0] : '',
       goLiveDatePerMarket: epic.goLiveDatePerMarket || '',
+      epicCategory: epic.epicCategory || '',
+      vbiImportance: epic.vbiImportance || '',
+      groupAccountability: epic.groupAccountability || '',
+      vbiAccountability: epic.vbiAccountability || '',
+      vbiResponse: epic.vbiResponse || '',
     });
     setEditingHeader(true);
   };
 
   const saveHeader = async () => {
+    if (!headerForm.epicName?.trim()) { setError('Epic name is required'); return; }
     setSavingHeader(true);
+    setError(null);
     try {
-      const res = await fetch(`/api/npd-epics/${epic.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...headerForm,
-          capex: headerForm.capex !== '' ? parseFloat(headerForm.capex) : null,
-          opex:  headerForm.opex  !== '' ? parseFloat(headerForm.opex)  : null,
-        }),
+      const updated = await sendJson(`/api/npd-epics/${epic.id}`, 'PUT', {
+        ...headerForm,
+        capex: headerForm.capex !== '' ? parseFloat(headerForm.capex) : null,
+        opex:  headerForm.opex  !== '' ? parseFloat(headerForm.opex)  : null,
       });
-      const updated = await res.json();
       setEpic(updated);
       setEditingHeader(false);
+    } catch (err) {
+      setError(`Epic not saved: ${err.message}`);
     } finally {
       setSavingHeader(false);
     }
@@ -489,15 +553,13 @@ function EpicDetail({ epic: initialEpic, onBack }) {
   const addMilestone = async () => {
     if (!newMilestone.trim()) return;
     setAddingMilestone(true);
+    setError(null);
     try {
-      const res = await fetch(`/api/npd-epics/${epic.id}/activities`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ label: newMilestone.trim() }),
-      });
-      const activity = await res.json();
+      const activity = await sendJson(`/api/npd-epics/${epic.id}/activities`, 'POST', { label: newMilestone.trim() });
       setActivities((a) => [...a, activity]);
       setNewMilestone('');
+    } catch (err) {
+      setError(`Milestone not added: ${err.message}`);
     } finally {
       setAddingMilestone(false);
     }
@@ -505,14 +567,12 @@ function EpicDetail({ epic: initialEpic, onBack }) {
 
   const saveSignOff = async () => {
     setSavingSignOff(true);
+    setError(null);
     try {
-      const res = await fetch(`/api/npd-epics/${epic.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(signOffForm),
-      });
-      const updated = await res.json();
+      const updated = await sendJson(`/api/npd-epics/${epic.id}`, 'PUT', signOffForm);
       setEpic(updated);
+    } catch (err) {
+      setError(`Sign-off not saved: ${err.message}`);
     } finally {
       setSavingSignOff(false);
     }
@@ -528,15 +588,26 @@ function EpicDetail({ epic: initialEpic, onBack }) {
         ← Back to Initiative
       </button>
 
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded-lg flex items-center justify-between">
+          {error}
+          <button onClick={() => setError(null)} className="text-red-500 hover:text-red-700 text-lg leading-none ml-3">×</button>
+        </div>
+      )}
+
       {/* Epic header card */}
       <div className="bg-white border border-vf-border rounded-xl overflow-hidden">
         <div className="bg-vf-dark text-white px-6 py-4 flex items-start justify-between gap-4">
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
               {epic.epicType && (
                 <span className="text-[11px] font-semibold bg-white/20 px-2 py-0.5 rounded text-white">{epic.epicType}</span>
               )}
+              {epic.epicCategory && (
+                <span className="text-[11px] font-semibold bg-white/20 px-2 py-0.5 rounded text-white">{epic.epicCategory}</span>
+              )}
               <RiskBadge level={epic.riskLevel} />
+              <ImportanceBadge level={epic.vbiImportance} />
             </div>
             <h3 className="text-lg font-bold">{epic.epicName}</h3>
             {epic.productCanvas && (
@@ -558,6 +629,13 @@ function EpicDetail({ epic: initialEpic, onBack }) {
             </div>
             <button onClick={startEditHeader} className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-xs rounded font-medium transition-all">
               Edit
+            </button>
+            <button
+              onClick={deleteEpic}
+              onBlur={() => setConfirmDelete(false)}
+              className={`px-3 py-1.5 text-xs rounded font-medium transition-all ${confirmDelete ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-white/10 text-white hover:bg-white/20'}`}
+            >
+              {confirmDelete ? 'Confirm delete' : 'Delete'}
             </button>
           </div>
         </div>
@@ -621,6 +699,29 @@ function EpicDetail({ epic: initialEpic, onBack }) {
                 <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Per-Market Go-Live Notes</label>
                 <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.goLiveDatePerMarket} onChange={(e) => hSet('goLiveDatePerMarket', e.target.value)} placeholder="e.g. UK: Aug 26, DE: Sep 26…" />
               </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Epic Category</label>
+                <input className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red" value={headerForm.epicCategory} onChange={(e) => hSet('epicCategory', e.target.value)} placeholder="e.g. New Capability/Feature" />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI Importance</label>
+                <select className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red bg-white" value={headerForm.vbiImportance} onChange={(e) => hSet('vbiImportance', e.target.value)}>
+                  <option value="">—</option>
+                  {Object.keys(IMPORTANCE_STYLE).map((l) => <option key={l} value={l}>{l}</option>)}
+                </select>
+              </div>
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">Group Accountability</label>
+              <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={headerForm.groupAccountability} onChange={(e) => hSet('groupAccountability', e.target.value)} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI (Market) Accountability</label>
+              <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={headerForm.vbiAccountability} onChange={(e) => hSet('vbiAccountability', e.target.value)} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-[11px] font-semibold text-vf-muted uppercase tracking-wide">VBI Epic Response</label>
+              <textarea rows={3} className="border border-vf-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-vf-red resize-y" value={headerForm.vbiResponse} onChange={(e) => hSet('vbiResponse', e.target.value)} />
             </div>
             <div className="flex justify-end gap-2">
               <button onClick={() => setEditingHeader(false)} className="px-4 py-2 text-sm border border-vf-border rounded-lg text-vf-dark hover:bg-vf-surface">Cancel</button>
@@ -632,17 +733,47 @@ function EpicDetail({ epic: initialEpic, onBack }) {
         ) : (
           <div className="px-6 py-5 grid grid-cols-3 gap-x-8 gap-y-3">
             {epic.description && (
-              <div className="col-span-3 text-sm text-vf-dark leading-relaxed border-b border-vf-border pb-3 mb-1">{epic.description}</div>
+              <div className="col-span-3 text-sm text-vf-dark leading-relaxed border-b border-vf-border pb-3 mb-1 whitespace-pre-line">{epic.description}</div>
             )}
             <InfoField label="CAPEX Draw" value={fmt(epic.capex)} />
             <InfoField label="OPEX Draw"  value={fmt(epic.opex)} />
-            <InfoField label="Total Draw"  value={fmt((epic.capex || 0) + (epic.opex || 0))} highlight />
+            <InfoField label="Total Draw"  value={epic.capex == null && epic.opex == null ? null : fmt((epic.capex || 0) + (epic.opex || 0))} highlight />
             <InfoField label="Markets Agreed" value={epic.marketsAgreed} />
             <InfoField label="Planned Go-Live" value={fmtDate(epic.goLiveDateOverall)} />
             {epic.goLiveDatePerMarket && <InfoField label="Per-Market Dates" value={epic.goLiveDatePerMarket} />}
           </div>
         )}
       </div>
+
+      {/* ─── NPD cycle review (from the NPD import) ─── */}
+      {!editingHeader && (epic.groupAccountability || epic.vbiAccountability || epic.vbiResponse || epic.checkFlag) && (
+        <div className="bg-white border border-vf-border rounded-xl overflow-hidden">
+          <div className="px-5 py-3 border-b border-vf-border bg-vf-surface flex items-center justify-between gap-3">
+            <div>
+              <h4 className="text-xs font-semibold text-vf-muted uppercase tracking-wide">NPD Cycle Review</h4>
+              <p className="text-[11px] text-vf-muted mt-0.5">Accountability split and VBI's response to this epic.</p>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap justify-end">
+              {epic.vbiTargetPortfolio && <ReviewFlag label="Target Portfolio" value={epic.vbiTargetPortfolio} />}
+              {epic.checkFlag && (
+                <span className="text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">{epic.checkFlag}</span>
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-3 divide-x divide-vf-border">
+            {[
+              ['Group Accountability', epic.groupAccountability],
+              ['VBI (Market) Accountability', epic.vbiAccountability],
+              ['VBI Epic Response', epic.vbiResponse],
+            ].map(([label, text]) => (
+              <div key={label} className="px-5 py-4">
+                <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mb-1.5">{label}</div>
+                <p className={`text-sm leading-relaxed whitespace-pre-line ${text ? 'text-vf-dark' : 'text-vf-muted italic'}`}>{text || 'Not provided'}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ─── Checklist ─── */}
       <div className="bg-white border border-vf-border rounded-xl overflow-hidden">
@@ -827,15 +958,17 @@ const PORTFOLIO_OPTIONS = [
   'Cloud & Edge Computing',
 ];
 
-function InitiativeFormModal({ item, onClose, onSave, onDelete }) {
+function InitiativeFormModal({ item, years, portfolios, defaultFy, onClose, onSave, onDelete }) {
   const isEdit = !!(item && item.id);
+  const portfolioOptions = [...new Set([...PORTFOLIO_OPTIONS, ...(portfolios || []), item?.portfolio].filter(Boolean))].sort();
+  const yearOptions = [...new Set([...(years || []), item?.fy, defaultFy].filter(Boolean))].sort();
   const [form, setForm] = useState({
     initiativeName:          item?.initiativeName          || '',
     portfolio:               item?.portfolio               || '',
     productFamily:           item?.productFamily           || '',
     productLine:             item?.productLine             || '',
     roadmapCategory:         item?.roadmapCategory         || '',
-    fy:                      item?.fy                      || 'FY27',
+    fy:                      item?.fy                      || defaultFy || yearOptions[yearOptions.length - 1] || 'FY28',
     quarter:                 item?.quarter                 || 'Q1',
     status:                  item?.status                  || 'Not Started',
     capex:                   item?.capex   ?? '',
@@ -880,9 +1013,14 @@ function InitiativeFormModal({ item, onClose, onSave, onDelete }) {
   const handleDelete = async () => {
     if (!confirmDelete) { setConfirmDelete(true); return; }
     setDeleting(true);
+    setError(null);
     try {
-      await fetch(`/api/products/npd-initiatives/${item.id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/products/npd-initiatives/${item.id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Delete failed');
       onDelete(item.id);
+    } catch (err) {
+      setError(err.message);
+      setConfirmDelete(false);
     } finally { setDeleting(false); }
   };
 
@@ -924,8 +1062,7 @@ function InitiativeFormModal({ item, onClose, onSave, onDelete }) {
             <div className="grid grid-cols-2 gap-3">
               {field('FY', true,
                 <select className={inputCls} value={form.fy} onChange={(e) => set('fy', e.target.value)}>
-                  <option value="FY27">FY27</option>
-                  <option value="FY28">FY28</option>
+                  {yearOptions.map((y) => <option key={y} value={y}>{y}</option>)}
                 </select>
               )}
               {field('Quarter', true,
@@ -939,7 +1076,7 @@ function InitiativeFormModal({ item, onClose, onSave, onDelete }) {
               {field('Portfolio', true,
                 <select className={inputCls} value={form.portfolio} onChange={(e) => set('portfolio', e.target.value)}>
                   <option value="">Select…</option>
-                  {PORTFOLIO_OPTIONS.map((p) => <option key={p} value={p}>{p}</option>)}
+                  {portfolioOptions.map((p) => <option key={p} value={p}>{p}</option>)}
                 </select>
               )}
               {field('Roadmap Category', true,
@@ -1019,49 +1156,45 @@ function InitiativeFormModal({ item, onClose, onSave, onDelete }) {
 
 // ─── Pipeline Card (timeline view) with quick-status edit ────────────────────
 
-function PipelineCard({ item, onClick, onStatusChange, onEdit }) {
-  const [status, setStatus] = useState(item.status);
+function PipelineCard({ item, onClick, onSave, onEdit }) {
   const [showPicker, setShowPicker] = useState(false);
-  const isReadOnly = String(item.id).startsWith('fy28-');
+  const status = item.status;
 
-  const changeStatus = async (e, newStatus) => {
+  const changeStatus = (e, newStatus) => {
     e.stopPropagation();
-    setStatus(newStatus);
     setShowPicker(false);
-    onStatusChange?.(item.id, newStatus);
-    if (isReadOnly) return;
-    await fetch(`/api/products/npd-initiatives/${item.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: newStatus }),
-    });
+    if (newStatus !== status) onSave(item.id, { status: newStatus });
   };
 
   return (
     <div
-      className="bg-white border border-vf-border rounded-lg p-3 cursor-pointer hover:shadow-md hover:border-vf-red transition-all relative group"
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData('text/npd-initiative', String(item.id));
+        e.dataTransfer.effectAllowed = 'move';
+      }}
+      className="bg-white border border-vf-border rounded-lg p-3 cursor-pointer hover:shadow-md hover:border-vf-red transition-all relative group active:cursor-grabbing"
       onClick={onClick}
+      title="Drag to another quarter to reschedule"
     >
-      {!isReadOnly && (
-        <button
-          onClick={(e) => { e.stopPropagation(); onEdit?.(item); }}
-          title="Edit initiative"
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-gray-100 text-vf-muted hover:text-vf-dark z-10"
-        >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-          </svg>
-        </button>
-      )}
+      <button
+        onClick={(e) => { e.stopPropagation(); onEdit?.(item); }}
+        title="Edit initiative"
+        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-gray-100 text-vf-muted hover:text-vf-dark z-10"
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+        </svg>
+      </button>
       <div className="text-sm font-semibold text-vf-dark leading-tight mb-1.5 pr-5">{item.initiativeName}</div>
       <div className="flex items-center gap-1.5 flex-wrap mb-1.5">
         {/* Clickable status badge */}
         <div className="relative" onClick={(e) => e.stopPropagation()}>
           <button
-            onClick={(e) => { e.stopPropagation(); !isReadOnly && setShowPicker((v) => !v); }}
-            title={isReadOnly ? undefined : 'Click to change status'}
-            className={`${!isReadOnly ? 'hover:opacity-70' : ''} transition-opacity`}
+            onClick={(e) => { e.stopPropagation(); setShowPicker((v) => !v); }}
+            title="Click to change status"
+            className="hover:opacity-70 transition-opacity"
           >
             <StatusBadge status={status} />
           </button>
@@ -1086,6 +1219,9 @@ function PipelineCard({ item, onClick, onStatusChange, onEdit }) {
       <div className="text-xs text-vf-muted">
         {item.portfolio} › {item.productFamily}
       </div>
+      {item.epicCount > 0 && (
+        <div className="text-[10px] text-vf-muted mt-1 font-medium">{item.epicCount} epic{item.epicCount === 1 ? '' : 's'}</div>
+      )}
       {(item.capex != null || item.opex != null) && (
         <div className="text-[10px] text-vf-muted mt-1 font-mono">
           CapEx {fmt(item.capex)} · OpEx {fmt(item.opex)}
@@ -1097,26 +1233,19 @@ function PipelineCard({ item, onClick, onStatusChange, onEdit }) {
 
 // ─── Initiative Detail ────────────────────────────────────────────────────────
 
-function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
+function InitiativeDetail({ item, onBack, onSave, onEdit, onEpicsChanged }) {
   const [epics, setEpics] = useState([]);
   const [loadingEpics, setLoadingEpics] = useState(true);
   const [showAddEpic, setShowAddEpic] = useState(false);
   const [selectedEpic, setSelectedEpic] = useState(null);
+  const [epicError, setEpicError] = useState(null);
   const [currentStages, setCurrentStages] = useState(item.stages || {});
-  const [currentStatus, setCurrentStatus] = useState(item.status || 'Not Started');
   const [showStatusPicker, setShowStatusPicker] = useState(false);
-  const isReadOnly = String(item.id).startsWith('fy28-');
+  const currentStatus = item.status || 'Not Started';
 
-  const updateStatus = async (newStatus) => {
-    setCurrentStatus(newStatus);
+  const updateStatus = (newStatus) => {
     setShowStatusPicker(false);
-    onStatusChange?.(item.id, newStatus);
-    if (isReadOnly) return;
-    await fetch(`/api/products/npd-initiatives/${item.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: newStatus }),
-    });
+    if (newStatus !== currentStatus) onSave(item.id, { status: newStatus });
   };
 
   const fetchEpics = useCallback(async () => {
@@ -1134,11 +1263,15 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
   useEffect(() => { fetchEpics(); }, [fetchEpics]);
 
   const openEpic = async (epicSummary) => {
+    setEpicError(null);
     try {
       const res = await fetch(`/api/npd-epics/${epicSummary.id}`);
       const full = await res.json();
-      if (full && full.id) setSelectedEpic(full);
-    } catch {}
+      if (!res.ok || !full?.id) throw new Error(full?.error || 'Could not open epic');
+      setSelectedEpic(full);
+    } catch (err) {
+      setEpicError(err.message);
+    }
   };
 
   if (selectedEpic) {
@@ -1146,6 +1279,7 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
       <EpicDetail
         epic={selectedEpic}
         onBack={() => { setSelectedEpic(null); fetchEpics(); }}
+        onDeleted={() => { setSelectedEpic(null); fetchEpics(); onEpicsChanged?.(item.id, -1); }}
       />
     );
   }
@@ -1170,9 +1304,9 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
             {/* Editable status */}
             <div className="relative">
               <button
-                onClick={() => !isReadOnly && setShowStatusPicker((v) => !v)}
-                className={`${!isReadOnly ? 'cursor-pointer hover:opacity-80' : 'cursor-default'} transition-opacity`}
-                title={isReadOnly ? 'FY28 — read only' : 'Click to change status'}
+                onClick={() => setShowStatusPicker((v) => !v)}
+                className="cursor-pointer hover:opacity-80 transition-opacity"
+                title="Click to change status"
               >
                 <StatusBadge status={currentStatus} />
               </button>
@@ -1197,18 +1331,16 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
               )}
             </div>
             <CategoryTag category={item.roadmapCategory} />
-            {!isReadOnly && (
-              <button
-                onClick={() => onEdit?.(item)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                </svg>
-                Edit
-              </button>
-            )}
+            <button
+              onClick={() => onEdit?.(item)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+              Edit
+            </button>
           </div>
         </div>
       </div>
@@ -1232,6 +1364,16 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
             {item.roadmapHorizon && <div className="text-sm"><span className="text-vf-muted">Horizon:</span> <span className="font-semibold">{item.roadmapHorizon}</span></div>}
             {item.primaryInvestmentDriver && <div className="text-sm"><span className="text-vf-muted">Investment Driver:</span> <span className="font-semibold">{item.primaryInvestmentDriver}</span></div>}
             {item.investmentCanvas && <div className="text-sm"><span className="text-vf-muted">Investment Canvas:</span> <span className="font-semibold">{item.investmentCanvas}</span></div>}
+            {item.externalId && <div className="text-sm"><span className="text-vf-muted">NPD ID:</span> <span className="font-semibold font-mono">{item.externalId}</span></div>}
+            {item.groupOwner && <div className="text-sm"><span className="text-vf-muted">Group Owner:</span> <span className="font-semibold break-all">{item.groupOwner}</span></div>}
+            {(item.vbiReview || item.vbiTargetPortfolio || item.aiFlag || item.localItImpact) && (
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {item.vbiReview && <ReviewFlag label="VBI Review" value={item.vbiReview} />}
+                {item.vbiTargetPortfolio && <ReviewFlag label="Target Portfolio" value={item.vbiTargetPortfolio} />}
+                {item.aiFlag && <ReviewFlag label="AI" value={item.aiFlag} />}
+                {item.localItImpact && <ReviewFlag label="Local IT Impact" value={item.localItImpact} />}
+              </div>
+            )}
           </div>
           <div>
             <div className="text-xs font-semibold text-vf-muted uppercase tracking-wide mb-2">Investment</div>
@@ -1247,13 +1389,21 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
             </div>
             <div className="bg-vf-surface rounded-lg p-3 mt-3 text-center">
               <div className="text-xs text-vf-muted font-medium mb-1">Total Investment</div>
-              <div className="text-xl font-bold text-vf-red font-mono">{fmt((item.capex || 0) + (item.opex || 0))}</div>
+              <div className="text-xl font-bold text-vf-red font-mono">{item.capex == null && item.opex == null ? '—' : fmt((item.capex || 0) + (item.opex || 0))}</div>
             </div>
           </div>
           <div>
-            <div className="text-xs font-semibold text-vf-muted uppercase tracking-wide mb-2">Description & Objectives</div>
-            <div className="bg-vf-surface rounded-lg p-4 text-sm text-vf-dark leading-relaxed h-[160px] overflow-y-auto">
-              {item.description || 'No description available.'}
+            <div className="text-xs font-semibold text-vf-muted uppercase tracking-wide mb-2">
+              {item.description || !item.vbiResponse ? 'Description & Objectives' : 'VBI Response'}
+            </div>
+            <div className="bg-vf-surface rounded-lg p-4 text-sm text-vf-dark leading-relaxed h-[160px] overflow-y-auto whitespace-pre-line">
+              {item.description || item.vbiResponse || 'No description available.'}
+              {item.description && item.vbiResponse && (
+                <>
+                  <div className="text-[10px] font-semibold text-vf-muted uppercase tracking-wide mt-3 mb-1">VBI Response</div>
+                  {item.vbiResponse}
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -1274,6 +1424,9 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
           </button>
         </div>
 
+        {epicError && (
+          <div className="mx-5 mt-4 bg-red-50 border border-red-200 text-red-700 text-sm px-3 py-2 rounded-lg">{epicError}</div>
+        )}
         {loadingEpics ? (
           <div className="p-8 text-center text-vf-muted text-sm">Loading epics…</div>
         ) : epics.length === 0 ? (
@@ -1297,6 +1450,7 @@ function InitiativeDetail({ item, onBack, onStatusChange, onEdit }) {
           onCreated={(epic) => {
             setEpics((e) => [...e, epic]);
             setShowAddEpic(false);
+            onEpicsChanged?.(item.id, +1);
           }}
         />
       )}
@@ -1326,8 +1480,15 @@ function EpicCard({ epic, index, onClick }) {
             <span className="text-[10px] bg-green-100 text-green-700 font-semibold px-1.5 py-0.5 rounded-full">Signed Off</span>
           )}
         </div>
-        {epic.epicType && (
-          <span className="text-[11px] font-medium text-vf-muted">{epic.epicType}</span>
+        {(epic.epicType || epic.epicCategory || epic.vbiImportance || epic.checkFlag) && (
+          <div className="flex items-center gap-2 flex-wrap mt-0.5">
+            {epic.epicType && <span className="text-[11px] font-medium text-vf-muted">{epic.epicType}</span>}
+            {epic.epicCategory && <span className="text-[11px] font-medium text-vf-muted">{epic.epicCategory}</span>}
+            <ImportanceBadge level={epic.vbiImportance} />
+            {epic.checkFlag && (
+              <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">{epic.checkFlag}</span>
+            )}
+          </div>
         )}
         {epic.description && (
           <p className="text-[11px] text-vf-muted leading-snug line-clamp-2 mt-0.5 pr-4">{epic.description}</p>
@@ -1398,17 +1559,46 @@ export default function NpdPipeline() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [formItem, setFormItem] = useState(null);
   const [quarterFilter, setQuarterFilter] = useState(null);
+  const [dragOverCell, setDragOverCell] = useState(null);
+  const showToast = useProductStore((s) => s.showToast);
 
-  const updateInitiativeStatus = useCallback((itemId, newStatus) => {
-    const realId = String(itemId).startsWith('fy28-')
-      ? parseInt(String(itemId).replace('fy28-', ''), 10)
-      : itemId;
+  const patchLocal = useCallback((id, patch) => {
+    setData((prev) => ({ ...prev, initiatives: prev.initiatives.map((i) => (i.id === id ? { ...i, ...patch } : i)) }));
+    setSelectedItem((prev) => (prev && prev.id === id ? { ...prev, ...patch } : prev));
+  }, []);
+
+  // Optimistically apply a change to an initiative, then save; undo it if the save fails.
+  const saveInitiative = useCallback(async (id, patch) => {
+    const before = data.initiatives.find((i) => i.id === id);
+    if (!before) return;
+    const undo = Object.fromEntries(Object.keys(patch).map((k) => [k, before[k]]));
+    patchLocal(id, patch);
+    try {
+      const res = await fetch(`/api/products/npd-initiatives/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(patch),
+      });
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Save failed');
+    } catch (err) {
+      patchLocal(id, undo);
+      showToast(`Not saved: ${err.message}`, 'warning');
+    }
+  }, [data.initiatives, patchLocal, showToast]);
+
+  const adjustEpicCount = useCallback((id, delta) => {
     setData((prev) => ({
       ...prev,
-      initiatives: prev.initiatives.map((i) => (i.id === realId ? { ...i, status: newStatus } : i)),
+      initiatives: prev.initiatives.map((i) => (i.id === id ? { ...i, epicCount: Math.max(0, (i.epicCount || 0) + delta) } : i)),
     }));
-    setSelectedItem((prev) => (prev && (prev.id === itemId || prev.id === realId) ? { ...prev, status: newStatus } : prev));
   }, []);
+
+  const moveToQuarter = useCallback((id, fy, quarter) => {
+    const item = data.initiatives.find((i) => i.id === id);
+    if (!item || (item.quarter === quarter && item.fy === fy)) return;
+    saveInitiative(id, { fy, quarter });
+    showToast(`Moved "${item.initiativeName}" to ${fy} ${quarter}`);
+  }, [data.initiatives, saveInitiative, showToast]);
 
   const handleSaveInitiative = useCallback((saved, isEdit) => {
     setData((prev) => ({
@@ -1441,19 +1631,23 @@ export default function NpdPipeline() {
         const qs = params.toString();
         const res = await fetch(`/api/products/npd-initiatives${qs ? '?' + qs : ''}`);
         const json = await res.json();
+        if (!res.ok || !Array.isArray(json.initiatives)) throw new Error(json.error || 'Could not load NPD pipeline');
         setData(json);
-      } catch {}
+      } catch (err) {
+        showToast(err.message, 'warning');
+      }
       setLoading(false);
     })();
-  }, [filters.category, filters.family, filters.productLine, filters.q, statusFilter, categoryFilter]);
+  }, [filters.category, filters.family, filters.productLine, filters.q, statusFilter, categoryFilter, showToast]);
 
-  const initiatives = useMemo(() => {
-    const fy27 = data.initiatives.filter((i) => i.fy === 'FY27');
-    const fy28 = fy27.map((i) => ({ ...i, id: `fy28-${i.id}`, fy: 'FY28' }));
-    const base = [...fy27, ...fy28];
-    if (fyFilter) return base.filter((i) => i.fy === fyFilter);
-    return base;
-  }, [data.initiatives, fyFilter]);
+  // Years present in the data (e.g. FY26, FY27, FY28)
+  const years = useMemo(() => [...new Set(data.initiatives.map((i) => i.fy))].sort(), [data.initiatives]);
+  const portfolios = useMemo(() => [...new Set(data.initiatives.map((i) => i.portfolio))].sort(), [data.initiatives]);
+
+  const initiatives = useMemo(
+    () => (fyFilter ? data.initiatives.filter((i) => i.fy === fyFilter) : data.initiatives),
+    [data.initiatives, fyFilter],
+  );
 
   const summary = useMemo(() => {
     const statusCounts = {}, categoryCounts = {}, portfolioCounts = {}, quarterCounts = {};
@@ -1498,22 +1692,29 @@ export default function NpdPipeline() {
 
   const fys = Object.keys(timelineData).sort();
 
+  const formModal = formItem !== null && (
+    <InitiativeFormModal
+      item={formItem}
+      years={years}
+      portfolios={portfolios}
+      defaultFy={fyFilter}
+      onClose={() => setFormItem(null)}
+      onSave={handleSaveInitiative}
+      onDelete={handleDeleteInitiative}
+    />
+  );
+
   if (selectedItem) {
     return (
       <div className="p-5">
-        {formItem !== null && (
-          <InitiativeFormModal
-            item={formItem}
-            onClose={() => setFormItem(null)}
-            onSave={handleSaveInitiative}
-            onDelete={handleDeleteInitiative}
-          />
-        )}
+        {formModal}
         <InitiativeDetail
+          key={selectedItem.id}
           item={selectedItem}
           onBack={() => setSelectedItem(null)}
-          onStatusChange={updateInitiativeStatus}
+          onSave={saveInitiative}
           onEdit={(i) => setFormItem(i)}
+          onEpicsChanged={adjustEpicCount}
         />
       </div>
     );
@@ -1521,14 +1722,7 @@ export default function NpdPipeline() {
 
   return (
     <div className="p-5">
-      {formItem !== null && (
-        <InitiativeFormModal
-          item={formItem}
-          onClose={() => setFormItem(null)}
-          onSave={handleSaveInitiative}
-          onDelete={handleDeleteInitiative}
-        />
-      )}
+      {formModal}
 
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-lg font-semibold">NPD Roadmap Pipeline</h2>
@@ -1550,8 +1744,7 @@ export default function NpdPipeline() {
       <div className="flex items-center gap-2 mb-4">
         <select className="border border-vf-border rounded-md px-2.5 py-1.5 text-sm bg-white cursor-pointer focus:outline-none focus:border-vf-red" value={fyFilter} onChange={(e) => setFyFilter(e.target.value)}>
           <option value="">All Years</option>
-          <option value="FY27">FY27</option>
-          <option value="FY28">FY28</option>
+          {years.map((y) => <option key={y} value={y}>{y}</option>)}
         </select>
         <select className="border border-vf-border rounded-md px-2.5 py-1.5 text-sm bg-white cursor-pointer focus:outline-none focus:border-vf-red" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
           <option value="">All Statuses</option>
@@ -1673,7 +1866,7 @@ export default function NpdPipeline() {
       {loading ? (
         <div className="bg-white border border-vf-border rounded-[10px] p-8 text-center text-vf-muted">Loading NPD pipeline...</div>
       ) : initiatives.length === 0 ? (
-        <div className="bg-white border border-vf-border rounded-[10px] p-8 text-center text-vf-muted">No initiatives found. Upload NPD data via Import / Export.</div>
+        <div className="bg-white border border-vf-border rounded-[10px] p-8 text-center text-vf-muted">No initiatives match these filters. A new NPD cycle can be loaded from Admin → NPD Import.</div>
       ) : viewMode === 'timeline' ? (
         <div className="space-y-4">
           {fys.map((fy) => (
@@ -1685,18 +1878,36 @@ export default function NpdPipeline() {
               <div className="grid grid-cols-4 gap-3">
                 {QUARTERS.map((q) => {
                   const items = timelineData[fy]?.[q] || [];
+                  const cell = `${fy} ${q}`;
+                  const isDropTarget = dragOverCell === cell;
                   return (
-                    <div key={q} className="min-h-[120px]">
+                    <div
+                      key={q}
+                      className={`min-h-[120px] rounded-lg transition-colors ${isDropTarget ? 'bg-red-50 outline-dashed outline-2 outline-vf-red/40 outline-offset-2' : ''}`}
+                      onDragOver={(e) => {
+                        if (!e.dataTransfer.types.includes('text/npd-initiative')) return;
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        if (dragOverCell !== cell) setDragOverCell(cell);
+                      }}
+                      onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setDragOverCell(null); }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        setDragOverCell(null);
+                        const id = parseInt(e.dataTransfer.getData('text/npd-initiative'), 10);
+                        if (!isNaN(id)) moveToQuarter(id, fy, q);
+                      }}
+                    >
                       <div className="text-sm font-semibold text-vf-muted mb-2 flex items-center justify-between">
                         <span>{q}</span>
                         {items.length > 0 && <span className="bg-vf-surface text-vf-muted text-xs px-1.5 py-0.5 rounded-full font-mono">{items.length}</span>}
                       </div>
                       <div className="space-y-2">
                         {items.map((item) => (
-                          <PipelineCard key={item.id} item={item} onClick={() => setSelectedItem(item)} onStatusChange={updateInitiativeStatus} onEdit={(i) => setFormItem(i)} />
+                          <PipelineCard key={item.id} item={item} onClick={() => setSelectedItem(item)} onSave={saveInitiative} onEdit={(i) => setFormItem(i)} />
                         ))}
                         {items.length === 0 && (
-                          <div className="text-xs text-vf-muted italic p-2">No initiatives</div>
+                          <div className="text-xs text-vf-muted italic p-2">{isDropTarget ? `Drop to move to ${q}` : 'No initiatives'}</div>
                         )}
                       </div>
                     </div>
@@ -1718,7 +1929,6 @@ export default function NpdPipeline() {
             <div />
           </div>
           {filteredInitiatives.map((item) => {
-            const isReadOnly = String(item.id).startsWith('fy28-');
             return (
               <div
                 key={item.id}
@@ -1735,18 +1945,16 @@ export default function NpdPipeline() {
                 <div className="px-3 py-2.5 text-xs font-mono font-medium text-vf-dark">{item.fy}</div>
                 <div className="px-3 py-2.5 text-xs font-mono font-medium text-vf-dark">{item.quarter}</div>
                 <div className="pr-2 flex items-center justify-center">
-                  {!isReadOnly && (
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setFormItem(item); }}
-                      title="Edit initiative"
-                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-gray-100 text-vf-muted hover:text-vf-dark"
-                    >
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                      </svg>
-                    </button>
-                  )}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setFormItem(item); }}
+                    title="Edit initiative"
+                    className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-gray-100 text-vf-muted hover:text-vf-dark"
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             );

@@ -9,6 +9,7 @@ import {
   Shield,
   MessageSquare,
   Upload,
+  Settings,
 } from 'lucide-react';
 import useProductStore from '../store/useProductStore.js';
 
@@ -40,6 +41,12 @@ const sections = [
     label: 'Data',
     items: [
       { to: '/import-export', icon: Upload, label: 'Import / Export' },
+    ],
+  },
+  {
+    label: 'Admin',
+    items: [
+      { to: '/admin', icon: Settings, label: 'Admin' },
     ],
   },
 ];

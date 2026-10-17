@@ -10,8 +10,12 @@ const costData = JSON.parse(readFileSync(join(__dirname, 'cost-data.json'), 'utf
 const prisma = new PrismaClient();
 
 async function seed() {
-  await prisma.costAction.deleteMany({});
-  await prisma.costAllocation.deleteMany({});
+  // Runs on every startup — only seed an empty database so edits/uploads survive restarts
+  const existing = await prisma.costAllocation.count();
+  if (existing > 0) {
+    console.log(`Cost data already has ${existing} allocations. Skipping.`);
+    return;
+  }
 
   const REMOVE_TOWERS = ['Global VBTS', 'VB Commercial', 'VBI Carrier', 'VBI Enterprise', 'Legacy', 'Innovation', 'Lean Corporate', 'P&S - Platforms'];
   const products = costData.filter(p =>

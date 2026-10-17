@@ -1,12 +1,11 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Upload, FileSpreadsheet } from 'lucide-react';
 import useProductStore from '../store/useProductStore.js';
 
 const UPLOAD_ZONES = [
-  { key: 'catalog', label: 'Product Catalog', desc: 'XLSX / CSV · categories, families, lines, names', emoji: '📋', endpoint: '/api/upload/catalog' },
   { key: 'trading', label: 'Trading Data', desc: 'XLSX / CSV · actual vs target, by region & product', emoji: '📈', endpoint: '/api/upload/trading' },
   { key: 'costs', label: 'Cost / P&L', desc: 'XLSX · P&S costs, network costs, overhead', emoji: '💰', endpoint: '/api/upload/costs' },
-  { key: 'npd', label: 'NPD Pipeline', desc: 'XLSX · stage gates, owners, launch dates', emoji: '🚀', endpoint: '/api/upload/npd' },
   { key: 'coverage', label: 'Country Coverage', desc: 'XLSX · market availability matrix', emoji: '🌍', endpoint: '/api/upload/coverage' },
   { key: 'sla', label: 'SLA Data', desc: 'XLSX · SLA tiers, uptime, support levels', emoji: '⭐', endpoint: '/api/upload/sla' },
   { key: 'bizcase', label: 'Business Case', desc: 'XLSX · P&L template with revenue, costs, margins, CapEx', emoji: '📊', endpoint: '/api/upload/bizcase' },
@@ -88,9 +87,14 @@ export default function ImportExport() {
   return (
     <div className="p-5">
       <h2 className="text-base font-semibold mb-1">Import / Export</h2>
-      <p className="text-xs text-vf-muted mb-5">
-        Upload Excel or CSV files to auto-update catalog data, costs, and trading performance.
+      <p className="text-xs text-vf-muted mb-3">
+        Upload Excel or CSV files to auto-update costs, trading performance, coverage, SLA and business cases.
       </p>
+      <div className="bg-white border border-vf-border rounded-[10px] px-4 py-3 mb-5 text-xs text-vf-text flex items-center gap-2">
+        <span className="font-semibold">Product taxonomy and NPD cycles</span>
+        <span className="text-vf-muted">are loaded from</span>
+        <Link to="/admin" className="text-vf-red font-semibold hover:underline">Admin →</Link>
+      </div>
 
       <div className="grid grid-cols-3 gap-4 mb-6">
         {UPLOAD_ZONES.map((zone) => (
