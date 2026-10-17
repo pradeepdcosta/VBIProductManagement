@@ -2175,16 +2175,6 @@ export default function NpdPipeline() {
           })}
         </div>
       )}
-
-      <div className="flex flex-wrap gap-3 mt-4 text-xs text-vf-muted items-center">
-        {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
-          <span key={cat} className="flex items-center gap-1">
-            <span className="inline-block w-3 h-3 rounded" style={{ backgroundColor: color }} />
-            {cat}
-          </span>
-        ))}
-        <span className="ml-auto">Click any initiative to view details →</span>
-      </div>
     </div>
   );
 }
