@@ -195,7 +195,7 @@ docker compose -f docker-compose.prod.yml down        # stops; data is kept
 
 ## Install without Docker
 
-You need **Node.js 20+** and **PostgreSQL 14+**.
+You need **Node.js 22 LTS or newer** and **PostgreSQL 14+**.
 
 1. Create a database and user. Then create `.env` in the project root from `.env.example` and set:
    - `DATABASE_URL=postgresql://user:pass@host:5432/vbi_products`

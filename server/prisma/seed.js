@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import pkg from 'xlsx';
-const { readFile, utils } = pkg;
+const { read, utils } = pkg;
+import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -19,7 +20,7 @@ async function main() {
 
   // Parse prods.xlsx
   const filePath = path.join(__dirname, '..', '..', 'data', 'prods.xlsx');
-  const workbook = readFile(filePath);
+  const workbook = read(readFileSync(filePath)); // xlsx's ESM build has no file access of its own
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rawRows = utils.sheet_to_json(sheet, { header: 1 });
 

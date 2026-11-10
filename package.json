@@ -1,7 +1,10 @@
 {
   "name": "vbi-product-portal",
   "private": true,
-  "workspaces": ["client", "server"],
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
     "dev": "concurrently -n API,UI -c cyan,magenta \"npm run dev -w server\" \"npm run dev -w client\"",
     "build": "npm run build -w client",
@@ -15,5 +18,8 @@
     "concurrently": "^9.2.1",
     "eslint": "^9.15.0",
     "prettier": "^3.5.0"
+  },
+  "overrides": {
+    "deepmerge-ts": "^8.0.2"
   }
 }
