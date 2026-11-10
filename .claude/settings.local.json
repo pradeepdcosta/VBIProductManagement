@@ -37,7 +37,8 @@
       "Bash(ls \"C:\\\\Users\\\\dcost\\\\OneDrive\\\\Documents\\\\Coding Projects\\\\VBI Product Management\\\\server\\\\scripts\\\\seed-npd\"*)",
       "Bash(ls \"D:\\\\Data Export\"*)",
       "Bash(ls D:/*.xlsx)",
-      "Bash(node --watch index.js)"
+      "Bash(node --watch index.js)",
+      "Bash(xargs wc -l)"
     ]
   }
 }
